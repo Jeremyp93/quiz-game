@@ -10,6 +10,7 @@ const initialState: GameState = {
   currentScene: 0,
   lastSceneBeforeScoreboard: undefined,
   currentQuestion: undefined,
+  isCurrentQuestionVisibleOnDisplay: false,
   lastQuestionId: undefined,
   blockedNextQuestionTeamIds: [],
   blockedTeamIdsForCurrentQuestion: [],

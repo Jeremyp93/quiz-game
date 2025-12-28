@@ -71,6 +71,10 @@ class GameService {
     await this.connection?.invoke('StartPhase1');
   }
 
+  async getQuestion() {
+    await this.connection?.invoke('GetQuestion');
+  }
+
   async showQuestion() {
     await this.connection?.invoke('ShowQuestion');
   }

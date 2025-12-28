@@ -18,6 +18,7 @@ public class GameSessionService : IGameSessionService
 
     // Phase 1 (Fast Buzzer) state
     private CurrentQuestionDto? _currentQuestion;
+    private bool _isCurrentQuestionVisibleOnDisplay;
     private Guid? _lastQuestionId;
     private List<int> _blockedNextQuestionTeamIds = new();
     private List<int> _blockedTeamIdsForCurrentQuestion = new();
@@ -50,6 +51,7 @@ public class GameSessionService : IGameSessionService
             CurrentScene = _currentScene,
             LastSceneBeforeScoreboard = _lastSceneBeforeScoreboard,
             CurrentQuestion = _currentQuestion,
+            IsCurrentQuestionVisibleOnDisplay = _isCurrentQuestionVisibleOnDisplay,
             LastQuestionId = _lastQuestionId,
             BlockedNextQuestionTeamIds = new List<int>(_blockedNextQuestionTeamIds),
             BlockedTeamIdsForCurrentQuestion = new List<int>(_blockedTeamIdsForCurrentQuestion)
@@ -62,7 +64,7 @@ public class GameSessionService : IGameSessionService
         _players.Clear();
         _teams.Clear();
         _currentPhase = Phase.Setup;
-        _currentScene = Scene.Teams;
+        _currentScene = Scene.Scoreboard;  // Changed from Teams to Scoreboard to prevent auto-showing teams
         _lastSceneBeforeScoreboard = null;
     }
 
@@ -160,13 +162,14 @@ public class GameSessionService : IGameSessionService
     {
         _currentPhase = Phase.FastBuzzer;
         _currentQuestion = null;
+        _isCurrentQuestionVisibleOnDisplay = false;
         _lastQuestionId = null;
         _blockedNextQuestionTeamIds.Clear();
         _blockedTeamIdsForCurrentQuestion.Clear();
         return Task.CompletedTask;
     }
 
-    public async Task ShowQuestion()
+    public async Task GetQuestion()
     {
         // Create a scope to resolve scoped IQuestionService
         using var scope = _serviceProvider.CreateScope();
@@ -185,7 +188,7 @@ public class GameSessionService : IGameSessionService
         _blockedTeamIdsForCurrentQuestion = new List<int>(_blockedNextQuestionTeamIds);
         _blockedNextQuestionTeamIds.Clear();
 
-        // Set current question
+        // Set current question (GM sees it, but not shown on display yet)
         _currentQuestion = new CurrentQuestionDto
         {
             Id = question.Id,
@@ -197,6 +200,18 @@ public class GameSessionService : IGameSessionService
         };
 
         _lastQuestionId = question.Id;
+        _isCurrentQuestionVisibleOnDisplay = false;
+
+        // Don't change scene - GM just sees it in their panel
+    }
+
+    public void ShowQuestion()
+    {
+        if (_currentQuestion == null)
+            throw new InvalidOperationException("No question loaded. Use GetQuestion first.");
+
+        // Show the question on display
+        _isCurrentQuestionVisibleOnDisplay = true;
 
         // Switch to Question scene (leaves scoreboard if visible)
         if (_currentScene == Scene.Scoreboard)
@@ -230,6 +245,7 @@ public class GameSessionService : IGameSessionService
     {
         _currentPhase = Phase.Setup;
         _currentQuestion = null;
+        _isCurrentQuestionVisibleOnDisplay = false;
         _lastQuestionId = null;
         _blockedNextQuestionTeamIds.Clear();
         _blockedTeamIdsForCurrentQuestion.Clear();

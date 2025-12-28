@@ -13,6 +13,7 @@ public class GameStateDto
 
     // Phase 1 (Fast Buzzer) state
     public CurrentQuestionDto? CurrentQuestion { get; set; }
+    public bool IsCurrentQuestionVisibleOnDisplay { get; set; }
     public Guid? LastQuestionId { get; set; }
     public List<int> BlockedNextQuestionTeamIds { get; set; } = new();
     public List<int> BlockedTeamIdsForCurrentQuestion { get; set; } = new();

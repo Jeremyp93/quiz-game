@@ -18,7 +18,8 @@ public interface IGameSessionService
 
     // Phase 1 (Fast Buzzer)
     Task StartPhase1();
-    Task ShowQuestion();
+    Task GetQuestion();
+    void ShowQuestion();
     void ShowAnswer();
     void ApplyBlocksForNextQuestion(List<int> teamIndices);
     void EndPhase();

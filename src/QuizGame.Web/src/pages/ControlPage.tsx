@@ -14,15 +14,17 @@ export default function ControlPage() {
     await gameService.startGame();
   };
 
-  const handleAddPlayer = () => {
-    if (playerInput.trim()) {
-      setPlayerNames([...playerNames, playerInput.trim()]);
-      setPlayerInput('');
-    }
+  const handleBulkPlayerInput = () => {
+    // Parse textarea input line by line
+    const lines = playerInput.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    setPlayerNames(lines);
   };
 
   const handleRemovePlayer = (index: number) => {
     setPlayerNames(playerNames.filter((_, i) => i !== index));
+    // Update textarea
+    const updatedNames = playerNames.filter((_, i) => i !== index);
+    setPlayerInput(updatedNames.join('\n'));
   };
 
   const handleSetPlayers = async () => {
@@ -61,6 +63,10 @@ export default function ControlPage() {
   const handleStartPhase1 = async () => {
     await gameService.startPhase1();
     setSelectedBlockedTeams([]);
+  };
+
+  const handleGetQuestion = async () => {
+    await gameService.getQuestion();
   };
 
   const handleShowQuestion = async () => {
@@ -113,30 +119,35 @@ export default function ControlPage() {
             <div className="setup-section">
               <h2>Setup Players</h2>
 
-              <div className="player-input">
-                <input
-                  type="text"
+              <div className="bulk-player-input">
+                <label>Enter player names (one per line):</label>
+                <textarea
                   value={playerInput}
                   onChange={e => setPlayerInput(e.target.value)}
-                  onKeyPress={e => e.key === 'Enter' && handleAddPlayer()}
-                  placeholder="Enter player name"
+                  onBlur={handleBulkPlayerInput}
+                  placeholder="Alice&#10;Bob&#10;Charlie&#10;..."
+                  rows={10}
+                  className="player-textarea"
                 />
-                <button onClick={handleAddPlayer} className="btn-add">Add</button>
-              </div>
-
-              <div className="player-list">
-                {playerNames.map((name, index) => (
-                  <div key={index} className="player-item">
-                    <span>{name}</span>
-                    <button onClick={() => handleRemovePlayer(index)} className="btn-remove">×</button>
-                  </div>
-                ))}
               </div>
 
               {playerNames.length > 0 && (
-                <button onClick={handleSetPlayers} className="btn-primary">
-                  Confirm Players ({playerNames.length})
-                </button>
+                <>
+                  <div className="player-count">
+                    {playerNames.length} player{playerNames.length !== 1 ? 's' : ''} entered
+                  </div>
+                  <div className="player-list">
+                    {playerNames.map((name, index) => (
+                      <div key={index} className="player-item">
+                        <span>{name}</span>
+                        <button onClick={() => handleRemovePlayer(index)} className="btn-remove">×</button>
+                      </div>
+                    ))}
+                  </div>
+                  <button onClick={handleSetPlayers} className="btn-primary">
+                    Confirm Players ({playerNames.length})
+                  </button>
+                </>
               )}
 
               {gameState.players.length > 0 && (
@@ -199,6 +210,9 @@ export default function ControlPage() {
               {gameState.currentQuestion && (
                 <div className="current-question-gm">
                   <h3>Current Question (GM View)</h3>
+                  <div className={`difficulty-badge difficulty-${gameState.currentQuestion.difficulty}`}>
+                    Difficulty: {gameState.currentQuestion.difficulty}
+                  </div>
                   <div className="question-preview">
                     <div className="q-lang">
                       <strong>FR:</strong> {gameState.currentQuestion.textFr}
@@ -219,13 +233,20 @@ export default function ControlPage() {
               )}
 
               <div className="phase-controls">
-                <button onClick={handleShowQuestion} className="btn-phase-action btn-show-question">
-                  Show Question
+                <button onClick={handleGetQuestion} className="btn-phase-action btn-get-question">
+                  Get Question (Preview)
+                </button>
+                <button
+                  onClick={handleShowQuestion}
+                  className="btn-phase-action btn-show-question"
+                  disabled={!gameState.currentQuestion || gameState.isCurrentQuestionVisibleOnDisplay}
+                >
+                  Show Question on Display
                 </button>
                 <button
                   onClick={handleShowAnswer}
                   className="btn-phase-action btn-show-answer"
-                  disabled={!gameState.currentQuestion}
+                  disabled={!gameState.currentQuestion || !gameState.isCurrentQuestionVisibleOnDisplay}
                 >
                   Show Answer
                 </button>

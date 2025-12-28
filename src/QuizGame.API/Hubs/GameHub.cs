@@ -81,9 +81,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    public async Task GetQuestion()
+    {
+        await _gameSessionService.GetQuestion();
+        await BroadcastGameState();
+    }
+
     public async Task ShowQuestion()
     {
-        await _gameSessionService.ShowQuestion();
+        _gameSessionService.ShowQuestion();
         await BroadcastGameState();
     }
 

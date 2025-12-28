@@ -99,6 +99,7 @@ export interface GameState {
 
   // Phase 1 (Fast Buzzer) state
   currentQuestion?: CurrentQuestion;
+  isCurrentQuestionVisibleOnDisplay: boolean;
   lastQuestionId?: string;
   blockedNextQuestionTeamIds: number[];
   blockedTeamIdsForCurrentQuestion: number[];
