@@ -6,7 +6,7 @@ using QuizGame.API.Hubs;
 using QuizGame.Application.Interfaces;
 using QuizGame.Domain.Enums;
 
-namespace QuizGame.Infrastructure.Services;
+namespace QuizGame.API.Services;
 
 public class TimerBackgroundService : BackgroundService
 {

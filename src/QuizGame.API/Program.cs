@@ -3,6 +3,7 @@ using QuizGame.Application.Interfaces;
 using QuizGame.Infrastructure.Data;
 using QuizGame.Infrastructure.Services;
 using QuizGame.API.Hubs;
+using QuizGame.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

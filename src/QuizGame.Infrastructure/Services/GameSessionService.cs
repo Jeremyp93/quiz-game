@@ -115,6 +115,9 @@ public class GameSessionService : IGameSessionService
         {
             _teams[i % 4].Players.Add(shuffledPlayers[i]);
         }
+
+        // Show team creation loading screen
+        _currentScene = Scene.TeamCreationLoading;
     }
 
     public void RenameTeam(int teamIndex, string newName)

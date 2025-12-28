@@ -6,5 +6,6 @@ public enum Scene
     Scoreboard,
     Question,
     Answer,
-    ListQuestion
+    ListQuestion,
+    TeamCreationLoading
 }

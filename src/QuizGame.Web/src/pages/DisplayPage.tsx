@@ -4,6 +4,7 @@ import TeamsScene from '../components/TeamsScene';
 import ScoreboardScene from '../components/ScoreboardScene';
 import QuestionScene from '../components/QuestionScene';
 import AnswerRevealScene from '../components/AnswerRevealScene';
+import TeamCreationLoadingScene from '../components/TeamCreationLoadingScene';
 import { ListQuestionScene } from '../components/scenes/ListQuestionScene';
 import { BoardsUpOverlay } from '../components/scenes/BoardsUpOverlay';
 import './DisplayPage.css';
@@ -37,6 +38,7 @@ export default function DisplayPage() {
     <div className="display-page">
       {gameState.currentScene === Scene.Teams && <TeamsScene teams={gameState.teams} />}
       {gameState.currentScene === Scene.Scoreboard && <ScoreboardScene teams={gameState.teams} />}
+      {gameState.currentScene === Scene.TeamCreationLoading && <TeamCreationLoadingScene />}
       {gameState.currentScene === Scene.Question && gameState.currentQuestion && gameState.isCurrentQuestionVisibleOnDisplay && (
         <QuestionScene
           question={gameState.currentQuestion}

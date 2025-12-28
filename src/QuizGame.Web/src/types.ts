@@ -24,6 +24,7 @@ export enum Scene {
   Question = 2,
   Answer = 3,
   ListQuestion = 4,
+  TeamCreationLoading = 5,
 }
 
 export enum TimerState {
