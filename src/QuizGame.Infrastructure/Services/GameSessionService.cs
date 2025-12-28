@@ -476,7 +476,8 @@ public class GameSessionService : IGameSessionService
             Id = t.Id,
             NameFr = t.NameFr,
             NameNl = t.NameNl,
-            Code = t.Code
+            Code = t.Code,
+            Icon = t.Icon
         }).ToList();
 
         // Initialize team assignments (4 teams, each gets 2 themes)

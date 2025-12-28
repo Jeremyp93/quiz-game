@@ -16,6 +16,7 @@ export default function ThemesPage() {
     nameFr: '',
     nameNl: '',
     code: '',
+    icon: '📚',
     isActive: true,
     sortOrder: undefined,
   });
@@ -58,6 +59,7 @@ export default function ThemesPage() {
       nameFr: theme.nameFr,
       nameNl: theme.nameNl,
       code: theme.code,
+      icon: theme.icon,
       isActive: theme.isActive,
       sortOrder: theme.sortOrder,
     });
@@ -100,6 +102,7 @@ export default function ThemesPage() {
       nameFr: '',
       nameNl: '',
       code: '',
+      icon: '📚',
       isActive: true,
       sortOrder: undefined,
     });
@@ -185,6 +188,21 @@ export default function ThemesPage() {
                 <small>Lowercase letters, numbers, and underscores only</small>
               </div>
 
+              <div className="form-group">
+                <label>Icon *</label>
+                <input
+                  type="text"
+                  value={formData.icon}
+                  onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+                  required
+                  placeholder="e.g., 🌍"
+                  maxLength={10}
+                />
+                <small>Emoji icon for the theme</small>
+              </div>
+            </div>
+
+            <div className="form-row">
               <div className="form-group">
                 <label>Sort Order</label>
                 <input

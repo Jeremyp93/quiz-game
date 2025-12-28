@@ -75,6 +75,7 @@ public class ThemeService : IThemeService
             NameFr = createDto.NameFr,
             NameNl = createDto.NameNl,
             Code = createDto.Code,
+            Icon = createDto.Icon,
             IsActive = createDto.IsActive,
             SortOrder = createDto.SortOrder
         };
@@ -103,6 +104,7 @@ public class ThemeService : IThemeService
         theme.NameFr = updateDto.NameFr;
         theme.NameNl = updateDto.NameNl;
         theme.Code = updateDto.Code;
+        theme.Icon = updateDto.Icon;
         theme.IsActive = updateDto.IsActive;
         theme.SortOrder = updateDto.SortOrder;
 
@@ -183,6 +185,7 @@ public class ThemeService : IThemeService
             NameFr = theme.NameFr,
             NameNl = theme.NameNl,
             Code = theme.Code,
+            Icon = theme.Icon,
             IsActive = theme.IsActive,
             SortOrder = theme.SortOrder,
             QuestionCount = theme.Questions?.Count ?? 0

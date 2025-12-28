@@ -64,6 +64,7 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                       transition={{ delay: 0.8 }}
                     >
                       <div className="theme-type-icon">✨</div>
+                      <div className="theme-icon">{assignment.selfSelectedTheme.icon}</div>
                       <div className="theme-content">
                         <div className="theme-name-fr">{assignment.selfSelectedTheme.nameFr}</div>
                         <div className="theme-name-nl">{assignment.selfSelectedTheme.nameNl}</div>
@@ -84,6 +85,7 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                       transition={{ delay: 1.0 }}
                     >
                       <div className="theme-type-icon">💣</div>
+                      <div className="theme-icon">{assignment.sabotageTheme.icon}</div>
                       <div className="theme-content">
                         <div className="theme-name-fr">{assignment.sabotageTheme.nameFr}</div>
                         <div className="theme-name-nl">{assignment.sabotageTheme.nameNl}</div>
@@ -117,8 +119,11 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                   animate={{ opacity: isAssigned ? 0.3 : 1, scale: 1 }}
                   transition={{ delay: 0.6 + idx * 0.05 }}
                 >
-                  <div className="theme-name-fr">{theme.nameFr}</div>
-                  <div className="theme-name-nl">{theme.nameNl}</div>
+                  <span className="available-theme-icon">{theme.icon}</span>
+                  <div className="available-theme-text">
+                    <div className="theme-name-fr">{theme.nameFr}</div>
+                    <div className="theme-name-nl">{theme.nameNl}</div>
+                  </div>
                 </motion.div>
               );
             })}

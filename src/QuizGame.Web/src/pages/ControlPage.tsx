@@ -468,7 +468,7 @@ export default function ControlPage() {
                       return (
                         <div key={theme.id} className={`theme-card ${isAssigned ? 'assigned' : ''}`}>
                           <div className="theme-name">
-                            {theme.nameFr} / {theme.nameNl}
+                            <span className="theme-icon-inline">{theme.icon}</span> {theme.nameFr} / {theme.nameNl}
                           </div>
                           {!isAssigned && gameState.sabotage.currentPickingTeamIndex !== null && (
                             <div className="theme-assign-buttons">

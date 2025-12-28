@@ -104,6 +104,7 @@ public class SabotageThemeDto
     public string NameFr { get; set; } = string.Empty;
     public string NameNl { get; set; } = string.Empty;
     public string Code { get; set; } = string.Empty;
+    public string Icon { get; set; } = "📚";
 }
 
 public class TeamThemeAssignmentDto

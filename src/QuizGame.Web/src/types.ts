@@ -64,6 +64,7 @@ export interface Theme {
   nameFr: string;
   nameNl: string;
   code: string;
+  icon: string;
   isActive: boolean;
   sortOrder?: number;
   questionCount: number;
@@ -73,6 +74,7 @@ export interface CreateThemeDto {
   nameFr: string;
   nameNl: string;
   code: string;
+  icon: string;
   isActive: boolean;
   sortOrder?: number;
 }
@@ -180,6 +182,7 @@ export interface SabotageTheme {
   nameFr: string;
   nameNl: string;
   code: string;
+  icon: string;
 }
 
 export interface TeamThemeAssignment {
