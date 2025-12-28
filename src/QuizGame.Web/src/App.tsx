@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import QuestionsPage from './pages/QuestionsPage';
+import ThemesPage from './pages/ThemesPage';
 import ControlPage from './pages/ControlPage';
 import DisplayPage from './pages/DisplayPage';
 import './App.css';
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/questions" element={<QuestionsPage />} />
+        <Route path="/themes" element={<ThemesPage />} />
         <Route path="/control" element={<ControlPage />} />
         <Route path="/display" element={<DisplayPage />} />
       </Routes>
@@ -21,9 +23,12 @@ function HomePage() {
   return (
     <div style={{ padding: '2rem' }}>
       <h1>Quiz Game MVP</h1>
-      <nav style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+      <nav style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
         <Link to="/questions" style={{ padding: '1rem', background: '#007bff', color: 'white', textDecoration: 'none', borderRadius: '4px' }}>
           Admin - Questions
+        </Link>
+        <Link to="/themes" style={{ padding: '1rem', background: '#667eea', color: 'white', textDecoration: 'none', borderRadius: '4px' }}>
+          Admin - Themes
         </Link>
         <Link to="/control" style={{ padding: '1rem', background: '#28a745', color: 'white', textDecoration: 'none', borderRadius: '4px' }}>
           Game Master - Control

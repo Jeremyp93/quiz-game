@@ -11,6 +11,7 @@ public class CreateQuestionDto
     public string? Tags { get; set; }
     public string TextFr { get; set; } = string.Empty;
     public string TextNl { get; set; } = string.Empty;
+    public Guid? ThemeId { get; set; }
 
     public RegularQuestionDetailsDto? RegularDetails { get; set; }
     public McqQuestionDetailsDto? McqDetails { get; set; }

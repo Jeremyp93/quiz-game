@@ -160,6 +160,7 @@ export default function QuestionsPage() {
                 <tr>
                   <th>Type</th>
                   <th>Difficulty</th>
+                  <th>Theme</th>
                   <th>Text (FR)</th>
                   <th>Text (NL)</th>
                   <th>Status</th>
@@ -171,6 +172,15 @@ export default function QuestionsPage() {
                   <tr key={question.id}>
                     <td>{getTypeLabel(question.type)}</td>
                     <td>{question.difficulty}</td>
+                    <td>
+                      {question.theme ? (
+                        <span className="theme-badge" title={`${question.theme.nameFr} / ${question.theme.nameNl}`}>
+                          {question.theme.nameFr}
+                        </span>
+                      ) : (
+                        <span className="no-theme">-</span>
+                      )}
+                    </td>
                     <td>{question.textFr}</td>
                     <td>{question.textNl}</td>
                     <td>

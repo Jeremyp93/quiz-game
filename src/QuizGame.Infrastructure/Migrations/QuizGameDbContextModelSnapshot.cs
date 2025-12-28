@@ -123,11 +123,16 @@ namespace QuizGame.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("ThemeId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ThemeId");
 
                     b.ToTable("Questions");
                 });
@@ -150,6 +155,43 @@ namespace QuizGame.Infrastructure.Migrations
                     b.HasKey("QuestionId");
 
                     b.ToTable("RegularQuestionDetails");
+                });
+
+            modelBuilder.Entity("QuizGame.Domain.Entities.Theme", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("NameFr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NameNl")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("SortOrder")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Themes");
                 });
 
             modelBuilder.Entity("QuizGame.Domain.Entities.ListQuestionAnswer", b =>
@@ -187,11 +229,23 @@ namespace QuizGame.Infrastructure.Migrations
 
             modelBuilder.Entity("QuizGame.Domain.Entities.Question", b =>
                 {
+                    b.HasOne("QuizGame.Domain.Entities.Theme", "Theme")
+                        .WithMany("Questions")
+                        .HasForeignKey("ThemeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("ListAnswers");
 
                     b.Navigation("McqDetails");
 
                     b.Navigation("RegularDetails");
+
+                    b.Navigation("Theme");
+                });
+
+            modelBuilder.Entity("QuizGame.Domain.Entities.Theme", b =>
+                {
+                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

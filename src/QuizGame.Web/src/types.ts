@@ -56,6 +56,24 @@ export interface ListQuestionAnswer {
   altSpellings?: string;
 }
 
+export interface Theme {
+  id: string;
+  nameFr: string;
+  nameNl: string;
+  code: string;
+  isActive: boolean;
+  sortOrder?: number;
+  questionCount: number;
+}
+
+export interface CreateThemeDto {
+  nameFr: string;
+  nameNl: string;
+  code: string;
+  isActive: boolean;
+  sortOrder?: number;
+}
+
 export interface Question {
   id: string;
   type: QuestionType;
@@ -65,6 +83,8 @@ export interface Question {
   tags?: string;
   textFr: string;
   textNl: string;
+  themeId?: string;
+  theme?: Theme;
   regularDetails?: RegularQuestionDetails;
   mcqDetails?: McqQuestionDetails;
   listAnswers?: ListQuestionAnswer[];
@@ -78,6 +98,7 @@ export interface CreateQuestionDto {
   tags?: string;
   textFr: string;
   textNl: string;
+  themeId?: string;
   regularDetails?: RegularQuestionDetails;
   mcqDetails?: McqQuestionDetails;
   listAnswers?: ListQuestionAnswer[];

@@ -88,7 +88,8 @@ public class QuestionService : IQuestionService
             Category = createDto.Category,
             Tags = createDto.Tags,
             TextFr = createDto.TextFr,
-            TextNl = createDto.TextNl
+            TextNl = createDto.TextNl,
+            ThemeId = createDto.ThemeId
         };
 
         _context.Questions.Add(question);
@@ -169,6 +170,7 @@ public class QuestionService : IQuestionService
         question.Tags = updateDto.Tags;
         question.TextFr = updateDto.TextFr;
         question.TextNl = updateDto.TextNl;
+        question.ThemeId = updateDto.ThemeId;
 
         // Remove old type-specific details
         if (question.RegularDetails != null)

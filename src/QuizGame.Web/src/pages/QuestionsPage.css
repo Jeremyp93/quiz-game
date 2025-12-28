@@ -102,3 +102,19 @@
   padding: 3rem;
   color: #6c757d;
 }
+
+.theme-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: #e3f2fd;
+  color: #1565c0;
+  cursor: help;
+}
+
+.no-theme {
+  color: #999;
+  font-style: italic;
+}

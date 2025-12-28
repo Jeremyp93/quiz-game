@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Question, QuestionType, CreateQuestionDto, McqChoice, ListQuestionAnswer } from '../types';
+import { Question, QuestionType, CreateQuestionDto, McqChoice, ListQuestionAnswer, Theme } from '../types';
+import { themeService } from '../services/themeService';
 import './QuestionForm.css';
 
 interface Props {
@@ -15,6 +16,8 @@ export default function QuestionForm({ question, onSubmit }: Props) {
   const [tags, setTags] = useState('');
   const [textFr, setTextFr] = useState('');
   const [textNl, setTextNl] = useState('');
+  const [themeId, setThemeId] = useState<string>('');
+  const [themes, setThemes] = useState<Theme[]>([]);
 
   // Regular
   const [answerFr, setAnswerFr] = useState('');
@@ -33,6 +36,10 @@ export default function QuestionForm({ question, onSubmit }: Props) {
   const [listAnswers, setListAnswers] = useState<ListQuestionAnswer[]>([]);
 
   useEffect(() => {
+    loadThemes();
+  }, []);
+
+  useEffect(() => {
     if (question) {
       setType(question.type);
       setDifficulty(question.difficulty);
@@ -41,6 +48,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       setTags(question.tags || '');
       setTextFr(question.textFr);
       setTextNl(question.textNl);
+      setThemeId(question.themeId || '');
 
       if (question.regularDetails) {
         setAnswerFr(question.regularDetails.answerFr);
@@ -63,8 +71,19 @@ export default function QuestionForm({ question, onSubmit }: Props) {
     }
   }, [question]);
 
+  const loadThemes = async () => {
+    const data = await themeService.getAll();
+    setThemes(data);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate theme for MCQ questions
+    if (type === QuestionType.Mcq && !themeId) {
+      alert('Theme is required for MCQ questions (Phase 3 requirement)');
+      return;
+    }
 
     const dto: CreateQuestionDto = {
       type,
@@ -74,6 +93,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       tags: tags || undefined,
       textFr,
       textNl,
+      themeId: themeId || undefined,
     };
 
     if (type === QuestionType.Regular) {
@@ -129,6 +149,29 @@ export default function QuestionForm({ question, onSubmit }: Props) {
             <option value={QuestionType.List}>List (Multiple Answers)</option>
             <option value={QuestionType.Mcq}>MCQ (3 Choices)</option>
           </select>
+        </div>
+
+        <div className="form-group">
+          <label>
+            Theme {type === QuestionType.Mcq && <span className="required-mark">*</span>}
+          </label>
+          <select
+            value={themeId}
+            onChange={e => setThemeId(e.target.value)}
+            required={type === QuestionType.Mcq}
+          >
+            <option value="">-- No Theme --</option>
+            {themes.map(theme => (
+              <option key={theme.id} value={theme.id}>
+                {theme.nameFr} / {theme.nameNl}
+              </option>
+            ))}
+          </select>
+          {type === QuestionType.Mcq && (
+            <small style={{ color: '#666', fontSize: '0.875rem' }}>
+              Required for MCQ questions (Phase 3)
+            </small>
+          )}
         </div>
 
         <div className="form-row">
