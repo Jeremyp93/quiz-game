@@ -155,6 +155,56 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    // Phase 3 (Sabotage) Methods
+
+    public async Task StartPhase3()
+    {
+        await _gameSessionService.StartPhase3();
+        await BroadcastGameState();
+    }
+
+    public async Task AssignThemeToTeam(int teamIndex, string themeId)
+    {
+        _gameSessionService.AssignThemeToTeam(teamIndex, Guid.Parse(themeId));
+        await BroadcastGameState();
+    }
+
+    public async Task UndoLastThemeAssignment()
+    {
+        _gameSessionService.UndoLastThemeAssignment();
+        await BroadcastGameState();
+    }
+
+    public async Task StartMcqSubphase()
+    {
+        await _gameSessionService.StartMcqSubphase();
+        await BroadcastGameState();
+    }
+
+    public async Task LoadNextMcqQuestion()
+    {
+        await _gameSessionService.LoadNextMcqQuestion();
+        await BroadcastGameState();
+    }
+
+    public async Task ShowMcqQuestion()
+    {
+        _gameSessionService.ShowMcqQuestion();
+        await BroadcastGameState();
+    }
+
+    public async Task SelectMcqAnswer(int choice)
+    {
+        _gameSessionService.SelectMcqAnswer((QuizGame.Domain.Enums.McqChoice)choice);
+        await BroadcastGameState();
+    }
+
+    public async Task RevealMcqAnswer()
+    {
+        _gameSessionService.RevealMcqAnswer();
+        await BroadcastGameState();
+    }
+
     private async Task BroadcastGameState()
     {
         var state = _gameSessionService.GetCurrentState();

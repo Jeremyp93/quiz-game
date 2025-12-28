@@ -32,4 +32,14 @@ public interface IGameSessionService
     void PauseListTimer();
     void ResumeListTimer();
     void ResetListTimer();
+
+    // Phase 3 (Sabotage)
+    Task StartPhase3();
+    void AssignThemeToTeam(int teamIndex, Guid themeId);
+    void UndoLastThemeAssignment();
+    Task StartMcqSubphase();
+    Task LoadNextMcqQuestion();
+    void ShowMcqQuestion();
+    void SelectMcqAnswer(McqChoice choice);
+    void RevealMcqAnswer();
 }

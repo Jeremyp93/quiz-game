@@ -7,5 +7,8 @@ public enum Scene
     Question,
     Answer,
     ListQuestion,
-    TeamCreationLoading
+    TeamCreationLoading,
+    SabotageThemeAssignment,
+    SabotageMcqQuestion,
+    SabotageMcqAnswer
 }
