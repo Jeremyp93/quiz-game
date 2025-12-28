@@ -90,6 +90,36 @@ class GameService {
   async endPhase() {
     await this.connection?.invoke('EndPhase');
   }
+
+  // Phase 2 (List)
+
+  async startPhase2() {
+    await this.connection?.invoke('StartPhase2');
+  }
+
+  async loadListQuestion() {
+    await this.connection?.invoke('LoadListQuestion');
+  }
+
+  async showListQuestion() {
+    await this.connection?.invoke('ShowListQuestion');
+  }
+
+  async startListTimer() {
+    await this.connection?.invoke('StartListTimer');
+  }
+
+  async pauseListTimer() {
+    await this.connection?.invoke('PauseListTimer');
+  }
+
+  async resumeListTimer() {
+    await this.connection?.invoke('ResumeListTimer');
+  }
+
+  async resetListTimer() {
+    await this.connection?.invoke('ResetListTimer');
+  }
 }
 
 export const gameService = new GameService();

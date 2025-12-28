@@ -23,4 +23,13 @@ public interface IGameSessionService
     void ShowAnswer();
     void ApplyBlocksForNextQuestion(List<int> teamIndices);
     void EndPhase();
+
+    // Phase 2 (List)
+    Task StartPhase2();
+    Task LoadListQuestion();
+    Task ShowListQuestion();
+    void StartListTimer();
+    void PauseListTimer();
+    void ResumeListTimer();
+    void ResetListTimer();
 }

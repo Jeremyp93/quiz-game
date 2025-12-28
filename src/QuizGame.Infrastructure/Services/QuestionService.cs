@@ -279,6 +279,33 @@ public class QuestionService : IQuestionService
         return MapToDto(questions[randomIndex]);
     }
 
+    public async Task<QuestionDto?> GetRandomListQuestionAsync(Guid? excludeQuestionId = null)
+    {
+        // Get all active List questions
+        var query = _context.Questions
+            .Include(q => q.ListAnswers)
+            .Where(q => q.Type == QuestionType.List && q.IsActive);
+
+        // Exclude the last question if provided and multiple questions exist
+        if (excludeQuestionId.HasValue)
+        {
+            var totalCount = await query.CountAsync();
+            if (totalCount > 1)
+            {
+                query = query.Where(q => q.Id != excludeQuestionId.Value);
+            }
+        }
+
+        var questions = await query.ToListAsync();
+
+        if (!questions.Any())
+            return null;
+
+        // Select random question
+        var randomIndex = Random.Shared.Next(questions.Count);
+        return MapToDto(questions[randomIndex]);
+    }
+
     private static void ValidateCreateDto(CreateQuestionDto dto)
     {
         if (dto.Difficulty < 1 || dto.Difficulty > 3)

@@ -23,6 +23,17 @@ public class GameSessionService : IGameSessionService
     private List<int> _blockedNextQuestionTeamIds = new();
     private List<int> _blockedTeamIdsForCurrentQuestion = new();
 
+    // Phase 2 (List) state
+    private CurrentListQuestionDto? _currentListQuestion;
+    private Guid? _lastListQuestionId;
+    private int _listTimerDuration = 45;
+    private TimerState _listTimerState = TimerState.Idle;
+    private DateTime? _listTimerStartedAtUtc;
+    private DateTime? _listTimerPausedAtUtc;
+    private long _listTimerAccumulatedPausedMs;
+    private DateTime? _listTimerFinishedAtUtc;
+    private DateTime? _listTimerBoardsUpVisibleUntilUtc;
+
     public GameSessionService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -54,7 +65,19 @@ public class GameSessionService : IGameSessionService
             IsCurrentQuestionVisibleOnDisplay = _isCurrentQuestionVisibleOnDisplay,
             LastQuestionId = _lastQuestionId,
             BlockedNextQuestionTeamIds = new List<int>(_blockedNextQuestionTeamIds),
-            BlockedTeamIdsForCurrentQuestion = new List<int>(_blockedTeamIdsForCurrentQuestion)
+            BlockedTeamIdsForCurrentQuestion = new List<int>(_blockedTeamIdsForCurrentQuestion),
+            CurrentListQuestion = _currentListQuestion,
+            LastListQuestionId = _lastListQuestionId,
+            ListTimer = new ListTimerDto
+            {
+                DurationSeconds = _listTimerDuration,
+                State = _listTimerState,
+                StartedAtUtc = _listTimerStartedAtUtc,
+                PausedAtUtc = _listTimerPausedAtUtc,
+                AccumulatedPausedMs = _listTimerAccumulatedPausedMs,
+                FinishedAtUtc = _listTimerFinishedAtUtc,
+                BoardsUpVisibleUntilUtc = _listTimerBoardsUpVisibleUntilUtc
+            }
         };
     }
 
@@ -250,11 +273,148 @@ public class GameSessionService : IGameSessionService
         _blockedNextQuestionTeamIds.Clear();
         _blockedTeamIdsForCurrentQuestion.Clear();
 
+        // Clear Phase 2 state
+        _currentListQuestion = null;
+        _lastListQuestionId = null;
+        ResetListTimerState();
+
         // Show scoreboard when ending phase
         if (_currentScene != Scene.Scoreboard)
         {
             _lastSceneBeforeScoreboard = _currentScene;
         }
         _currentScene = Scene.Scoreboard;
+    }
+
+    // Phase 2 (List) Methods
+
+    public Task StartPhase2()
+    {
+        _currentPhase = Phase.List;
+        _currentListQuestion = null;
+        _lastListQuestionId = null;
+        ResetListTimerState();
+        return Task.CompletedTask;
+    }
+
+    public async Task LoadListQuestion()
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var questionService = scope.ServiceProvider.GetRequiredService<IQuestionService>();
+
+        var question = await questionService.GetRandomListQuestionAsync(_lastListQuestionId);
+
+        if (question == null)
+            throw new InvalidOperationException("No active List questions available");
+
+        if (question.ListAnswers == null || !question.ListAnswers.Any())
+            throw new InvalidOperationException("Question missing List answers");
+
+        _currentListQuestion = new CurrentListQuestionDto
+        {
+            Id = question.Id,
+            TextFr = question.TextFr,
+            TextNl = question.TextNl,
+            Answers = question.ListAnswers.Select(a => new ListAnswerDto
+            {
+                AnswerFr = a.AnswerFr,
+                AnswerNl = a.AnswerNl
+            }).ToList(),
+            Difficulty = question.Difficulty
+        };
+
+        _lastListQuestionId = question.Id;
+
+        // Reset timer when loading new question
+        ResetListTimerState();
+    }
+
+    public async Task ShowListQuestion()
+    {
+        // Auto-load if no question loaded
+        if (_currentListQuestion == null)
+        {
+            await LoadListQuestion();
+        }
+
+        // Switch to ListQuestion scene
+        if (_currentScene == Scene.Scoreboard)
+        {
+            _lastSceneBeforeScoreboard = null;
+        }
+        _currentScene = Scene.ListQuestion;
+    }
+
+    public void StartListTimer()
+    {
+        if (_listTimerState != TimerState.Idle)
+            throw new InvalidOperationException("Timer must be in Idle state to start");
+
+        if (_currentScene != Scene.ListQuestion)
+            throw new InvalidOperationException("Question must be shown on display first");
+
+        _listTimerState = TimerState.Running;
+        _listTimerStartedAtUtc = DateTime.UtcNow;
+        _listTimerAccumulatedPausedMs = 0;
+    }
+
+    public void PauseListTimer()
+    {
+        if (_listTimerState != TimerState.Running)
+            throw new InvalidOperationException("Timer must be Running to pause");
+
+        _listTimerState = TimerState.Paused;
+        _listTimerPausedAtUtc = DateTime.UtcNow;
+    }
+
+    public void ResumeListTimer()
+    {
+        if (_listTimerState != TimerState.Paused)
+            throw new InvalidOperationException("Timer must be Paused to resume");
+
+        if (_listTimerPausedAtUtc.HasValue && _listTimerStartedAtUtc.HasValue)
+        {
+            var pauseDuration = (DateTime.UtcNow - _listTimerPausedAtUtc.Value).TotalMilliseconds;
+            _listTimerAccumulatedPausedMs += (long)pauseDuration;
+        }
+
+        _listTimerState = TimerState.Running;
+        _listTimerPausedAtUtc = null;
+    }
+
+    public void ResetListTimer()
+    {
+        if (_listTimerState == TimerState.Idle)
+            throw new InvalidOperationException("Timer is already in Idle state");
+
+        ResetListTimerState();
+    }
+
+    private void ResetListTimerState()
+    {
+        _listTimerDuration = 45;
+        _listTimerState = TimerState.Idle;
+        _listTimerStartedAtUtc = null;
+        _listTimerPausedAtUtc = null;
+        _listTimerAccumulatedPausedMs = 0;
+        _listTimerFinishedAtUtc = null;
+        _listTimerBoardsUpVisibleUntilUtc = null;
+    }
+
+    // Called by TimerBackgroundService when timer hits 0
+    public void FinishListTimer()
+    {
+        if (_listTimerState != TimerState.Running)
+            return;
+
+        _listTimerState = TimerState.Finished;
+        _listTimerFinishedAtUtc = DateTime.UtcNow;
+        _listTimerBoardsUpVisibleUntilUtc = DateTime.UtcNow.AddSeconds(10);
+    }
+
+    // Called by TimerBackgroundService to clear BoardsUp overlay after 10s
+    public void ClearBoardsUpOverlay()
+    {
+        _listTimerBoardsUpVisibleUntilUtc = null;
     }
 }

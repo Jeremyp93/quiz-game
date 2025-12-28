@@ -15,4 +15,7 @@ public interface IQuestionService
 
     // Phase 1 (Fast Buzzer)
     Task<QuestionDto?> GetRandomRegularQuestionAsync(Guid? excludeQuestionId = null);
+
+    // Phase 2 (List)
+    Task<QuestionDto?> GetRandomListQuestionAsync(Guid? excludeQuestionId = null);
 }

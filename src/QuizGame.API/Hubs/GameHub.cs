@@ -111,6 +111,50 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    // Phase 2 (List) Methods
+
+    public async Task StartPhase2()
+    {
+        await _gameSessionService.StartPhase2();
+        await BroadcastGameState();
+    }
+
+    public async Task LoadListQuestion()
+    {
+        await _gameSessionService.LoadListQuestion();
+        await BroadcastGameState();
+    }
+
+    public async Task ShowListQuestion()
+    {
+        await _gameSessionService.ShowListQuestion();
+        await BroadcastGameState();
+    }
+
+    public async Task StartListTimer()
+    {
+        _gameSessionService.StartListTimer();
+        await BroadcastGameState();
+    }
+
+    public async Task PauseListTimer()
+    {
+        _gameSessionService.PauseListTimer();
+        await BroadcastGameState();
+    }
+
+    public async Task ResumeListTimer()
+    {
+        _gameSessionService.ResumeListTimer();
+        await BroadcastGameState();
+    }
+
+    public async Task ResetListTimer()
+    {
+        _gameSessionService.ResetListTimer();
+        await BroadcastGameState();
+    }
+
     private async Task BroadcastGameState()
     {
         var state = _gameSessionService.GetCurrentState();

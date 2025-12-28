@@ -23,6 +23,14 @@ export enum Scene {
   Scoreboard = 1,
   Question = 2,
   Answer = 3,
+  ListQuestion = 4,
+}
+
+export enum TimerState {
+  Idle = 0,
+  Running = 1,
+  Paused = 2,
+  Finished = 3,
 }
 
 export interface RegularQuestionDetails {
@@ -89,6 +97,29 @@ export interface CurrentQuestion {
   difficulty: number;
 }
 
+export interface ListAnswer {
+  answerFr: string;
+  answerNl: string;
+}
+
+export interface CurrentListQuestion {
+  id: string;
+  textFr: string;
+  textNl: string;
+  answers: ListAnswer[];
+  difficulty: number;
+}
+
+export interface ListTimer {
+  durationSeconds: number;
+  state: TimerState;
+  startedAtUtc?: string;
+  pausedAtUtc?: string;
+  accumulatedPausedMs: number;
+  finishedAtUtc?: string;
+  boardsUpVisibleUntilUtc?: string;
+}
+
 export interface GameState {
   isGameStarted: boolean;
   players: string[];
@@ -103,4 +134,9 @@ export interface GameState {
   lastQuestionId?: string;
   blockedNextQuestionTeamIds: number[];
   blockedTeamIdsForCurrentQuestion: number[];
+
+  // Phase 2 (List) state
+  currentListQuestion?: CurrentListQuestion;
+  lastListQuestionId?: string;
+  listTimer: ListTimer;
 }

@@ -94,6 +94,35 @@ export default function ControlPage() {
     setSelectedBlockedTeams([]);
   };
 
+  // Phase 2 (List) handlers
+  const handleStartPhase2 = async () => {
+    await gameService.startPhase2();
+  };
+
+  const handleLoadListQuestion = async () => {
+    await gameService.loadListQuestion();
+  };
+
+  const handleShowListQuestion = async () => {
+    await gameService.showListQuestion();
+  };
+
+  const handleStartTimer = async () => {
+    await gameService.startListTimer();
+  };
+
+  const handlePauseTimer = async () => {
+    await gameService.pauseListTimer();
+  };
+
+  const handleResumeTimer = async () => {
+    await gameService.resumeListTimer();
+  };
+
+  const handleResetTimer = async () => {
+    await gameService.resetListTimer();
+  };
+
   if (!isConnected) {
     return (
       <div className="control-page">
@@ -200,6 +229,9 @@ export default function ControlPage() {
               <button onClick={handleStartPhase1} className="btn-phase">
                 Start Fast Buzzer Phase
               </button>
+              <button onClick={handleStartPhase2} className="btn-phase" style={{ marginTop: '1rem' }}>
+                Start List Phase
+              </button>
             </div>
           )}
 
@@ -279,6 +311,103 @@ export default function ControlPage() {
                     Blocked for next question: {gameState.blockedNextQuestionTeamIds.map(i => gameState.teams[i]?.name).join(', ')}
                   </div>
                 )}
+              </div>
+
+              <button onClick={handleEndPhase} className="btn-end-phase">
+                End Phase
+              </button>
+            </div>
+          )}
+
+          {gameState.currentPhase === Phase.List && (
+            <div className="phase-panel">
+              <h2>Phase 2: List</h2>
+
+              {gameState.currentListQuestion && (
+                <div className="current-question-gm">
+                  <h3>Current List Question (GM View)</h3>
+                  <div className={`difficulty-badge difficulty-${gameState.currentListQuestion.difficulty}`}>
+                    Difficulty: {gameState.currentListQuestion.difficulty}
+                  </div>
+                  <div className="question-preview">
+                    <div className="q-lang">
+                      <strong>FR:</strong> {gameState.currentListQuestion.textFr}
+                    </div>
+                    <div className="q-lang">
+                      <strong>NL:</strong> {gameState.currentListQuestion.textNl}
+                    </div>
+                    <div className="answer-preview">
+                      <h4>Accepted Answers ({gameState.currentListQuestion.answers.length})</h4>
+                      {gameState.currentListQuestion.answers.map((answer, i) => (
+                        <div key={i} className="list-answer-item">
+                          <div className="q-lang">
+                            <strong>FR:</strong> {answer.answerFr}
+                          </div>
+                          <div className="q-lang">
+                            <strong>NL:</strong> {answer.answerNl}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {gameState.listTimer && (
+                <div className="timer-status-panel">
+                  <h3>Timer Status</h3>
+                  <div className="timer-info">
+                    <div className="timer-state">
+                      State: <strong>{['Idle', 'Running', 'Paused', 'Finished'][gameState.listTimer.state]}</strong>
+                    </div>
+                    <div className="timer-duration">
+                      Duration: {gameState.listTimer.durationSeconds} seconds
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="phase-controls">
+                <button onClick={handleLoadListQuestion} className="btn-phase-action btn-load-question">
+                  Load Question
+                </button>
+                <button
+                  onClick={handleShowListQuestion}
+                  className="btn-phase-action btn-show-question"
+                >
+                  Show Question
+                </button>
+              </div>
+
+              <div className="phase-controls">
+                <button
+                  onClick={handleStartTimer}
+                  className="btn-phase-action btn-start-timer"
+                  disabled={gameState.listTimer.state !== 0 || gameState.currentScene !== Scene.ListQuestion}
+                >
+                  Start Timer
+                </button>
+                <button
+                  onClick={handlePauseTimer}
+                  className="btn-phase-action btn-pause-timer"
+                  disabled={gameState.listTimer.state !== 1}
+                >
+                  Pause Timer
+                </button>
+                <button
+                  onClick={handleResumeTimer}
+                  className="btn-phase-action btn-resume-timer"
+                  disabled={gameState.listTimer.state !== 2}
+                >
+                  Resume Timer
+                </button>
+                <button
+                  onClick={handleResetTimer}
+                  className="btn-phase-action btn-reset-timer"
+                  disabled={gameState.listTimer.state === 0}
+                >
+                  Reset Timer
+                </button>
               </div>
 
               <button onClick={handleEndPhase} className="btn-end-phase">

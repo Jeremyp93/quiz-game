@@ -4,6 +4,8 @@ import TeamsScene from '../components/TeamsScene';
 import ScoreboardScene from '../components/ScoreboardScene';
 import QuestionScene from '../components/QuestionScene';
 import AnswerRevealScene from '../components/AnswerRevealScene';
+import { ListQuestionScene } from '../components/scenes/ListQuestionScene';
+import { BoardsUpOverlay } from '../components/scenes/BoardsUpOverlay';
 import './DisplayPage.css';
 
 export default function DisplayPage() {
@@ -27,6 +29,10 @@ export default function DisplayPage() {
     );
   }
 
+  // Check if BoardsUp overlay should be shown
+  const showBoardsUp = gameState.listTimer.boardsUpVisibleUntilUtc &&
+                       new Date(gameState.listTimer.boardsUpVisibleUntilUtc).getTime() > Date.now();
+
   return (
     <div className="display-page">
       {gameState.currentScene === Scene.Teams && <TeamsScene teams={gameState.teams} />}
@@ -45,6 +51,13 @@ export default function DisplayPage() {
           blockedTeamIndices={gameState.blockedTeamIdsForCurrentQuestion}
         />
       )}
+      {gameState.currentScene === Scene.ListQuestion && gameState.currentListQuestion && (
+        <ListQuestionScene
+          question={gameState.currentListQuestion}
+          timer={gameState.listTimer}
+        />
+      )}
+      {showBoardsUp && <BoardsUpOverlay />}
     </div>
   );
 }

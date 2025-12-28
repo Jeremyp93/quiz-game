@@ -35,6 +35,9 @@ builder.Services.AddDbContext<QuizGameDbContext>(options =>
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddSingleton<IGameSessionService, GameSessionService>();
 
+// Register background services
+builder.Services.AddHostedService<TimerBackgroundService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
