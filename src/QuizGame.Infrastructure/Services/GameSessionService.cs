@@ -25,6 +25,7 @@ public class GameSessionService : IGameSessionService
 
     // Phase 2 (List) state
     private CurrentListQuestionDto? _currentListQuestion;
+    private bool _isCurrentListQuestionVisibleOnDisplay;
     private Guid? _lastListQuestionId;
     private int _listTimerDuration = 45;
     private TimerState _listTimerState = TimerState.Idle;
@@ -67,6 +68,7 @@ public class GameSessionService : IGameSessionService
             BlockedNextQuestionTeamIds = new List<int>(_blockedNextQuestionTeamIds),
             BlockedTeamIdsForCurrentQuestion = new List<int>(_blockedTeamIdsForCurrentQuestion),
             CurrentListQuestion = _currentListQuestion,
+            IsCurrentListQuestionVisibleOnDisplay = _isCurrentListQuestionVisibleOnDisplay,
             LastListQuestionId = _lastListQuestionId,
             ListTimer = new ListTimerDto
             {
@@ -295,6 +297,7 @@ public class GameSessionService : IGameSessionService
     {
         _currentPhase = Phase.List;
         _currentListQuestion = null;
+        _isCurrentListQuestionVisibleOnDisplay = false;
         _lastListQuestionId = null;
         ResetListTimerState();
         return Task.CompletedTask;
@@ -327,9 +330,12 @@ public class GameSessionService : IGameSessionService
         };
 
         _lastListQuestionId = question.Id;
+        _isCurrentListQuestionVisibleOnDisplay = false;
 
         // Reset timer when loading new question
         ResetListTimerState();
+
+        // Don't change scene - GM just sees it in their panel
     }
 
     public async Task ShowListQuestion()
@@ -339,6 +345,9 @@ public class GameSessionService : IGameSessionService
         {
             await LoadListQuestion();
         }
+
+        // Show the question on display
+        _isCurrentListQuestionVisibleOnDisplay = true;
 
         // Switch to ListQuestion scene
         if (_currentScene == Scene.Scoreboard)

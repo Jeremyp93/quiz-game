@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { CurrentListQuestion, ListTimer, TimerState } from '../../types';
 import './ListQuestionScene.css';
+import { useEffect, useState } from 'react';
 
 interface ListQuestionSceneProps {
   question: CurrentListQuestion;
@@ -8,6 +9,20 @@ interface ListQuestionSceneProps {
 }
 
 export function ListQuestionScene({ question, timer }: ListQuestionSceneProps) {
+
+  const [currentTime, setCurrentTime] = useState(Date.now());
+
+  // Update current time every 100ms when timer is running
+  useEffect(() => {
+    if (timer.state === TimerState.Running) {
+      const interval = setInterval(() => {
+        setCurrentTime(Date.now());
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [timer.state]);
+
+
   // Calculate remaining seconds from timer
   const getRemainingSeconds = (): number => {
     if (timer.state === TimerState.Idle) {
@@ -28,8 +43,7 @@ export function ListQuestionScene({ question, timer }: ListQuestionSceneProps) {
 
     if (timer.state === TimerState.Running && timer.startedAtUtc) {
       const startTime = new Date(timer.startedAtUtc).getTime();
-      const now = Date.now();
-      const elapsed = (now - startTime) - timer.accumulatedPausedMs;
+      const elapsed = (currentTime - startTime) - timer.accumulatedPausedMs;
       const remaining = (timer.durationSeconds * 1000) - elapsed;
       return Math.max(0, Math.ceil(remaining / 1000));
     }
@@ -77,6 +91,7 @@ export function ListQuestionScene({ question, timer }: ListQuestionSceneProps) {
             <span className="lang-label">FR:</span>
             <p className="question-text">{question.textFr}</p>
           </div>
+          <div className="question-divider"></div>
           <div className="question-lang">
             <span className="lang-label">NL:</span>
             <p className="question-text">{question.textNl}</p>

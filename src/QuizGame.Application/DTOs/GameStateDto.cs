@@ -20,6 +20,7 @@ public class GameStateDto
 
     // Phase 2 (List) state
     public CurrentListQuestionDto? CurrentListQuestion { get; set; }
+    public bool IsCurrentListQuestionVisibleOnDisplay { get; set; }
     public Guid? LastListQuestionId { get; set; }
     public ListTimerDto ListTimer { get; set; } = new();
 }

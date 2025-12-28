@@ -53,7 +53,7 @@ export default function DisplayPage() {
           blockedTeamIndices={gameState.blockedTeamIdsForCurrentQuestion}
         />
       )}
-      {gameState.currentScene === Scene.ListQuestion && gameState.currentListQuestion && (
+      {gameState.currentScene === Scene.ListQuestion && gameState.currentListQuestion && gameState.isCurrentListQuestionVisibleOnDisplay && (
         <ListQuestionScene
           question={gameState.currentListQuestion}
           timer={gameState.listTimer}

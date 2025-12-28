@@ -138,6 +138,7 @@ export interface GameState {
 
   // Phase 2 (List) state
   currentListQuestion?: CurrentListQuestion;
+  isCurrentListQuestionVisibleOnDisplay: boolean;
   lastListQuestionId?: string;
   listTimer: ListTimer;
 }
