@@ -9,6 +9,94 @@ public static class DbSeeder
     {
         // Clear existing data
         context.Questions.RemoveRange(context.Questions);
+        context.Themes.RemoveRange(context.Themes);
+        context.SaveChanges();
+
+        // ==================== THEMES ====================
+        var themeAnimals = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "animals",
+            NameFr = "Animaux",
+            NameNl = "Dieren",
+            IsActive = true,
+            SortOrder = 1
+        };
+
+        var themeSports = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "sports",
+            NameFr = "Sports",
+            NameNl = "Sport",
+            IsActive = true,
+            SortOrder = 2
+        };
+
+        var themeTechnology = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "technology",
+            NameFr = "Technologie",
+            NameNl = "Technologie",
+            IsActive = true,
+            SortOrder = 3
+        };
+
+        var themeMovies = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "movies",
+            NameFr = "Cinéma",
+            NameNl = "Film",
+            IsActive = true,
+            SortOrder = 4
+        };
+
+        var themeArt = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "art",
+            NameFr = "Art",
+            NameNl = "Kunst",
+            IsActive = true,
+            SortOrder = 5
+        };
+
+        var themeMusic = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "music",
+            NameFr = "Musique",
+            NameNl = "Muziek",
+            IsActive = true,
+            SortOrder = 6
+        };
+
+        var themeHistory = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "history",
+            NameFr = "Histoire",
+            NameNl = "Geschiedenis",
+            IsActive = true,
+            SortOrder = 7
+        };
+
+        var themeScience = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "science",
+            NameFr = "Sciences",
+            NameNl = "Wetenschappen",
+            IsActive = true,
+            SortOrder = 8
+        };
+
+        context.Themes.AddRange(new[] {
+            themeAnimals, themeSports, themeTechnology, themeMovies,
+            themeArt, themeMusic, themeHistory, themeScience
+        });
         context.SaveChanges();
 
         var questions = new List<Question>();
@@ -116,6 +204,7 @@ public static class DbSeeder
             Tags = "mammals,classification",
             TextFr = "Quel animal est le plus grand mammifère terrestre ?",
             TextNl = "Welk dier is het grootste landzoogdier?",
+            ThemeId = themeAnimals.Id,
             McqDetails = new McqQuestionDetails
             {
                 ChoiceAFr = "Éléphant d'Afrique",
@@ -138,6 +227,7 @@ public static class DbSeeder
             Tags = "olympics,track",
             TextFr = "Combien de mètres fait un sprint olympique court ?",
             TextNl = "Hoeveel meter is een korte olympische sprint?",
+            ThemeId = themeSports.Id,
             McqDetails = new McqQuestionDetails
             {
                 ChoiceAFr = "50 mètres",
@@ -161,6 +251,7 @@ public static class DbSeeder
             Tags = "computers,programming",
             TextFr = "Quel langage de programmation est principalement utilisé pour le développement Android ?",
             TextNl = "Welke programmeertaal wordt vooral gebruikt voor Android-ontwikkeling?",
+            ThemeId = themeTechnology.Id,
             McqDetails = new McqQuestionDetails
             {
                 ChoiceAFr = "Swift",
@@ -183,6 +274,7 @@ public static class DbSeeder
             Tags = "oscars,directors",
             TextFr = "Qui a réalisé 'Pulp Fiction' ?",
             TextNl = "Wie regisseerde 'Pulp Fiction'?",
+            ThemeId = themeMovies.Id,
             McqDetails = new McqQuestionDetails
             {
                 ChoiceAFr = "Steven Spielberg",
@@ -206,6 +298,7 @@ public static class DbSeeder
             Tags = "painting,renaissance",
             TextFr = "Dans quel musée se trouve 'La Naissance de Vénus' de Botticelli ?",
             TextNl = "In welk museum bevindt zich Botticelli's 'De geboorte van Venus'?",
+            ThemeId = themeArt.Id,
             McqDetails = new McqQuestionDetails
             {
                 ChoiceAFr = "Le Louvre",
@@ -214,6 +307,221 @@ public static class DbSeeder
                 ChoiceBNl = "De Uffizi Galerij",
                 ChoiceCFr = "Le Musée du Prado",
                 ChoiceCNl = "Het Prado Museum",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        // Additional MCQ questions to complete theme sets for Phase 3 testing
+
+        // ANIMALS theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Combien de pattes a une araignée ?",
+            TextNl = "Hoeveel poten heeft een spin?",
+            ThemeId = themeAnimals.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "6",
+                ChoiceANl = "6",
+                ChoiceBFr = "8",
+                ChoiceBNl = "8",
+                ChoiceCFr = "10",
+                ChoiceCNl = "10",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 2,
+            IsActive = true,
+            TextFr = "Quel est le seul mammifère capable de voler ?",
+            TextNl = "Wat is het enige zoogdier dat kan vliegen?",
+            ThemeId = themeAnimals.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "L'écureuil volant",
+                ChoiceANl = "Vliegende eekhoorn",
+                ChoiceBFr = "La chauve-souris",
+                ChoiceBNl = "Vleermuis",
+                ChoiceCFr = "Le poisson volant",
+                ChoiceCNl = "Vliegende vis",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "Quel est l'animal le plus venimeux au monde ?",
+            TextNl = "Wat is het giftigste dier ter wereld?",
+            ThemeId = themeAnimals.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "La méduse-boîte",
+                ChoiceANl = "Dooskwal",
+                ChoiceBFr = "Le taipan du désert",
+                ChoiceBNl = "Woestijntaipan",
+                ChoiceCFr = "La grenouille dorée",
+                ChoiceCNl = "Gouden gifkikker",
+                CorrectChoice = McqChoice.A
+            }
+        });
+
+        // SPORTS theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Combien de joueurs y a-t-il dans une équipe de football ?",
+            TextNl = "Hoeveel spelers zitten er in een voetbalteam?",
+            ThemeId = themeSports.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "9",
+                ChoiceANl = "9",
+                ChoiceBFr = "11",
+                ChoiceBNl = "11",
+                ChoiceCFr = "13",
+                ChoiceCNl = "13",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 2,
+            IsActive = true,
+            TextFr = "Dans quel pays se sont déroulés les Jeux Olympiques de 2016 ?",
+            TextNl = "In welk land vonden de Olympische Spelen van 2016 plaats?",
+            ThemeId = themeSports.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Chine",
+                ChoiceANl = "China",
+                ChoiceBFr = "Brésil",
+                ChoiceBNl = "Brazilië",
+                ChoiceCFr = "Royaume-Uni",
+                ChoiceCNl = "Verenigd Koninkrijk",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "Qui détient le record du monde de médailles olympiques ?",
+            TextNl = "Wie heeft het wereldrecord voor olympische medailles?",
+            ThemeId = themeSports.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Usain Bolt",
+                ChoiceANl = "Usain Bolt",
+                ChoiceBFr = "Michael Phelps",
+                ChoiceBNl = "Michael Phelps",
+                ChoiceCFr = "Simone Biles",
+                ChoiceCNl = "Simone Biles",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        // MUSIC theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Combien de cordes a une guitare classique ?",
+            TextNl = "Hoeveel snaren heeft een klassieke gitaar?",
+            ThemeId = themeMusic.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "4",
+                ChoiceANl = "4",
+                ChoiceBFr = "6",
+                ChoiceBNl = "6",
+                ChoiceCFr = "8",
+                ChoiceCNl = "8",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Quel instrument Freddie Mercury jouait-il ?",
+            TextNl = "Welk instrument bespeelde Freddie Mercury?",
+            ThemeId = themeMusic.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Guitare",
+                ChoiceANl = "Gitaar",
+                ChoiceBFr = "Piano",
+                ChoiceBNl = "Piano",
+                ChoiceCFr = "Batterie",
+                ChoiceCNl = "Drums",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 2,
+            IsActive = true,
+            TextFr = "Quel est le vrai nom d'Elton John ?",
+            TextNl = "Wat is de echte naam van Elton John?",
+            ThemeId = themeMusic.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Reginald Dwight",
+                ChoiceANl = "Reginald Dwight",
+                ChoiceBFr = "David Jones",
+                ChoiceBNl = "David Jones",
+                ChoiceCFr = "Robert Zimmerman",
+                ChoiceCNl = "Robert Zimmerman",
+                CorrectChoice = McqChoice.A
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "Quel compositeur est devenu sourd à la fin de sa vie ?",
+            TextNl = "Welke componist werd doof op het einde van zijn leven?",
+            ThemeId = themeMusic.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Mozart",
+                ChoiceANl = "Mozart",
+                ChoiceBFr = "Beethoven",
+                ChoiceBNl = "Beethoven",
+                ChoiceCFr = "Bach",
+                ChoiceCNl = "Bach",
                 CorrectChoice = McqChoice.B
             }
         });
