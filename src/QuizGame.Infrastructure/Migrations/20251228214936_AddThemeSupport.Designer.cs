@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizGame.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using QuizGame.Infrastructure.Data;
 namespace QuizGame.Infrastructure.Migrations
 {
     [DbContext(typeof(QuizGameDbContext))]
-    partial class QuizGameDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251228214936_AddThemeSupport")]
+    partial class AddThemeSupport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -166,10 +169,6 @@ namespace QuizGame.Infrastructure.Migrations
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Icon")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")

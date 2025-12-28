@@ -1,43 +1,50 @@
-import axios from 'axios';
 import { Theme, CreateThemeDto } from '../types';
 
-const API_URL = 'http://localhost:5000/api/themes';
+const API_BASE = 'http://localhost:5000/api';
 
 export const themeService = {
-  async getAll(): Promise<Theme[]> {
-    const response = await axios.get<Theme[]>(API_URL);
-    return response.data;
-  },
+  async getAll(isActive?: boolean, search?: string): Promise<Theme[]> {
+    const params = new URLSearchParams();
+    if (isActive !== undefined) params.append('isActive', isActive.toString());
+    if (search) params.append('search', search);
 
-  async getFiltered(isActive?: boolean, search?: string): Promise<Theme[]> {
-    const params: any = {};
-    if (isActive !== undefined) params.isActive = isActive;
-    if (search) params.search = search;
-
-    const response = await axios.get<Theme[]>(API_URL, { params });
-    return response.data;
+    const url = `${API_BASE}/themes${params.toString() ? '?' + params.toString() : ''}`;
+    const response = await fetch(url);
+    return response.json();
   },
 
   async getById(id: string): Promise<Theme> {
-    const response = await axios.get<Theme>(`${API_URL}/${id}`);
-    return response.data;
+    const response = await fetch(`${API_BASE}/themes/${id}`);
+    return response.json();
   },
 
   async create(theme: CreateThemeDto): Promise<Theme> {
-    const response = await axios.post<Theme>(API_URL, theme);
-    return response.data;
+    const response = await fetch(`${API_BASE}/themes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(theme),
+    });
+    return response.json();
   },
 
   async update(id: string, theme: CreateThemeDto): Promise<Theme> {
-    const response = await axios.put<Theme>(`${API_URL}/${id}`, theme);
-    return response.data;
+    const response = await fetch(`${API_BASE}/themes/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(theme),
+    });
+    return response.json();
   },
 
   async delete(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/${id}`);
+    await fetch(`${API_BASE}/themes/${id}`, {
+      method: 'DELETE',
+    });
   },
 
   async toggleActive(id: string): Promise<void> {
-    await axios.patch(`${API_URL}/${id}/toggle`);
+    await fetch(`${API_BASE}/themes/${id}/toggle`, {
+      method: 'POST',
+    });
   },
 };

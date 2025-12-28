@@ -119,7 +119,7 @@ public class GameSessionService : IGameSessionService
         _players.Clear();
         _teams.Clear();
         _currentPhase = Phase.Setup;
-        _currentScene = Scene.Scoreboard;  // Changed from Teams to Scoreboard to prevent auto-showing teams
+        _currentScene = Scene.TeamCreationLoading;  // Changed from Teams to Scoreboard to prevent auto-showing teams
         _lastSceneBeforeScoreboard = null;
     }
 
@@ -678,7 +678,12 @@ public class GameSessionService : IGameSessionService
 
         // Get team's current theme
         var teamAssignment = _sabotageTeamThemeAssignments.First(ta => ta.TeamIndex == _sabotageCurrentPlayingTeamIndex.Value);
-        var currentTheme = teamAssignment.AssignedThemes[_sabotageCurrentThemeIndex.Value];
+        var currentTheme = _sabotageCurrentThemeIndex.Value == 0
+            ? teamAssignment.SelfSelectedTheme
+            : teamAssignment.SabotageTheme;
+
+        if (currentTheme == null)
+            throw new InvalidOperationException("Theme not assigned");
 
         // Determine difficulty based on question index (0-3)
         // Distribution: 2×Diff1, 1×Diff2, 1×Diff3
