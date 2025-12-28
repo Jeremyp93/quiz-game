@@ -13,6 +13,9 @@ public class QuestionDto
     public string TextFr { get; set; } = string.Empty;
     public string TextNl { get; set; } = string.Empty;
 
+    public Guid? ThemeId { get; set; }
+    public ThemeDto? Theme { get; set; }
+
     public RegularQuestionDetailsDto? RegularDetails { get; set; }
     public McqQuestionDetailsDto? McqDetails { get; set; }
     public List<ListQuestionAnswerDto>? ListAnswers { get; set; }

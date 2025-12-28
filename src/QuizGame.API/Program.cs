@@ -34,6 +34,7 @@ builder.Services.AddDbContext<QuizGameDbContext>(options =>
 
 // Register services
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IThemeService, ThemeService>();
 builder.Services.AddSingleton<IGameSessionService, GameSessionService>();
 
 // Register background services

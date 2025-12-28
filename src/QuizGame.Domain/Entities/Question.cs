@@ -15,6 +15,10 @@ public class Question
     public string TextFr { get; set; } = string.Empty;
     public string TextNl { get; set; } = string.Empty;
 
+    // Theme relationship (optional for Regular/List, required for MCQ in Phase 3)
+    public Guid? ThemeId { get; set; }
+    public Theme? Theme { get; set; }
+
     // Navigation properties (1:1 relationships, only one will be populated based on Type)
     public RegularQuestionDetails? RegularDetails { get; set; }
     public McqQuestionDetails? McqDetails { get; set; }

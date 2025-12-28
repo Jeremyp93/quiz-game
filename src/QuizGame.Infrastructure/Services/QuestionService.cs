@@ -22,6 +22,7 @@ public class QuestionService : IQuestionService
             .Include(q => q.RegularDetails)
             .Include(q => q.McqDetails)
             .Include(q => q.ListAnswers)
+            .Include(q => q.Theme)
             .OrderByDescending(q => q.Id)
             .ToListAsync();
 
@@ -38,6 +39,7 @@ public class QuestionService : IQuestionService
             .Include(q => q.RegularDetails)
             .Include(q => q.McqDetails)
             .Include(q => q.ListAnswers)
+            .Include(q => q.Theme)
             .AsQueryable();
 
         if (type.HasValue)
@@ -66,6 +68,7 @@ public class QuestionService : IQuestionService
         var question = await _context.Questions
             .Include(q => q.RegularDetails)
             .Include(q => q.McqDetails)
+            .Include(q => q.Theme)
             .Include(q => q.ListAnswers)
             .FirstOrDefaultAsync(q => q.Id == id);
 
@@ -330,6 +333,16 @@ public class QuestionService : IQuestionService
             Tags = question.Tags,
             TextFr = question.TextFr,
             TextNl = question.TextNl,
+            ThemeId = question.ThemeId,
+            Theme = question.Theme == null ? null : new ThemeDto
+            {
+                Id = question.Theme.Id,
+                NameFr = question.Theme.NameFr,
+                NameNl = question.Theme.NameNl,
+                Code = question.Theme.Code,
+                IsActive = question.Theme.IsActive,
+                SortOrder = question.Theme.SortOrder
+            },
             RegularDetails = question.RegularDetails == null ? null : new RegularQuestionDetailsDto
             {
                 AnswerFr = question.RegularDetails.AnswerFr,

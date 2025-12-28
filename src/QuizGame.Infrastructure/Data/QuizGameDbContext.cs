@@ -14,6 +14,7 @@ public class QuizGameDbContext : DbContext
     public DbSet<RegularQuestionDetails> RegularQuestionDetails => Set<RegularQuestionDetails>();
     public DbSet<McqQuestionDetails> McqQuestionDetails => Set<McqQuestionDetails>();
     public DbSet<ListQuestionAnswer> ListQuestionAnswers => Set<ListQuestionAnswer>();
+    public DbSet<Theme> Themes => Set<Theme>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -111,6 +112,36 @@ public class QuizGameDbContext : DbContext
                 .WithMany(q => q.ListAnswers)
                 .HasForeignKey(l => l.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Theme configuration
+        modelBuilder.Entity<Theme>(entity =>
+        {
+            entity.HasKey(t => t.Id);
+
+            entity.Property(t => t.NameFr)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(t => t.NameNl)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(t => t.Code)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.HasIndex(t => t.Code)
+                .IsUnique();
+
+            entity.Property(t => t.IsActive)
+                .IsRequired()
+                .HasDefaultValue(true);
+
+            entity.HasMany(t => t.Questions)
+                .WithOne(q => q.Theme)
+                .HasForeignKey(q => q.ThemeId)
+                .OnDelete(DeleteBehavior.SetNull); // Set ThemeId to null if theme is deleted
         });
     }
 }
