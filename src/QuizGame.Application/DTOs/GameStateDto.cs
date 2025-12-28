@@ -80,6 +80,7 @@ public class SabotageStateDto
     public List<SabotageThemeDto> SelectedThemes { get; set; } = new();
     public List<TeamThemeAssignmentDto> TeamThemeAssignments { get; set; } = new();
     public int? CurrentPickingTeamIndex { get; set; }
+    public int CurrentPickNumber { get; set; } = 1; // 1 = self-select, 2 = sabotage another team
     public bool IsThemeAssignmentComplete { get; set; }
 
     // Subphase 2: MCQ Questions
@@ -108,7 +109,8 @@ public class SabotageThemeDto
 public class TeamThemeAssignmentDto
 {
     public int TeamIndex { get; set; }
-    public List<SabotageThemeDto> AssignedThemes { get; set; } = new();
+    public SabotageThemeDto? SelfSelectedTheme { get; set; }
+    public SabotageThemeDto? SabotageTheme { get; set; }
 }
 
 public class CurrentMcqQuestionDto

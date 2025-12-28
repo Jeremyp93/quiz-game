@@ -40,6 +40,7 @@ public class GameSessionService : IGameSessionService
     private List<SabotageThemeDto> _sabotageSelectedThemes = new();
     private List<TeamThemeAssignmentDto> _sabotageTeamThemeAssignments = new();
     private int? _sabotageCurrentPickingTeamIndex;
+    private int _sabotageCurrentPickNumber = 1; // 1 = self-select, 2 = sabotage another team
     private bool _sabotageIsThemeAssignmentComplete;
     private int? _sabotageCurrentPlayingTeamIndex;
     private int? _sabotageCurrentThemeIndex;
@@ -100,6 +101,7 @@ public class GameSessionService : IGameSessionService
                 SelectedThemes = new List<SabotageThemeDto>(_sabotageSelectedThemes),
                 TeamThemeAssignments = new List<TeamThemeAssignmentDto>(_sabotageTeamThemeAssignments),
                 CurrentPickingTeamIndex = _sabotageCurrentPickingTeamIndex,
+                CurrentPickNumber = _sabotageCurrentPickNumber,
                 IsThemeAssignmentComplete = _sabotageIsThemeAssignmentComplete,
                 CurrentPlayingTeamIndex = _sabotageCurrentPlayingTeamIndex,
                 CurrentThemeIndex = _sabotageCurrentThemeIndex,
@@ -482,7 +484,8 @@ public class GameSessionService : IGameSessionService
             .Select(i => new TeamThemeAssignmentDto
             {
                 TeamIndex = i,
-                AssignedThemes = new List<SabotageThemeDto>()
+                SelfSelectedTheme = null,
+                SabotageTheme = null
             })
             .ToList();
 
@@ -491,8 +494,9 @@ public class GameSessionService : IGameSessionService
                                 .OrderByDescending(x => x.Score)
                                 .ToList();
 
-        // Start with highest scoring team
+        // Start with highest scoring team, pick 1 (self-select)
         _sabotageCurrentPickingTeamIndex = teamScores[0].TeamIndex;
+        _sabotageCurrentPickNumber = 1;
         _sabotageIsThemeAssignmentComplete = false;
         _sabotageCurrentSubphase = SabotageSubphase.ThemeAssignment;
         _sabotageThemeAssignmentHistory.Clear();
@@ -507,13 +511,19 @@ public class GameSessionService : IGameSessionService
         if (_sabotageIsThemeAssignmentComplete)
             throw new InvalidOperationException("Theme assignment is already complete");
 
+        if (_sabotageCurrentPickingTeamIndex == null)
+            throw new InvalidOperationException("No team is currently picking");
+
         // Find the theme
         var theme = _sabotageSelectedThemes.FirstOrDefault(t => t.Id == themeId);
         if (theme == null)
             throw new ArgumentException("Theme not found in selected themes");
 
         // Check if theme is already assigned
-        if (_sabotageTeamThemeAssignments.Any(ta => ta.AssignedThemes.Any(t => t.Id == themeId)))
+        bool isThemeAssigned = _sabotageTeamThemeAssignments.Any(ta =>
+            (ta.SelfSelectedTheme != null && ta.SelfSelectedTheme.Id == themeId) ||
+            (ta.SabotageTheme != null && ta.SabotageTheme.Id == themeId));
+        if (isThemeAssigned)
             throw new InvalidOperationException("Theme is already assigned");
 
         // Get team assignment
@@ -521,60 +531,62 @@ public class GameSessionService : IGameSessionService
         if (teamAssignment == null)
             throw new ArgumentException("Team not found");
 
-        // Check if team already has 2 themes
-        if (teamAssignment.AssignedThemes.Count >= 2)
-            throw new InvalidOperationException("Team already has 2 themes");
-
-        // Assign theme to team
-        teamAssignment.AssignedThemes.Add(theme);
-        _sabotageThemeAssignmentHistory.Add(themeId);
-
-        // Determine next picking team
-        var assignedCount = _sabotageTeamThemeAssignments.Sum(ta => ta.AssignedThemes.Count);
-        var remainingThemes = 8 - assignedCount;
-
-        if (remainingThemes == 0)
+        if (_sabotageCurrentPickNumber == 1)
         {
-            // All themes assigned
-            _sabotageIsThemeAssignmentComplete = true;
-            _sabotageCurrentPickingTeamIndex = null;
+            // Pick 1: Self-select - must assign to current picking team
+            if (teamIndex != _sabotageCurrentPickingTeamIndex.Value)
+                throw new InvalidOperationException("For pick 1, you must select a theme for your own team");
+
+            if (teamAssignment.SelfSelectedTheme != null)
+                throw new InvalidOperationException("Team already has a self-selected theme");
+
+            teamAssignment.SelfSelectedTheme = theme;
+            _sabotageThemeAssignmentHistory.Add(themeId);
+
+            // Move to pick 2 (sabotage) for same team
+            _sabotageCurrentPickNumber = 2;
         }
-        else if (remainingThemes == 1)
+        else // _sabotageCurrentPickNumber == 2
         {
-            // Special rule: Last theme auto-assigned to team without 2 themes
-            var teamNeedingTheme = _sabotageTeamThemeAssignments
-                .FirstOrDefault(ta => ta.AssignedThemes.Count < 2);
+            // Pick 2: Sabotage - must assign to ANOTHER team
+            if (teamIndex == _sabotageCurrentPickingTeamIndex.Value)
+                throw new InvalidOperationException("For pick 2, you must select a theme to sabotage another team");
 
-            if (teamNeedingTheme != null)
-            {
-                var lastTheme = _sabotageSelectedThemes
-                    .First(t => !_sabotageTeamThemeAssignments.Any(ta => ta.AssignedThemes.Any(at => at.Id == t.Id)));
+            if (teamAssignment.SabotageTheme != null)
+                throw new InvalidOperationException("Team already has a sabotage theme");
 
-                teamNeedingTheme.AssignedThemes.Add(lastTheme);
-                _sabotageThemeAssignmentHistory.Add(lastTheme.Id);
-                _sabotageIsThemeAssignmentComplete = true;
-                _sabotageCurrentPickingTeamIndex = null;
-            }
-        }
-        else
-        {
-            // Find next team to pick (by score order, skip teams with 2 themes)
+            teamAssignment.SabotageTheme = theme;
+            _sabotageThemeAssignmentHistory.Add(themeId);
+
+            // Move to next team in score order
             var teamScores = _teams.Select((t, i) => new { TeamIndex = i, Score = t.Score })
                                     .OrderByDescending(x => x.Score)
                                     .ToList();
 
-            var currentTeamScoreIndex = teamScores.FindIndex(ts => ts.TeamIndex == teamIndex);
+            var currentPickerScoreIndex = teamScores.FindIndex(ts => ts.TeamIndex == _sabotageCurrentPickingTeamIndex.Value);
 
-            for (int i = currentTeamScoreIndex + 1; i < teamScores.Count + 10; i++) // +10 to handle wrap-around
+            // Find next team that hasn't completed their 2 picks yet
+            bool foundNextTeam = false;
+            for (int i = 1; i < teamScores.Count; i++)
             {
-                var nextTeamIndex = teamScores[i % teamScores.Count].TeamIndex;
+                var nextTeamIndex = teamScores[(currentPickerScoreIndex + i) % teamScores.Count].TeamIndex;
                 var nextTeamAssignment = _sabotageTeamThemeAssignments.First(ta => ta.TeamIndex == nextTeamIndex);
 
-                if (nextTeamAssignment.AssignedThemes.Count < 2)
+                // Team hasn't completed if either theme slot is empty
+                if (nextTeamAssignment.SelfSelectedTheme == null || nextTeamAssignment.SabotageTheme == null)
                 {
                     _sabotageCurrentPickingTeamIndex = nextTeamIndex;
+                    _sabotageCurrentPickNumber = nextTeamAssignment.SelfSelectedTheme == null ? 1 : 2;
+                    foundNextTeam = true;
                     break;
                 }
+            }
+
+            if (!foundNextTeam)
+            {
+                // All themes assigned
+                _sabotageIsThemeAssignmentComplete = true;
+                _sabotageCurrentPickingTeamIndex = null;
             }
         }
     }
@@ -590,43 +602,49 @@ public class GameSessionService : IGameSessionService
         // Find and remove the theme from whichever team has it
         foreach (var teamAssignment in _sabotageTeamThemeAssignments)
         {
-            var themeToRemove = teamAssignment.AssignedThemes.FirstOrDefault(t => t.Id == lastThemeId);
-            if (themeToRemove != null)
+            if (teamAssignment.SelfSelectedTheme != null && teamAssignment.SelfSelectedTheme.Id == lastThemeId)
             {
-                teamAssignment.AssignedThemes.Remove(themeToRemove);
+                teamAssignment.SelfSelectedTheme = null;
+                break;
+            }
+            if (teamAssignment.SabotageTheme != null && teamAssignment.SabotageTheme.Id == lastThemeId)
+            {
+                teamAssignment.SabotageTheme = null;
                 break;
             }
         }
 
-        // Recalculate current picking team
+        // Recalculate current picking team and pick number
         _sabotageIsThemeAssignmentComplete = false;
 
-        var assignedCount = _sabotageTeamThemeAssignments.Sum(ta => ta.AssignedThemes.Count);
-        if (assignedCount == 0)
-        {
-            // Back to start
-            var teamScores = _teams.Select((t, i) => new { TeamIndex = i, Score = t.Score })
-                                    .OrderByDescending(x => x.Score)
-                                    .ToList();
-            _sabotageCurrentPickingTeamIndex = teamScores[0].TeamIndex;
-        }
-        else
-        {
-            // Find the team that should pick next
-            var teamScores = _teams.Select((t, i) => new { TeamIndex = i, Score = t.Score })
-                                    .OrderByDescending(x => x.Score)
-                                    .ToList();
+        var teamScores = _teams.Select((t, i) => new { TeamIndex = i, Score = t.Score })
+                                .OrderByDescending(x => x.Score)
+                                .ToList();
 
-            foreach (var ts in teamScores)
+        // Find the first team (in score order) that hasn't completed both picks
+        foreach (var ts in teamScores)
+        {
+            var teamAssignment = _sabotageTeamThemeAssignments.First(ta => ta.TeamIndex == ts.TeamIndex);
+
+            if (teamAssignment.SelfSelectedTheme == null)
             {
-                var teamAssignment = _sabotageTeamThemeAssignments.First(ta => ta.TeamIndex == ts.TeamIndex);
-                if (teamAssignment.AssignedThemes.Count < 2)
-                {
-                    _sabotageCurrentPickingTeamIndex = ts.TeamIndex;
-                    break;
-                }
+                // Team hasn't done pick 1 yet
+                _sabotageCurrentPickingTeamIndex = ts.TeamIndex;
+                _sabotageCurrentPickNumber = 1;
+                return;
+            }
+            else if (teamAssignment.SabotageTheme == null)
+            {
+                // Team has done pick 1 but not pick 2
+                _sabotageCurrentPickingTeamIndex = ts.TeamIndex;
+                _sabotageCurrentPickNumber = 2;
+                return;
             }
         }
+
+        // If we get here, all picks are complete (shouldn't happen after undo)
+        _sabotageIsThemeAssignmentComplete = true;
+        _sabotageCurrentPickingTeamIndex = null;
     }
 
     public async Task StartMcqSubphase()

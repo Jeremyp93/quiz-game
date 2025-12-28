@@ -449,13 +449,20 @@ export default function ControlPage() {
                     <div className="current-picker">
                       <strong>Current Picking Team:</strong>{' '}
                       {gameState.teams[gameState.sabotage.currentPickingTeamIndex]?.name}
+                      <br />
+                      <strong>Pick Number:</strong>{' '}
+                      {gameState.sabotage.currentPickNumber === 1 ? (
+                        <span style={{ color: '#eab308' }}>✨ Pick 1 (Choose for yourself)</span>
+                      ) : (
+                        <span style={{ color: '#dc2626' }}>💣 Pick 2 (Sabotage another team)</span>
+                      )}
                     </div>
                   )}
 
                   <div className="theme-assignment-grid">
                     {gameState.sabotage.selectedThemes.map((theme) => {
                       const isAssigned = gameState.sabotage.teamThemeAssignments.some(
-                        ta => ta.assignedThemes.some(t => t.id === theme.id)
+                        ta => (ta.selfSelectedTheme?.id === theme.id) || (ta.sabotageTheme?.id === theme.id)
                       );
 
                       return (
@@ -469,18 +476,26 @@ export default function ControlPage() {
                                 const teamAssignment = gameState.sabotage.teamThemeAssignments.find(
                                   ta => ta.teamIndex === idx
                                 );
-                                const canAssign = teamAssignment && teamAssignment.assignedThemes.length < 2;
 
-                                return canAssign ? (
+                                // Pick 1: can only assign to current picking team
+                                if (gameState.sabotage.currentPickNumber === 1) {
+                                  if (idx !== gameState.sabotage.currentPickingTeamIndex) return null;
+                                  if (teamAssignment?.selfSelectedTheme) return null; // Already has self-selected
+                                } else {
+                                  // Pick 2: can only assign to OTHER teams
+                                  if (idx === gameState.sabotage.currentPickingTeamIndex) return null;
+                                  if (teamAssignment?.sabotageTheme) return null; // Already has sabotage
+                                }
+
+                                return (
                                   <button
                                     key={idx}
                                     onClick={() => handleAssignTheme(idx, theme.id)}
                                     className="btn-assign-theme"
-                                    disabled={idx !== gameState.sabotage.currentPickingTeamIndex}
                                   >
-                                    → {team.name}
+                                    {gameState.sabotage.currentPickNumber === 1 ? '✨' : '💣'} → {team.name}
                                   </button>
-                                ) : null;
+                                );
                               })}
                             </div>
                           )}
@@ -496,13 +511,18 @@ export default function ControlPage() {
                         <div key={idx} className="team-assignment-card">
                           <h4>{team.name}</h4>
                           <div className="assigned-themes-list">
-                            {assignment?.assignedThemes.map((theme) => (
-                              <div key={theme.id} className="assigned-theme-badge">
-                                {theme.nameFr} / {theme.nameNl}
+                            {assignment?.selfSelectedTheme && (
+                              <div className="assigned-theme-badge self-selected">
+                                ✨ {assignment.selfSelectedTheme.nameFr} / {assignment.selfSelectedTheme.nameNl}
                               </div>
-                            ))}
-                            {(!assignment || assignment.assignedThemes.length === 0) && (
-                              <div className="no-themes">No themes assigned</div>
+                            )}
+                            {assignment?.sabotageTheme && (
+                              <div className="assigned-theme-badge sabotage">
+                                💣 {assignment.sabotageTheme.nameFr} / {assignment.sabotageTheme.nameNl}
+                              </div>
+                            )}
+                            {!assignment?.selfSelectedTheme && !assignment?.sabotageTheme && (
+                              <div className="no-themes">No themes assigned yet</div>
                             )}
                           </div>
                         </div>

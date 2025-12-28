@@ -184,7 +184,8 @@ export interface SabotageTheme {
 
 export interface TeamThemeAssignment {
   teamIndex: number;
-  assignedThemes: SabotageTheme[];
+  selfSelectedTheme?: SabotageTheme;
+  sabotageTheme?: SabotageTheme;
 }
 
 export interface CurrentMcqQuestion {
@@ -207,6 +208,7 @@ export interface SabotageState {
   selectedThemes: SabotageTheme[];
   teamThemeAssignments: TeamThemeAssignment[];
   currentPickingTeamIndex?: number;
+  currentPickNumber: number; // 1 = self-select, 2 = sabotage another team
   isThemeAssignmentComplete: boolean;
   currentPlayingTeamIndex?: number;
   currentThemeIndex?: number;

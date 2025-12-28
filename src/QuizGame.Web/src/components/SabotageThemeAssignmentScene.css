@@ -75,11 +75,32 @@
 }
 
 .theme-badge {
-  background: rgba(255, 255, 255, 0.95);
-  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #1f2937;
+}
+
+.theme-badge.self-selected {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde047 100%);
+  border: 2px solid #eab308;
+}
+
+.theme-badge.sabotage {
+  background: linear-gradient(135deg, #fecaca 0%, #f87171 100%);
+  border: 2px solid #dc2626;
+}
+
+.theme-type-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.theme-content {
+  flex: 1;
 }
 
 .theme-name-fr {
@@ -101,6 +122,15 @@
   text-align: center;
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.slot-icon {
+  font-size: 1.8rem;
+  opacity: 0.7;
 }
 
 .available-themes {

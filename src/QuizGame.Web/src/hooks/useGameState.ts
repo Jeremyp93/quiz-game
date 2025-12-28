@@ -26,6 +26,7 @@ const initialState: GameState = {
     currentSubphase: SabotageSubphase.ThemeAssignment,
     selectedThemes: [],
     teamThemeAssignments: [],
+    currentPickNumber: 1,
     isThemeAssignmentComplete: false,
     isAnswerRevealed: false,
     currentQuestionInTheme: 0,

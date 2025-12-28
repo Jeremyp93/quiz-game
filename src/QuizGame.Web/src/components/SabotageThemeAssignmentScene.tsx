@@ -50,27 +50,49 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ repeat: Infinity, duration: 1.5 }}
                     >
-                      👉 Choosing...
+                      {sabotage.currentPickNumber === 1 ? '✨ Pick 1: Choose your theme' : '💣 Pick 2: Sabotage another team'}
                     </motion.div>
                   )}
                 </div>
 
                 <div className="assigned-themes">
-                  {assignment?.assignedThemes.map((theme, themeIdx) => (
+                  {assignment?.selfSelectedTheme && (
                     <motion.div
-                      key={theme.id}
-                      className="theme-badge"
+                      className="theme-badge self-selected"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: 0.8 + themeIdx * 0.2 }}
+                      transition={{ delay: 0.8 }}
                     >
-                      <div className="theme-name-fr">{theme.nameFr}</div>
-                      <div className="theme-name-nl">{theme.nameNl}</div>
+                      <div className="theme-type-icon">✨</div>
+                      <div className="theme-content">
+                        <div className="theme-name-fr">{assignment.selfSelectedTheme.nameFr}</div>
+                        <div className="theme-name-nl">{assignment.selfSelectedTheme.nameNl}</div>
+                      </div>
                     </motion.div>
-                  ))}
-                  {assignment && assignment.assignedThemes.length < 2 && (
+                  )}
+                  {!assignment?.selfSelectedTheme && (
                     <div className="theme-slot-empty">
-                      {assignment.assignedThemes.length === 0 ? '? / ?' : '?'}
+                      <span className="slot-icon">✨</span> ?
+                    </div>
+                  )}
+
+                  {assignment?.sabotageTheme && (
+                    <motion.div
+                      className="theme-badge sabotage"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 1.0 }}
+                    >
+                      <div className="theme-type-icon">💣</div>
+                      <div className="theme-content">
+                        <div className="theme-name-fr">{assignment.sabotageTheme.nameFr}</div>
+                        <div className="theme-name-nl">{assignment.sabotageTheme.nameNl}</div>
+                      </div>
+                    </motion.div>
+                  )}
+                  {!assignment?.sabotageTheme && (
+                    <div className="theme-slot-empty">
+                      <span className="slot-icon">💣</span> ?
                     </div>
                   )}
                 </div>
@@ -84,7 +106,7 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
           <div className="themes-grid">
             {sabotage.selectedThemes.map((theme, idx) => {
               const isAssigned = sabotage.teamThemeAssignments.some(
-                ta => ta.assignedThemes.some(t => t.id === theme.id)
+                ta => (ta.selfSelectedTheme?.id === theme.id) || (ta.sabotageTheme?.id === theme.id)
               );
 
               return (
