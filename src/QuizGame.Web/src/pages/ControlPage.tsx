@@ -123,6 +123,23 @@ export default function ControlPage() {
     await gameService.resetListTimer();
   };
 
+  // Phase 3 (Sabotage) handlers
+  const handleStartPhase3 = async () => {
+    await gameService.startPhase3();
+  };
+
+  const handleAssignTheme = async (teamIndex: number, themeId: string) => {
+    await gameService.assignThemeToTeam(teamIndex, themeId);
+  };
+
+  const handleUndoThemeAssignment = async () => {
+    await gameService.undoLastThemeAssignment();
+  };
+
+  const handleStartMcqSubphase = async () => {
+    await gameService.startMcqSubphase();
+  };
+
   if (!isConnected) {
     return (
       <div className="control-page">
@@ -231,6 +248,9 @@ export default function ControlPage() {
               </button>
               <button onClick={handleStartPhase2} className="btn-phase" style={{ marginTop: '1rem' }}>
                 Start List Phase
+              </button>
+              <button onClick={handleStartPhase3} className="btn-phase" style={{ marginTop: '1rem' }}>
+                Start Sabotage Phase
               </button>
             </div>
           )}
@@ -411,6 +431,114 @@ export default function ControlPage() {
               </div>
 
               <button onClick={handleEndPhase} className="btn-end-phase">
+                End Phase
+              </button>
+            </div>
+          )}
+
+          {gameState.currentPhase === Phase.Sabotage && (
+            <div className="phase-panel">
+              <h2>Phase 3: Sabotage</h2>
+
+              {gameState.sabotage.currentSubphase === 0 && (
+                <>
+                  <h3>Subphase 1: Theme Assignment</h3>
+
+                  {gameState.sabotage.currentPickingTeamIndex !== null &&
+                   gameState.sabotage.currentPickingTeamIndex !== undefined && (
+                    <div className="current-picker">
+                      <strong>Current Picking Team:</strong>{' '}
+                      {gameState.teams[gameState.sabotage.currentPickingTeamIndex]?.name}
+                    </div>
+                  )}
+
+                  <div className="theme-assignment-grid">
+                    {gameState.sabotage.selectedThemes.map((theme) => {
+                      const isAssigned = gameState.sabotage.teamThemeAssignments.some(
+                        ta => ta.assignedThemes.some(t => t.id === theme.id)
+                      );
+
+                      return (
+                        <div key={theme.id} className={`theme-card ${isAssigned ? 'assigned' : ''}`}>
+                          <div className="theme-name">
+                            {theme.nameFr} / {theme.nameNl}
+                          </div>
+                          {!isAssigned && gameState.sabotage.currentPickingTeamIndex !== null && (
+                            <div className="theme-assign-buttons">
+                              {gameState.teams.map((team, idx) => {
+                                const teamAssignment = gameState.sabotage.teamThemeAssignments.find(
+                                  ta => ta.teamIndex === idx
+                                );
+                                const canAssign = teamAssignment && teamAssignment.assignedThemes.length < 2;
+
+                                return canAssign ? (
+                                  <button
+                                    key={idx}
+                                    onClick={() => handleAssignTheme(idx, theme.id)}
+                                    className="btn-assign-theme"
+                                    disabled={idx !== gameState.sabotage.currentPickingTeamIndex}
+                                  >
+                                    → {team.name}
+                                  </button>
+                                ) : null;
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="team-assignments-grid">
+                    {gameState.teams.map((team, idx) => {
+                      const assignment = gameState.sabotage.teamThemeAssignments.find(ta => ta.teamIndex === idx);
+                      return (
+                        <div key={idx} className="team-assignment-card">
+                          <h4>{team.name}</h4>
+                          <div className="assigned-themes-list">
+                            {assignment?.assignedThemes.map((theme) => (
+                              <div key={theme.id} className="assigned-theme-badge">
+                                {theme.nameFr} / {theme.nameNl}
+                              </div>
+                            ))}
+                            {(!assignment || assignment.assignedThemes.length === 0) && (
+                              <div className="no-themes">No themes assigned</div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="phase-controls">
+                    <button
+                      onClick={handleUndoThemeAssignment}
+                      className="btn-undo"
+                      disabled={gameState.sabotage.isThemeAssignmentComplete}
+                    >
+                      ↶ Undo Last Assignment
+                    </button>
+                    <button
+                      onClick={handleStartMcqSubphase}
+                      className="btn-start-mcq"
+                      disabled={!gameState.sabotage.isThemeAssignmentComplete}
+                    >
+                      Start MCQ Subphase →
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {gameState.sabotage.currentSubphase === 1 && (
+                <>
+                  <h3>Subphase 2: MCQ Questions</h3>
+                  <p style={{ color: '#666', marginTop: '1rem' }}>
+                    MCQ gameplay controls (Coming soon)
+                  </p>
+                </>
+              )}
+
+              <button onClick={handleEndPhase} className="btn-end-phase" style={{ marginTop: '2rem' }}>
                 End Phase
               </button>
             </div>

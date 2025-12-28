@@ -120,6 +120,40 @@ class GameService {
   async resetListTimer() {
     await this.connection?.invoke('ResetListTimer');
   }
+
+  // Phase 3 (Sabotage)
+
+  async startPhase3() {
+    await this.connection?.invoke('StartPhase3');
+  }
+
+  async assignThemeToTeam(teamIndex: number, themeId: string) {
+    await this.connection?.invoke('AssignThemeToTeam', teamIndex, themeId);
+  }
+
+  async undoLastThemeAssignment() {
+    await this.connection?.invoke('UndoLastThemeAssignment');
+  }
+
+  async startMcqSubphase() {
+    await this.connection?.invoke('StartMcqSubphase');
+  }
+
+  async loadNextMcqQuestion() {
+    await this.connection?.invoke('LoadNextMcqQuestion');
+  }
+
+  async showMcqQuestion() {
+    await this.connection?.invoke('ShowMcqQuestion');
+  }
+
+  async selectMcqAnswer(choice: number) {
+    await this.connection?.invoke('SelectMcqAnswer', choice);
+  }
+
+  async revealMcqAnswer() {
+    await this.connection?.invoke('RevealMcqAnswer');
+  }
 }
 
 export const gameService = new GameService();

@@ -25,6 +25,9 @@ export enum Scene {
   Answer = 3,
   ListQuestion = 4,
   TeamCreationLoading = 5,
+  SabotageThemeAssignment = 6,
+  SabotageMcqQuestion = 7,
+  SabotageMcqAnswer = 8,
 }
 
 export enum TimerState {
@@ -162,4 +165,53 @@ export interface GameState {
   isCurrentListQuestionVisibleOnDisplay: boolean;
   lastListQuestionId?: string;
   listTimer: ListTimer;
+
+  // Phase 3 (Sabotage) state
+  sabotage: SabotageState;
+}
+
+export enum SabotageSubphase {
+  ThemeAssignment = 0,
+  McqQuestions = 1,
+}
+
+export interface SabotageTheme {
+  id: string;
+  nameFr: string;
+  nameNl: string;
+  code: string;
+}
+
+export interface TeamThemeAssignment {
+  teamIndex: number;
+  assignedThemes: SabotageTheme[];
+}
+
+export interface CurrentMcqQuestion {
+  id: string;
+  textFr: string;
+  textNl: string;
+  choiceAFr: string;
+  choiceANl: string;
+  choiceBFr: string;
+  choiceBNl: string;
+  choiceCFr: string;
+  choiceCNl: string;
+  correctChoice: McqChoice;
+  difficulty: number;
+  theme: SabotageTheme;
+}
+
+export interface SabotageState {
+  currentSubphase: SabotageSubphase;
+  selectedThemes: SabotageTheme[];
+  teamThemeAssignments: TeamThemeAssignment[];
+  currentPickingTeamIndex?: number;
+  isThemeAssignmentComplete: boolean;
+  currentPlayingTeamIndex?: number;
+  currentThemeIndex?: number;
+  currentMcqQuestion?: CurrentMcqQuestion;
+  selectedAnswer?: McqChoice;
+  isAnswerRevealed: boolean;
+  currentQuestionInTheme: number;
 }

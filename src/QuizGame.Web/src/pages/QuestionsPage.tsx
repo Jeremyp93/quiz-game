@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Question, QuestionType, CreateQuestionDto, McqChoice } from '../types';
+import { Question, QuestionType, CreateQuestionDto } from '../types';
 import { questionService } from '../services/questionService';
 import QuestionForm from '../components/QuestionForm';
 import './QuestionsPage.css';

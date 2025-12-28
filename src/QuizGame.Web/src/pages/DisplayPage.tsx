@@ -7,6 +7,7 @@ import AnswerRevealScene from '../components/AnswerRevealScene';
 import TeamCreationLoadingScene from '../components/TeamCreationLoadingScene';
 import { ListQuestionScene } from '../components/scenes/ListQuestionScene';
 import { BoardsUpOverlay } from '../components/scenes/BoardsUpOverlay';
+import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentScene';
 import './DisplayPage.css';
 
 export default function DisplayPage() {
@@ -58,6 +59,9 @@ export default function DisplayPage() {
           question={gameState.currentListQuestion}
           timer={gameState.listTimer}
         />
+      )}
+      {gameState.currentScene === Scene.SabotageThemeAssignment && (
+        <SabotageThemeAssignmentScene gameState={gameState} />
       )}
       {showBoardsUp && <BoardsUpOverlay />}
     </div>

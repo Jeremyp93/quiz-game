@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { gameService } from '../services/gameService';
-import { GameState } from '../types';
+import { GameState, TimerState, SabotageSubphase } from '../types';
 
 const initialState: GameState = {
   isGameStarted: false,
@@ -14,6 +14,22 @@ const initialState: GameState = {
   lastQuestionId: undefined,
   blockedNextQuestionTeamIds: [],
   blockedTeamIdsForCurrentQuestion: [],
+  currentListQuestion: undefined,
+  isCurrentListQuestionVisibleOnDisplay: false,
+  lastListQuestionId: undefined,
+  listTimer: {
+    durationSeconds: 45,
+    state: TimerState.Idle,
+    accumulatedPausedMs: 0,
+  },
+  sabotage: {
+    currentSubphase: SabotageSubphase.ThemeAssignment,
+    selectedThemes: [],
+    teamThemeAssignments: [],
+    isThemeAssignmentComplete: false,
+    isAnswerRevealed: false,
+    currentQuestionInTheme: 0,
+  },
 };
 
 export function useGameState() {
