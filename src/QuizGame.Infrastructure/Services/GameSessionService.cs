@@ -760,4 +760,56 @@ public class GameSessionService : IGameSessionService
         _sabotageIsAnswerRevealed = true;
         _currentScene = Scene.SabotageMcqAnswer;
     }
+
+    public async Task AdvanceToNextMcqQuestion()
+    {
+        if (!_sabotageCurrentPlayingTeamIndex.HasValue)
+            throw new InvalidOperationException("No current playing team");
+
+        if (!_sabotageCurrentThemeIndex.HasValue)
+            throw new InvalidOperationException("No current theme");
+
+        // Increment question in theme
+        _sabotageCurrentQuestionInTheme++;
+
+        // Check if we've completed 4 questions for this theme
+        if (_sabotageCurrentQuestionInTheme >= 4)
+        {
+            // Move to next theme
+            _sabotageCurrentQuestionInTheme = 0;
+            _sabotageCurrentThemeIndex++;
+
+            // Check if we've completed both themes (0 = self-selected, 1 = sabotage)
+            if (_sabotageCurrentThemeIndex >= 2)
+            {
+                // Move to next team
+                var teamScores = _teams.Select((t, i) => new { TeamIndex = i, Score = t.Score })
+                                        .OrderByDescending(x => x.Score)
+                                        .ToList();
+
+                var currentTeamScoreIndex = teamScores.FindIndex(ts => ts.TeamIndex == _sabotageCurrentPlayingTeamIndex.Value);
+
+                // Check if there's a next team
+                if (currentTeamScoreIndex < teamScores.Count - 1)
+                {
+                    // Move to next team
+                    _sabotageCurrentPlayingTeamIndex = teamScores[currentTeamScoreIndex + 1].TeamIndex;
+                    _sabotageCurrentThemeIndex = 0;
+                    _sabotageCurrentQuestionInTheme = 0;
+                }
+                else
+                {
+                    // All teams completed - MCQ subphase is done
+                    _sabotageCurrentPlayingTeamIndex = null;
+                    _sabotageCurrentThemeIndex = null;
+                    _sabotageCurrentMcqQuestion = null;
+                    _currentScene = Scene.Scoreboard;
+                    return;
+                }
+            }
+        }
+
+        // Load next question
+        await LoadNextMcqQuestion();
+    }
 }

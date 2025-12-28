@@ -8,6 +8,8 @@ import TeamCreationLoadingScene from '../components/TeamCreationLoadingScene';
 import { ListQuestionScene } from '../components/scenes/ListQuestionScene';
 import { BoardsUpOverlay } from '../components/scenes/BoardsUpOverlay';
 import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentScene';
+import SabotageMcqQuestionScene from '../components/SabotageMcqQuestionScene';
+import SabotageMcqAnswerScene from '../components/SabotageMcqAnswerScene';
 import './DisplayPage.css';
 
 export default function DisplayPage() {
@@ -62,6 +64,12 @@ export default function DisplayPage() {
       )}
       {gameState.currentScene === Scene.SabotageThemeAssignment && (
         <SabotageThemeAssignmentScene gameState={gameState} />
+      )}
+      {gameState.currentScene === Scene.SabotageMcqQuestion && (
+        <SabotageMcqQuestionScene gameState={gameState} />
+      )}
+      {gameState.currentScene === Scene.SabotageMcqAnswer && (
+        <SabotageMcqAnswerScene gameState={gameState} />
       )}
       {showBoardsUp && <BoardsUpOverlay />}
     </div>

@@ -1,0 +1,125 @@
+.sabotage-mcq-question-scene {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mcq-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.phase-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.team-info h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #fbbf24;
+}
+
+.theme-info {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.theme-type {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.progress-info {
+  font-size: 1.3rem;
+  opacity: 0.9;
+}
+
+.question-container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.question-text {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.question-fr {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.question-nl {
+  font-size: 2rem;
+  opacity: 0.85;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1f2937;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.choice:hover {
+  transform: translateX(10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.choice-letter {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.choice-text {
+  flex: 1;
+}
+
+.choice-text > div:first-child {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.choice-nl {
+  font-size: 1.5rem;
+  opacity: 0.7;
+}

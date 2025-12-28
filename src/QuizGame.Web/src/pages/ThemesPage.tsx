@@ -28,7 +28,7 @@ export default function ThemesPage() {
   const loadThemes = async () => {
     try {
       setLoading(true);
-      const data = await themeService.getFiltered(filterActive, searchText);
+      const data = await themeService.getAll(filterActive, searchText);
       setThemes(data);
       setError('');
     } catch (err: any) {

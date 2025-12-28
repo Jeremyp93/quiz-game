@@ -154,6 +154,10 @@ class GameService {
   async revealMcqAnswer() {
     await this.connection?.invoke('RevealMcqAnswer');
   }
+
+  async advanceToNextMcqQuestion() {
+    await this.connection?.invoke('AdvanceToNextMcqQuestion');
+  }
 }
 
 export const gameService = new GameService();

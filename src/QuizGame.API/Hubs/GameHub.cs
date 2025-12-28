@@ -205,6 +205,12 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    public async Task AdvanceToNextMcqQuestion()
+    {
+        await _gameSessionService.AdvanceToNextMcqQuestion();
+        await BroadcastGameState();
+    }
+
     private async Task BroadcastGameState()
     {
         var state = _gameSessionService.GetCurrentState();
