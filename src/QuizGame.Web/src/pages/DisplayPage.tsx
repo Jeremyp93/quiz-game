@@ -2,6 +2,8 @@ import { useGameState } from '../hooks/useGameState';
 import { Scene } from '../types';
 import TeamsScene from '../components/TeamsScene';
 import ScoreboardScene from '../components/ScoreboardScene';
+import QuestionScene from '../components/QuestionScene';
+import AnswerRevealScene from '../components/AnswerRevealScene';
 import './DisplayPage.css';
 
 export default function DisplayPage() {
@@ -29,6 +31,20 @@ export default function DisplayPage() {
     <div className="display-page">
       {gameState.currentScene === Scene.Teams && <TeamsScene teams={gameState.teams} />}
       {gameState.currentScene === Scene.Scoreboard && <ScoreboardScene teams={gameState.teams} />}
+      {gameState.currentScene === Scene.Question && gameState.currentQuestion && (
+        <QuestionScene
+          question={gameState.currentQuestion}
+          teams={gameState.teams}
+          blockedTeamIndices={gameState.blockedTeamIdsForCurrentQuestion}
+        />
+      )}
+      {gameState.currentScene === Scene.Answer && gameState.currentQuestion && (
+        <AnswerRevealScene
+          question={gameState.currentQuestion}
+          teams={gameState.teams}
+          blockedTeamIndices={gameState.blockedTeamIdsForCurrentQuestion}
+        />
+      )}
     </div>
   );
 }

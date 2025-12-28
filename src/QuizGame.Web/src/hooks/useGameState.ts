@@ -9,6 +9,10 @@ const initialState: GameState = {
   currentPhase: 0,
   currentScene: 0,
   lastSceneBeforeScoreboard: undefined,
+  currentQuestion: undefined,
+  lastQuestionId: undefined,
+  blockedNextQuestionTeamIds: [],
+  blockedTeamIdsForCurrentQuestion: [],
 };
 
 export function useGameState() {

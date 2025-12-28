@@ -73,6 +73,38 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    // Phase 1 (Fast Buzzer) Methods
+
+    public async Task StartPhase1()
+    {
+        await _gameSessionService.StartPhase1();
+        await BroadcastGameState();
+    }
+
+    public async Task ShowQuestion()
+    {
+        await _gameSessionService.ShowQuestion();
+        await BroadcastGameState();
+    }
+
+    public async Task ShowAnswer()
+    {
+        _gameSessionService.ShowAnswer();
+        await BroadcastGameState();
+    }
+
+    public async Task ApplyBlocksForNextQuestion(List<int> teamIndices)
+    {
+        _gameSessionService.ApplyBlocksForNextQuestion(teamIndices);
+        await BroadcastGameState();
+    }
+
+    public async Task EndPhase()
+    {
+        _gameSessionService.EndPhase();
+        await BroadcastGameState();
+    }
+
     private async Task BroadcastGameState()
     {
         var state = _gameSessionService.GetCurrentState();

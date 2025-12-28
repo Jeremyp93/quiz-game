@@ -64,6 +64,28 @@ class GameService {
   async backToGame() {
     await this.connection?.invoke('BackToGame');
   }
+
+  // Phase 1 (Fast Buzzer)
+
+  async startPhase1() {
+    await this.connection?.invoke('StartPhase1');
+  }
+
+  async showQuestion() {
+    await this.connection?.invoke('ShowQuestion');
+  }
+
+  async showAnswer() {
+    await this.connection?.invoke('ShowAnswer');
+  }
+
+  async applyBlocksForNextQuestion(teamIndices: number[]) {
+    await this.connection?.invoke('ApplyBlocksForNextQuestion', teamIndices);
+  }
+
+  async endPhase() {
+    await this.connection?.invoke('EndPhase');
+  }
 }
 
 export const gameService = new GameService();

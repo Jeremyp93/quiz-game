@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { gameService } from '../services/gameService';
-import { Scene } from '../types';
+import { Scene, Phase } from '../types';
 import './ControlPage.css';
 
 export default function ControlPage() {
   const { gameState, isConnected } = useGameState();
   const [playerInput, setPlayerInput] = useState('');
   const [playerNames, setPlayerNames] = useState<string[]>([]);
+  const [selectedBlockedTeams, setSelectedBlockedTeams] = useState<number[]>([]);
 
   const handleStartGame = async () => {
     await gameService.startGame();
@@ -54,6 +55,37 @@ export default function ControlPage() {
 
   const handleBackToGame = async () => {
     await gameService.backToGame();
+  };
+
+  // Phase 1 (Fast Buzzer) handlers
+  const handleStartPhase1 = async () => {
+    await gameService.startPhase1();
+    setSelectedBlockedTeams([]);
+  };
+
+  const handleShowQuestion = async () => {
+    await gameService.showQuestion();
+  };
+
+  const handleShowAnswer = async () => {
+    await gameService.showAnswer();
+  };
+
+  const toggleTeamBlock = (teamIndex: number) => {
+    setSelectedBlockedTeams(prev =>
+      prev.includes(teamIndex)
+        ? prev.filter(i => i !== teamIndex)
+        : [...prev, teamIndex]
+    );
+  };
+
+  const handleApplyBlocks = async () => {
+    await gameService.applyBlocksForNextQuestion(selectedBlockedTeams);
+  };
+
+  const handleEndPhase = async () => {
+    await gameService.endPhase();
+    setSelectedBlockedTeams([]);
   };
 
   if (!isConnected) {
@@ -148,6 +180,89 @@ export default function ControlPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {gameState.teams.length > 0 && gameState.currentPhase === Phase.Setup && (
+            <div className="phase-selector">
+              <h2>Select Phase</h2>
+              <button onClick={handleStartPhase1} className="btn-phase">
+                Start Fast Buzzer Phase
+              </button>
+            </div>
+          )}
+
+          {gameState.currentPhase === Phase.FastBuzzer && (
+            <div className="phase-panel">
+              <h2>Phase 1: Fast Buzzer</h2>
+
+              {gameState.currentQuestion && (
+                <div className="current-question-gm">
+                  <h3>Current Question (GM View)</h3>
+                  <div className="question-preview">
+                    <div className="q-lang">
+                      <strong>FR:</strong> {gameState.currentQuestion.textFr}
+                    </div>
+                    <div className="q-lang">
+                      <strong>NL:</strong> {gameState.currentQuestion.textNl}
+                    </div>
+                    <div className="answer-preview">
+                      <div className="q-lang">
+                        <strong>Answer FR:</strong> {gameState.currentQuestion.answerFr}
+                      </div>
+                      <div className="q-lang">
+                        <strong>Answer NL:</strong> {gameState.currentQuestion.answerNl}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="phase-controls">
+                <button onClick={handleShowQuestion} className="btn-phase-action btn-show-question">
+                  Show Question
+                </button>
+                <button
+                  onClick={handleShowAnswer}
+                  className="btn-phase-action btn-show-answer"
+                  disabled={!gameState.currentQuestion}
+                >
+                  Show Answer
+                </button>
+              </div>
+
+              <div className="blocking-section">
+                <h3>Block Team(s) For Next Question</h3>
+                <div className="blocking-teams">
+                  {gameState.teams.map((team, index) => (
+                    <label key={index} className="blocking-team-item">
+                      <input
+                        type="checkbox"
+                        checked={selectedBlockedTeams.includes(index)}
+                        onChange={() => toggleTeamBlock(index)}
+                      />
+                      <span>{team.name}</span>
+                    </label>
+                  ))}
+                </div>
+                <button
+                  onClick={handleApplyBlocks}
+                  className="btn-apply-blocks"
+                  disabled={selectedBlockedTeams.length === 0}
+                >
+                  Apply Blocks ({selectedBlockedTeams.length})
+                </button>
+
+                {gameState.blockedNextQuestionTeamIds.length > 0 && (
+                  <div className="blocks-pending">
+                    Blocked for next question: {gameState.blockedNextQuestionTeamIds.map(i => gameState.teams[i]?.name).join(', ')}
+                  </div>
+                )}
+              </div>
+
+              <button onClick={handleEndPhase} className="btn-end-phase">
+                End Phase
+              </button>
             </div>
           )}
 

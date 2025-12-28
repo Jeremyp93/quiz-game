@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using QuizGame.Application.DTOs;
 using QuizGame.Application.Interfaces;
 using QuizGame.Domain.Enums;
@@ -6,12 +7,25 @@ namespace QuizGame.Infrastructure.Services;
 
 public class GameSessionService : IGameSessionService
 {
+    private readonly IServiceProvider _serviceProvider;
+
     private bool _isGameStarted;
     private List<string> _players = new();
     private List<Team> _teams = new();
     private Phase _currentPhase = Phase.Setup;
     private Scene _currentScene = Scene.Teams;
     private Scene? _lastSceneBeforeScoreboard;
+
+    // Phase 1 (Fast Buzzer) state
+    private CurrentQuestionDto? _currentQuestion;
+    private Guid? _lastQuestionId;
+    private List<int> _blockedNextQuestionTeamIds = new();
+    private List<int> _blockedTeamIdsForCurrentQuestion = new();
+
+    public GameSessionService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
 
     private class Team
     {
@@ -34,7 +48,11 @@ public class GameSessionService : IGameSessionService
             }).ToList(),
             CurrentPhase = _currentPhase,
             CurrentScene = _currentScene,
-            LastSceneBeforeScoreboard = _lastSceneBeforeScoreboard
+            LastSceneBeforeScoreboard = _lastSceneBeforeScoreboard,
+            CurrentQuestion = _currentQuestion,
+            LastQuestionId = _lastQuestionId,
+            BlockedNextQuestionTeamIds = new List<int>(_blockedNextQuestionTeamIds),
+            BlockedTeamIdsForCurrentQuestion = new List<int>(_blockedTeamIdsForCurrentQuestion)
         };
     }
 
@@ -134,5 +152,93 @@ public class GameSessionService : IGameSessionService
         {
             _currentScene = Scene.Teams;
         }
+    }
+
+    // Phase 1 (Fast Buzzer) Methods
+
+    public Task StartPhase1()
+    {
+        _currentPhase = Phase.FastBuzzer;
+        _currentQuestion = null;
+        _lastQuestionId = null;
+        _blockedNextQuestionTeamIds.Clear();
+        _blockedTeamIdsForCurrentQuestion.Clear();
+        return Task.CompletedTask;
+    }
+
+    public async Task ShowQuestion()
+    {
+        // Create a scope to resolve scoped IQuestionService
+        using var scope = _serviceProvider.CreateScope();
+        var questionService = scope.ServiceProvider.GetRequiredService<IQuestionService>();
+
+        // Get random Regular question (avoid immediate repeat if possible)
+        var question = await questionService.GetRandomRegularQuestionAsync(_lastQuestionId);
+
+        if (question == null)
+            throw new InvalidOperationException("No active Regular questions available");
+
+        if (question.RegularDetails == null)
+            throw new InvalidOperationException("Question missing Regular details");
+
+        // Apply blocks for this question
+        _blockedTeamIdsForCurrentQuestion = new List<int>(_blockedNextQuestionTeamIds);
+        _blockedNextQuestionTeamIds.Clear();
+
+        // Set current question
+        _currentQuestion = new CurrentQuestionDto
+        {
+            Id = question.Id,
+            TextFr = question.TextFr,
+            TextNl = question.TextNl,
+            AnswerFr = question.RegularDetails.AnswerFr,
+            AnswerNl = question.RegularDetails.AnswerNl,
+            Difficulty = question.Difficulty
+        };
+
+        _lastQuestionId = question.Id;
+
+        // Switch to Question scene (leaves scoreboard if visible)
+        if (_currentScene == Scene.Scoreboard)
+        {
+            _lastSceneBeforeScoreboard = null;
+        }
+        _currentScene = Scene.Question;
+    }
+
+    public void ShowAnswer()
+    {
+        if (_currentQuestion == null)
+            throw new InvalidOperationException("No current question to reveal answer");
+
+        _currentScene = Scene.Answer;
+    }
+
+    public void ApplyBlocksForNextQuestion(List<int> teamIndices)
+    {
+        // Validate team indices
+        foreach (var index in teamIndices)
+        {
+            if (index < 0 || index >= _teams.Count)
+                throw new ArgumentException($"Invalid team index: {index}");
+        }
+
+        _blockedNextQuestionTeamIds = new List<int>(teamIndices);
+    }
+
+    public void EndPhase()
+    {
+        _currentPhase = Phase.Setup;
+        _currentQuestion = null;
+        _lastQuestionId = null;
+        _blockedNextQuestionTeamIds.Clear();
+        _blockedTeamIdsForCurrentQuestion.Clear();
+
+        // Show scoreboard when ending phase
+        if (_currentScene != Scene.Scoreboard)
+        {
+            _lastSceneBeforeScoreboard = _currentScene;
+        }
+        _currentScene = Scene.Scoreboard;
     }
 }

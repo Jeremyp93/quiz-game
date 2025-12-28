@@ -80,6 +80,15 @@ export interface Team {
   score: number;
 }
 
+export interface CurrentQuestion {
+  id: string;
+  textFr: string;
+  textNl: string;
+  answerFr: string;
+  answerNl: string;
+  difficulty: number;
+}
+
 export interface GameState {
   isGameStarted: boolean;
   players: string[];
@@ -87,4 +96,10 @@ export interface GameState {
   currentPhase: Phase;
   currentScene: Scene;
   lastSceneBeforeScoreboard?: Scene;
+
+  // Phase 1 (Fast Buzzer) state
+  currentQuestion?: CurrentQuestion;
+  lastQuestionId?: string;
+  blockedNextQuestionTeamIds: number[];
+  blockedTeamIdsForCurrentQuestion: number[];
 }

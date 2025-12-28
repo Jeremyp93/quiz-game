@@ -1,0 +1,129 @@
+.answer-reveal-scene {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.answer-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.answer-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.answer-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.qa-section {
+  margin-bottom: 2rem;
+}
+
+.qa-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.answer-title {
+  color: #28a745;
+}
+
+.answer-section {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+.qa-bilingual {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.qa-lang {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lang-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.qa-text {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.4;
+}
+
+.answer-text {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #155724;
+}
+
+.qa-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+  margin: 0.5rem 0;
+}
+
+.blocked-teams-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.blocked-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #dc3545;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.blocked-teams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.blocked-team-badge {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+}

@@ -12,4 +12,7 @@ public interface IQuestionService
     Task<QuestionDto?> UpdateQuestionAsync(Guid id, CreateQuestionDto updateDto);
     Task<bool> DeleteQuestionAsync(Guid id);
     Task<bool> ToggleActiveAsync(Guid id);
+
+    // Phase 1 (Fast Buzzer)
+    Task<QuestionDto?> GetRandomRegularQuestionAsync(Guid? excludeQuestionId = null);
 }
