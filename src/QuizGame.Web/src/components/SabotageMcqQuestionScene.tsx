@@ -23,6 +23,7 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
   return (
     <div className="sabotage-mcq-question-scene">
       <motion.div
+        key="mcq-header"
         className="mcq-header"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -42,10 +43,11 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
       </motion.div>
 
       <motion.div
+        key={`question-${question.id}`}
         className="question-container"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
       >
         <div className="question-text">
           <div className="question-fr">{question.textFr}</div>
@@ -53,44 +55,29 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
         </div>
 
         <div className="choices">
-          <motion.div
-            className="choice"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
-          >
+          <div className={`choice ${sabotage.selectedAnswer === 0 ? 'selected' : ''}`}>
             <div className="choice-letter">A</div>
             <div className="choice-text">
               <div>{question.choiceAFr}</div>
               <div className="choice-nl">{question.choiceANl}</div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="choice"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-          >
+          <div className={`choice ${sabotage.selectedAnswer === 1 ? 'selected' : ''}`}>
             <div className="choice-letter">B</div>
             <div className="choice-text">
               <div>{question.choiceBFr}</div>
               <div className="choice-nl">{question.choiceBNl}</div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="choice"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.9 }}
-          >
+          <div className={`choice ${sabotage.selectedAnswer === 2 ? 'selected' : ''}`}>
             <div className="choice-letter">C</div>
             <div className="choice-text">
               <div>{question.choiceCFr}</div>
               <div className="choice-nl">{question.choiceCNl}</div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>

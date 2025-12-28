@@ -42,4 +42,5 @@ public interface IGameSessionService
     void ShowMcqQuestion();
     void SelectMcqAnswer(McqChoice choice);
     void RevealMcqAnswer();
+    Task AdvanceToNextMcqQuestion();
 }

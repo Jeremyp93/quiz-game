@@ -441,6 +441,368 @@ public static class DbSeeder
             }
         });
 
+        // TECHNOLOGY theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Quelle entreprise a créé l'iPhone ?",
+            TextNl = "Welk bedrijf heeft de iPhone gemaakt?",
+            ThemeId = themeTechnology.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Samsung",
+                ChoiceANl = "Samsung",
+                ChoiceBFr = "Apple",
+                ChoiceBNl = "Apple",
+                ChoiceCFr = "Google",
+                ChoiceCNl = "Google",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Que signifie WWW dans une adresse internet ?",
+            TextNl = "Wat betekent WWW in een internetadres?",
+            ThemeId = themeTechnology.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "World Wide Web",
+                ChoiceANl = "World Wide Web",
+                ChoiceBFr = "World Web Wide",
+                ChoiceBNl = "World Web Wide",
+                ChoiceCFr = "Wide World Web",
+                ChoiceCNl = "Wide World Web",
+                CorrectChoice = McqChoice.A
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "Qui est considéré comme le père de l'informatique moderne ?",
+            TextNl = "Wie wordt beschouwd als de vader van de moderne informatica?",
+            ThemeId = themeTechnology.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Steve Jobs",
+                ChoiceANl = "Steve Jobs",
+                ChoiceBFr = "Alan Turing",
+                ChoiceBNl = "Alan Turing",
+                ChoiceCFr = "Bill Gates",
+                ChoiceCNl = "Bill Gates",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        // MOVIES theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Quel film a remporté l'Oscar du meilleur film en 1998 ?",
+            TextNl = "Welke film won de Oscar voor beste film in 1998?",
+            ThemeId = themeMovies.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Saving Private Ryan",
+                ChoiceANl = "Saving Private Ryan",
+                ChoiceBFr = "Titanic",
+                ChoiceBNl = "Titanic",
+                ChoiceCFr = "The Truman Show",
+                ChoiceCNl = "The Truman Show",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Dans quel film trouve-t-on la réplique 'Je suis ton père' ?",
+            TextNl = "In welke film komt de zin 'Ik ben je vader' voor?",
+            ThemeId = themeMovies.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Star Trek",
+                ChoiceANl = "Star Trek",
+                ChoiceBFr = "Star Wars",
+                ChoiceBNl = "Star Wars",
+                ChoiceCFr = "Retour vers le futur",
+                ChoiceCNl = "Terug naar de toekomst",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "Quel acteur a joué dans le plus de films de l'histoire ?",
+            TextNl = "Welke acteur speelde in de meeste films in de geschiedenis?",
+            ThemeId = themeMovies.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Samuel L. Jackson",
+                ChoiceANl = "Samuel L. Jackson",
+                ChoiceBFr = "Christopher Lee",
+                ChoiceBNl = "Christopher Lee",
+                ChoiceCFr = "Robert De Niro",
+                ChoiceCNl = "Robert De Niro",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        // ART theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Qui a peint la Joconde ?",
+            TextNl = "Wie schilderde de Mona Lisa?",
+            ThemeId = themeArt.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Michelangelo",
+                ChoiceANl = "Michelangelo",
+                ChoiceBFr = "Leonardo da Vinci",
+                ChoiceBNl = "Leonardo da Vinci",
+                ChoiceCFr = "Raphael",
+                ChoiceCNl = "Raphael",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Quelle couleur obtient-on en mélangeant rouge et jaune ?",
+            TextNl = "Welke kleur krijg je door rood en geel te mengen?",
+            ThemeId = themeArt.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Vert",
+                ChoiceANl = "Groen",
+                ChoiceBFr = "Orange",
+                ChoiceBNl = "Oranje",
+                ChoiceCFr = "Violet",
+                ChoiceCNl = "Violet",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 2,
+            IsActive = true,
+            TextFr = "Quel artiste a coupé son oreille ?",
+            TextNl = "Welke kunstenaar sneed zijn oor af?",
+            ThemeId = themeArt.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Pablo Picasso",
+                ChoiceANl = "Pablo Picasso",
+                ChoiceBFr = "Vincent van Gogh",
+                ChoiceBNl = "Vincent van Gogh",
+                ChoiceCFr = "Claude Monet",
+                ChoiceCNl = "Claude Monet",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        // HISTORY theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "En quelle année l'homme a-t-il marché sur la lune pour la première fois ?",
+            TextNl = "In welk jaar liep de mens voor het eerst op de maan?",
+            ThemeId = themeHistory.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "1965",
+                ChoiceANl = "1965",
+                ChoiceBFr = "1969",
+                ChoiceBNl = "1969",
+                ChoiceCFr = "1972",
+                ChoiceCNl = "1972",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Qui était le premier président des États-Unis ?",
+            TextNl = "Wie was de eerste president van de Verenigde Staten?",
+            ThemeId = themeHistory.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Thomas Jefferson",
+                ChoiceANl = "Thomas Jefferson",
+                ChoiceBFr = "George Washington",
+                ChoiceBNl = "George Washington",
+                ChoiceCFr = "Abraham Lincoln",
+                ChoiceCNl = "Abraham Lincoln",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 2,
+            IsActive = true,
+            TextFr = "Quelle civilisation a construit le Machu Picchu ?",
+            TextNl = "Welke beschaving bouwde Machu Picchu?",
+            ThemeId = themeHistory.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Les Aztèques",
+                ChoiceANl = "De Azteken",
+                ChoiceBFr = "Les Incas",
+                ChoiceBNl = "De Inca's",
+                ChoiceCFr = "Les Mayas",
+                ChoiceCNl = "De Maya's",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "En quelle année est tombé le mur de Berlin ?",
+            TextNl = "In welk jaar viel de Berlijnse Muur?",
+            ThemeId = themeHistory.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "1987",
+                ChoiceANl = "1987",
+                ChoiceBFr = "1989",
+                ChoiceBNl = "1989",
+                ChoiceCFr = "1991",
+                ChoiceCNl = "1991",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        // SCIENCE theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Quelle planète est la plus proche du Soleil ?",
+            TextNl = "Welke planeet staat het dichtst bij de zon?",
+            ThemeId = themeScience.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Vénus",
+                ChoiceANl = "Venus",
+                ChoiceBFr = "Mercure",
+                ChoiceBNl = "Mercurius",
+                ChoiceCFr = "Mars",
+                ChoiceCNl = "Mars",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 1,
+            IsActive = true,
+            TextFr = "Combien d'os y a-t-il dans le corps humain adulte ?",
+            TextNl = "Hoeveel botten heeft een volwassen menselijk lichaam?",
+            ThemeId = themeScience.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "186",
+                ChoiceANl = "186",
+                ChoiceBFr = "206",
+                ChoiceBNl = "206",
+                ChoiceCFr = "226",
+                ChoiceCNl = "226",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 2,
+            IsActive = true,
+            TextFr = "Quel est l'élément chimique le plus abondant dans l'univers ?",
+            TextNl = "Wat is het meest voorkomende chemische element in het universum?",
+            ThemeId = themeScience.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Oxygène",
+                ChoiceANl = "Zuurstof",
+                ChoiceBFr = "Hydrogène",
+                ChoiceBNl = "Waterstof",
+                ChoiceCFr = "Hélium",
+                ChoiceCNl = "Helium",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Mcq,
+            Difficulty = 3,
+            IsActive = true,
+            TextFr = "Quelle particule subatomique a été découverte au CERN en 2012 ?",
+            TextNl = "Welk subatomair deeltje werd in 2012 ontdekt bij CERN?",
+            ThemeId = themeScience.Id,
+            McqDetails = new McqQuestionDetails
+            {
+                ChoiceAFr = "Le quark",
+                ChoiceANl = "De quark",
+                ChoiceBFr = "Le boson de Higgs",
+                ChoiceBNl = "Het Higgs-deeltje",
+                ChoiceCFr = "Le neutrino",
+                ChoiceCNl = "De neutrino",
+                CorrectChoice = McqChoice.B
+            }
+        });
+
         // MUSIC theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
         questions.Add(new Question
         {

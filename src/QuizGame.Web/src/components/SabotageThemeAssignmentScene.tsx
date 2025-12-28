@@ -44,15 +44,6 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
               >
                 <div className="team-header">
                   <h3>{team.name}</h3>
-                  {isCurrentPicker && !sabotage.isThemeAssignmentComplete && (
-                    <motion.div
-                      className="picker-indicator"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ repeat: Infinity, duration: 1.5 }}
-                    >
-                      {sabotage.currentPickNumber === 1 ? '✨ Pick 1: Choose your theme' : '💣 Pick 2: Sabotage another team'}
-                    </motion.div>
-                  )}
                 </div>
 
                 <div className="assigned-themes">
@@ -104,6 +95,16 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
         </div>
 
         <div className="available-themes">
+          {!sabotage.isThemeAssignmentComplete && (
+            <div className='theme-action'>
+                    <motion.div
+                      className="picker-indicator"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ repeat: Infinity, duration: 1.5 }}
+                    >
+                      {sabotage.currentPickNumber === 1 ? '✨ Pick 1: Choose your theme' : '💣 Pick 2: Sabotage another team'}
+                    </motion.div></div>
+                  )}
           <h3>Available Themes</h3>
           <div className="themes-grid">
             {sabotage.selectedThemes.map((theme, idx) => {
@@ -130,7 +131,6 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
           </div>
         </div>
       </div>
-
       {sabotage.isThemeAssignmentComplete && (
         <motion.div
           className="completion-message"

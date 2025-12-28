@@ -52,7 +52,7 @@
 }
 
 .question-text {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2.5rem;
@@ -92,6 +92,22 @@
 .choice:hover {
   transform: translateX(10px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.choice.selected {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+  border: 3px solid #fbbf24;
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.6), 0 12px 24px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.choice.selected .choice-text {
+  color: white;
+}
+
+.choice.selected .choice-nl {
+  opacity: 0.9;
 }
 
 .choice-letter {
