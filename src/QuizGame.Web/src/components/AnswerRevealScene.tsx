@@ -20,16 +20,16 @@ export default function AnswerRevealScene({ question, teams, blockedTeamIndices 
   };
 
   const answerReveal = {
-    hidden: { opacity: 0, height: 0, scale: 0.8 },
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
     show: {
       opacity: 1,
-      height: 'auto',
+      y: 0,
       scale: 1,
       transition: {
         type: 'spring',
-        damping: 15,
+        damping: 20,
         stiffness: 100,
-        duration: 0.6,
+        duration: 0.8,
       },
     },
   };

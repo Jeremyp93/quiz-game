@@ -54,11 +54,14 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<GameHub>("/gameHub");
 
-// Ensure database is created
+// Ensure database is created and seeded
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<QuizGameDbContext>();
     db.Database.EnsureCreated();
+
+    // Seed the database with test questions
+    DbSeeder.SeedDatabase(db);
 }
 
 app.Run();

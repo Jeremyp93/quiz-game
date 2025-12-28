@@ -95,18 +95,21 @@
 .blocked-team-badge {
   background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
   color: white;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem 1rem 3rem;
   border-radius: 16px;
   font-size: 1.3rem;
   font-weight: 600;
   box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .blocked-team-badge::before {
   content: '🚫';
   position: absolute;
-  left: -10px;
-  top: -10px;
-  font-size: 2rem;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
 }
