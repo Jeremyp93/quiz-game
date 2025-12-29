@@ -10,5 +10,6 @@ public enum Scene
     TeamCreationLoading,
     SabotageThemeAssignment,
     SabotageMcqQuestion,
-    SabotageMcqAnswer
+    SabotageMcqAnswer,
+    QuestionTransition
 }

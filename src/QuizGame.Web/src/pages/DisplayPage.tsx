@@ -10,6 +10,7 @@ import { BoardsUpOverlay } from '../components/scenes/BoardsUpOverlay';
 import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentScene';
 import SabotageMcqQuestionScene from '../components/SabotageMcqQuestionScene';
 import SabotageMcqAnswerScene from '../components/SabotageMcqAnswerScene';
+import QuestionTransitionScene from '../components/QuestionTransitionScene';
 import './DisplayPage.css';
 
 export default function DisplayPage() {
@@ -70,6 +71,9 @@ export default function DisplayPage() {
       )}
       {gameState.currentScene === Scene.SabotageMcqAnswer && (
         <SabotageMcqAnswerScene gameState={gameState} />
+      )}
+      {gameState.currentScene === Scene.QuestionTransition && (
+        <QuestionTransitionScene />
       )}
       {showBoardsUp && <BoardsUpOverlay />}
     </div>

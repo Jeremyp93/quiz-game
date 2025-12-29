@@ -583,7 +583,7 @@ export default function ControlPage() {
                         {gameState.sabotage.currentThemeIndex === 0 ? (
                           <span>✨ Self-Selected</span>
                         ) : (
-                          <span>💣 Sabotage</span>
+                          <span>💣 {gameState.sabotage.currentMcqQuestion?.theme.nameNl} / {gameState.sabotage.currentMcqQuestion?.theme.nameFr} (Sabotage)</span>
                         )}
                         {' - '}Question {gameState.sabotage.currentQuestionInTheme + 1}/4
                       </div>

@@ -28,6 +28,7 @@ export enum Scene {
   SabotageThemeAssignment = 6,
   SabotageMcqQuestion = 7,
   SabotageMcqAnswer = 8,
+  QuestionTransition = 9,
 }
 
 export enum TimerState {

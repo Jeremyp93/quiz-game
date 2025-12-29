@@ -810,5 +810,8 @@ public class GameSessionService : IGameSessionService
 
         // Load next question
         await LoadNextMcqQuestion();
+
+        // Reset scene to QuestionTransition so GM can preview and show next question
+        _currentScene = Scene.QuestionTransition;
     }
 }
