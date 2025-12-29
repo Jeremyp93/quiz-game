@@ -664,8 +664,7 @@ public class GameSessionService : IGameSessionService
         _sabotageCurrentThemeIndex = 0; // First of their 2 themes
         _sabotageCurrentQuestionInTheme = 0;
 
-        // Load first question
-        await LoadNextMcqQuestion();
+        // Don't auto-load first question - wait for manual load
     }
 
     public async Task LoadNextMcqQuestion()

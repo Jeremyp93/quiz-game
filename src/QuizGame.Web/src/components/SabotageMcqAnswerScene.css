@@ -1,33 +1,36 @@
 .sabotage-mcq-answer-scene {
   min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 3rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .mcq-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .phase-title {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .team-info h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
   color: #fbbf24;
 }
 
 .theme-info {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -36,55 +39,59 @@
 }
 
 .theme-type {
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 0.8;
   font-style: italic;
 }
 
 .progress-info {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   opacity: 0.9;
 }
 
 .question-container {
   max-width: 1200px;
   width: 100%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
 
 .question-text {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2.5rem;
-  margin-bottom: 2rem;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .question-fr {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
 }
 
 .question-nl {
-  font-size: 2rem;
+  font-size: 1.5rem;
   opacity: 0.85;
+  line-height: 1.3;
 }
 
 .choices {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .choice {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   background: rgba(255, 255, 255, 0.95);
   color: #1f2937;
-  padding: 2rem;
+  padding: 1.25rem 1.5rem;
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   position: relative;
@@ -103,12 +110,12 @@
 }
 
 .choice-letter {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: bold;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  width: 70px;
-  height: 70px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -130,18 +137,20 @@
 }
 
 .choice-text > div:first-child {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
 }
 
 .choice-nl {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   opacity: 0.7;
+  line-height: 1.3;
 }
 
 .choice-indicator {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: bold;
 }
 
@@ -160,12 +169,12 @@
 .result-banner {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem 3rem;
+  border-radius: 16px;
+  padding: 1.25rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   border: 3px solid;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
@@ -181,11 +190,11 @@
 }
 
 .result-icon {
-  font-size: 3rem;
+  font-size: 2.2rem;
 }
 
 .result-text {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
