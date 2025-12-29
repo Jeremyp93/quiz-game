@@ -606,23 +606,30 @@ export default function ControlPage() {
                       <div className="mcq-question-info">
                         <h4>Question Preview</h4>
                         <div className="mcq-question-text">
-                          <div><strong>{gameState.sabotage.currentMcqQuestion.textFr}</strong></div>
-                          <div style={{ opacity: 0.7, fontSize: '0.95em', marginTop: '0.25rem' }}>
-                            {gameState.sabotage.currentMcqQuestion.textNl}
+                          <div>{gameState.sabotage.currentMcqQuestion.textFr}</div>
+                          <div>{gameState.sabotage.currentMcqQuestion.textNl}</div>
+                        </div>
+                        <div className="mcq-choices">
+                          <div
+                            className={`mcq-choice ${gameState.sabotage.selectedAnswer === 0 ? 'mcq-choice-selected' : ''} ${gameState.sabotage.isAnswerRevealed ? 'disabled' : ''}`}
+                            onClick={() => !gameState.sabotage.isAnswerRevealed && handleSelectMcqAnswer(0)}
+                          >
+                            <strong>A:</strong> {gameState.sabotage.currentMcqQuestion.choiceAFr} / {gameState.sabotage.currentMcqQuestion.choiceANl}
+                          </div>
+                          <div
+                            className={`mcq-choice ${gameState.sabotage.selectedAnswer === 1 ? 'mcq-choice-selected' : ''} ${gameState.sabotage.isAnswerRevealed ? 'disabled' : ''}`}
+                            onClick={() => !gameState.sabotage.isAnswerRevealed && handleSelectMcqAnswer(1)}
+                          >
+                            <strong>B:</strong> {gameState.sabotage.currentMcqQuestion.choiceBFr} / {gameState.sabotage.currentMcqQuestion.choiceBNl}
+                          </div>
+                          <div
+                            className={`mcq-choice ${gameState.sabotage.selectedAnswer === 2 ? 'mcq-choice-selected' : ''} ${gameState.sabotage.isAnswerRevealed ? 'disabled' : ''}`}
+                            onClick={() => !gameState.sabotage.isAnswerRevealed && handleSelectMcqAnswer(2)}
+                          >
+                            <strong>C:</strong> {gameState.sabotage.currentMcqQuestion.choiceCFr} / {gameState.sabotage.currentMcqQuestion.choiceCNl}
                           </div>
                         </div>
-                        <div className="mcq-choices" style={{ marginTop: '1rem' }}>
-                          <div className={gameState.sabotage.selectedAnswer === 0 ? 'mcq-choice-selected' : ''}>
-                            <strong>A:</strong> {gameState.sabotage.currentMcqQuestion.choiceAFr}
-                          </div>
-                          <div className={gameState.sabotage.selectedAnswer === 1 ? 'mcq-choice-selected' : ''}>
-                            <strong>B:</strong> {gameState.sabotage.currentMcqQuestion.choiceBFr}
-                          </div>
-                          <div className={gameState.sabotage.selectedAnswer === 2 ? 'mcq-choice-selected' : ''}>
-                            <strong>C:</strong> {gameState.sabotage.currentMcqQuestion.choiceCFr}
-                          </div>
-                        </div>
-                        <div className="mcq-meta" style={{ marginTop: '1rem' }}>
+                        <div className="mcq-meta">
                           <strong>Difficulty:</strong> {'⭐'.repeat(gameState.sabotage.currentMcqQuestion.difficulty)} |
                           <strong> Correct Answer:</strong> <span style={{ color: '#10b981', fontWeight: 'bold' }}>
                             {['A', 'B', 'C'][gameState.sabotage.currentMcqQuestion.correctChoice]}
@@ -630,71 +637,33 @@ export default function ControlPage() {
                         </div>
                       </div>
 
-                      {gameState.currentScene !== Scene.SabotageMcqQuestion && gameState.currentScene !== Scene.SabotageMcqAnswer && (
-                        <div className="phase-controls">
-                          <button
-                            onClick={handleShowMcqQuestion}
-                            className="btn-phase-action btn-show-question"
-                          >
-                            📺 Show Question on Display
-                          </button>
-                        </div>
-                      )}
+                      <div className="mcq-control-buttons">
+                        <button
+                          onClick={handleShowMcqQuestion}
+                          disabled={gameState.currentScene === Scene.SabotageMcqQuestion ||
+                                    gameState.currentScene === Scene.SabotageMcqAnswer}
+                          className="btn-phase-action btn-show-question"
+                        >
+                          📺 Show Question on Display
+                        </button>
 
-                      {(gameState.currentScene === Scene.SabotageMcqQuestion || gameState.currentScene === Scene.SabotageMcqAnswer) && (
-                        <>
-                          <div className="phase-controls">
-                            <h4 style={{ marginBottom: '0.5rem' }}>Select Team's Answer:</h4>
-                            <div style={{ display: 'flex', gap: '1rem' }}>
-                              <button
-                                onClick={() => handleSelectMcqAnswer(0)}
-                                className={`btn-answer ${gameState.sabotage.selectedAnswer === 0 ? 'selected' : ''}`}
-                                disabled={gameState.sabotage.isAnswerRevealed}
-                              >
-                                A
-                              </button>
-                              <button
-                                onClick={() => handleSelectMcqAnswer(1)}
-                                className={`btn-answer ${gameState.sabotage.selectedAnswer === 1 ? 'selected' : ''}`}
-                                disabled={gameState.sabotage.isAnswerRevealed}
-                              >
-                                B
-                              </button>
-                              <button
-                                onClick={() => handleSelectMcqAnswer(2)}
-                                className={`btn-answer ${gameState.sabotage.selectedAnswer === 2 ? 'selected' : ''}`}
-                                disabled={gameState.sabotage.isAnswerRevealed}
-                              >
-                                C
-                              </button>
-                            </div>
-                            {gameState.sabotage.selectedAnswer !== undefined && !gameState.sabotage.isAnswerRevealed && (
-                              <div style={{ marginTop: '0.5rem', color: '#3b82f6', fontWeight: 'bold' }}>
-                                Selected: {['A', 'B', 'C'][gameState.sabotage.selectedAnswer]}
-                              </div>
-                            )}
-                          </div>
+                        <button
+                          onClick={handleRevealMcqAnswer}
+                          disabled={gameState.sabotage.selectedAnswer === undefined ||
+                                    gameState.sabotage.isAnswerRevealed}
+                          className="btn-phase-action btn-reveal"
+                        >
+                          ✓ Reveal Answer
+                        </button>
 
-                          <div className="phase-controls">
-                            {!gameState.sabotage.isAnswerRevealed ? (
-                              <button
-                                onClick={handleRevealMcqAnswer}
-                                className="btn-phase-action btn-reveal"
-                                disabled={gameState.sabotage.selectedAnswer === undefined}
-                              >
-                                ✓ Reveal Answer
-                              </button>
-                            ) : (
-                              <button
-                                onClick={handleAdvanceToNextMcqQuestion}
-                                className="btn-phase-action btn-next-question"
-                              >
-                                ➡️ Next Question
-                              </button>
-                            )}
-                          </div>
-                        </>
-                      )}
+                        <button
+                          onClick={handleAdvanceToNextMcqQuestion}
+                          disabled={!gameState.sabotage.isAnswerRevealed}
+                          className="btn-phase-action btn-next-question"
+                        >
+                          ➡️ Next Question
+                        </button>
+                      </div>
                     </>
                   )}
 
