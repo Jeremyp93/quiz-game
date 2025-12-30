@@ -10,16 +10,13 @@
   font-size: 2.5rem;
   font-weight: 900;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.8),
-               0 0 40px rgba(139, 92, 246, 0.6),
-               0 4px 8px rgba(0, 0, 0, 0.5);
+  color: white;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.8),
+               0 0 40px rgba(251, 191, 36, 0.5),
+               0 4px 12px rgba(0, 0, 0, 0.7),
+               0 2px 4px rgba(0, 0, 0, 0.9);
   letter-spacing: 2px;
   text-transform: uppercase;
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #fbbf24);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: glow-pulse 2s ease-in-out infinite;
 }
 
 /* Team info container */

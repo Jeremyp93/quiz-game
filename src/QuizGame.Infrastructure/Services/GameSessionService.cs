@@ -549,8 +549,15 @@ public class GameSessionService : IGameSessionService
         }
         else // _sabotageCurrentPickNumber == 2
         {
-            // Pick 2: Sabotage - must assign to ANOTHER team
-            if (teamIndex == _sabotageCurrentPickingTeamIndex.Value)
+            // Pick 2: Sabotage - must assign to ANOTHER team (unless it's the only option)
+            // Check if there are other teams without sabotage themes
+            var teamsWithoutSabotage = _sabotageTeamThemeAssignments
+                .Where(ta => ta.SabotageTheme == null)
+                .ToList();
+
+            // If there are multiple teams without sabotage, prevent self-sabotage
+            // If only one team left (the current one), allow self-sabotage
+            if (teamsWithoutSabotage.Count > 1 && teamIndex == _sabotageCurrentPickingTeamIndex.Value)
                 throw new InvalidOperationException("For pick 2, you must select a theme to sabotage another team");
 
             if (teamAssignment.SabotageTheme != null)
@@ -749,6 +756,14 @@ public class GameSessionService : IGameSessionService
             throw new InvalidOperationException("No MCQ question loaded");
 
         _sabotageSelectedAnswer = choice;
+    }
+
+    public void ClearMcqAnswer()
+    {
+        if (_sabotageCurrentMcqQuestion == null)
+            throw new InvalidOperationException("No MCQ question loaded");
+
+        _sabotageSelectedAnswer = null;
     }
 
     public void RevealMcqAnswer()

@@ -153,6 +153,10 @@ export default function ControlPage() {
     await gameService.selectMcqAnswer(choice);
   };
 
+  const handleClearMcqAnswer = async () => {
+    await gameService.clearMcqAnswer();
+  };
+
   const handleRevealMcqAnswer = async () => {
     await gameService.revealMcqAnswer();
   };
@@ -503,9 +507,20 @@ export default function ControlPage() {
                                   if (idx !== gameState.sabotage.currentPickingTeamIndex) return null;
                                   if (teamAssignment?.selfSelectedTheme) return null; // Already has self-selected
                                 } else {
-                                  // Pick 2: can only assign to OTHER teams
-                                  if (idx === gameState.sabotage.currentPickingTeamIndex) return null;
+                                  // Pick 2: can assign to OTHER teams (or self if it's the only option)
                                   if (teamAssignment?.sabotageTheme) return null; // Already has sabotage
+
+                                  // Check if there are any other teams without sabotage themes
+                                  const teamsWithoutSabotage = gameState.teams.filter((_, tIdx) => {
+                                    const ta = gameState.sabotage.teamThemeAssignments.find(a => a.teamIndex === tIdx);
+                                    return !ta?.sabotageTheme;
+                                  });
+
+                                  // If current team is the only one without a sabotage theme, allow self-sabotage
+                                  // Otherwise, exclude current team
+                                  if (teamsWithoutSabotage.length > 1 && idx === gameState.sabotage.currentPickingTeamIndex) {
+                                    return null;
+                                  }
                                 }
 
                                 return (
@@ -581,7 +596,7 @@ export default function ControlPage() {
                       <div>
                         <strong>Theme:</strong>{' '}
                         {gameState.sabotage.currentThemeIndex === 0 ? (
-                          <span>✨ Self-Selected</span>
+                          <span>✨ {gameState.sabotage.currentMcqQuestion?.theme.nameNl} / {gameState.sabotage.currentMcqQuestion?.theme.nameFr} (Self-Selected)</span>
                         ) : (
                           <span>💣 {gameState.sabotage.currentMcqQuestion?.theme.nameNl} / {gameState.sabotage.currentMcqQuestion?.theme.nameFr} (Sabotage)</span>
                         )}
@@ -628,12 +643,25 @@ export default function ControlPage() {
                           >
                             <strong>C:</strong> {gameState.sabotage.currentMcqQuestion.choiceCFr} / {gameState.sabotage.currentMcqQuestion.choiceCNl}
                           </div>
+                          <button
+                            onClick={handleClearMcqAnswer}
+                            className={styles['btn-clear-answer']}
+                            disabled={gameState.sabotage.isAnswerRevealed || gameState.sabotage.selectedAnswer === undefined}
+                          >
+                            🔄 Clear Selection
+                          </button>
                         </div>
                         <div className={styles['mcq-meta']}>
                           <strong>Difficulty:</strong> {'⭐'.repeat(gameState.sabotage.currentMcqQuestion.difficulty)} |
                           <strong> Correct Answer:</strong> <span style={{ color: '#10b981', fontWeight: 'bold' }}>
                             {['A', 'B', 'C'][gameState.sabotage.currentMcqQuestion.correctChoice]}
-                          </span>
+                          </span> | <button
+                            onClick={handleClearMcqAnswer}
+                            className={styles['btn-clear-answer']}
+                            disabled={gameState.sabotage.isAnswerRevealed || gameState.sabotage.selectedAnswer === undefined}
+                          >
+                            🔄 Clear Selection
+                          </button>
                         </div>
                       </div>
 

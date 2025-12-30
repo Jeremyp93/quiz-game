@@ -151,6 +151,10 @@ class GameService {
     await this.connection?.invoke('SelectMcqAnswer', choice);
   }
 
+  async clearMcqAnswer() {
+    await this.connection?.invoke('ClearMcqAnswer');
+  }
+
   async revealMcqAnswer() {
     await this.connection?.invoke('RevealMcqAnswer');
   }

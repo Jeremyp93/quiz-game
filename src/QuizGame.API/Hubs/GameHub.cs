@@ -199,6 +199,12 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    public async Task ClearMcqAnswer()
+    {
+        _gameSessionService.ClearMcqAnswer();
+        await BroadcastGameState();
+    }
+
     public async Task RevealMcqAnswer()
     {
         _gameSessionService.RevealMcqAnswer();
