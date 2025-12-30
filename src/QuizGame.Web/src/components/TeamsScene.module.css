@@ -2,62 +2,212 @@
 
 .teams-scene {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 3rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.teams-scene::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: backgroundPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .scene-title {
   color: white;
-  font-size: 4rem;
+  font-size: 5rem;
+  font-weight: 800;
   margin-bottom: 3rem;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(59, 130, 246, 0.3),
+    0 5px 15px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.05em;
+  animation: titleGlow 3s ease-in-out infinite;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.scene-title div {
+  margin: 0;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 0.5),
+      0 0 40px rgba(59, 130, 246, 0.3),
+      0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(255, 255, 255, 0.8),
+      0 0 60px rgba(59, 130, 246, 0.6),
+      0 5px 20px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .teams-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
   max-width: 1400px;
+  z-index: 1;
 }
 
 .team-display-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.team-display-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--team-gradient);
+  box-shadow: 0 0 20px var(--team-glow);
 }
 
 .team-display-header {
   text-align: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px solid #667eea;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.team-display-header::after {
+  /* content: ''; */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, var(--team-gradient) 50%, transparent 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--team-glow);
 }
 
 .team-display-header h2 {
-  font-size: 2.5rem;
-  color: #667eea;
+  font-size: 3rem;
+  font-weight: 800;
+  background: var(--team-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
+  filter: drop-shadow(0 2px 4px var(--team-glow));
+  letter-spacing: 0.02em;
 }
 
 .team-display-players {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .player-display-item {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--team-gradient);
   color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  font-size: 1.5rem;
-  font-weight: 500;
+  padding: 1.3rem 2rem;
+  border-radius: 16px;
+  font-size: 1.6rem;
+  font-weight: 600;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 6px 20px var(--team-glow),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.02em;
+}
+
+.player-display-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .teams-grid {
+    grid-template-columns: 1fr;
+    max-width: 700px;
+  }
+
+  .scene-title {
+    font-size: 4rem;
+  }
+
+  .team-display-header h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .teams-scene {
+    padding: 2rem;
+  }
+
+  .scene-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .teams-grid {
+    gap: 1.5rem;
+  }
+
+  .team-display-card {
+    padding: 2rem;
+  }
+
+  .team-display-header h2 {
+    font-size: 2rem;
+  }
+
+  .player-display-item {
+    font-size: 1.3rem;
+    padding: 1rem 1.5rem;
+  }
 }
