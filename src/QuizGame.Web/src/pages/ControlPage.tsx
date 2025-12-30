@@ -252,7 +252,7 @@ export default function ControlPage() {
             </div>
           ) : !gameState.teams.length ? (
             <div className={styles['setup-section']}>
-              <h2>Setup Players</h2>
+              <h2>Setup Players {gameState.currentScene}</h2>
 
               <div className={styles['bulk-player-input']}>
                 <label>Enter player names (one per line):</label>
@@ -536,9 +536,8 @@ export default function ControlPage() {
                 <div className={styles['phase-intro-controls']}>
                   <p>Phase 3 introduction is showing on display.</p>
                   <button
-                    onClick={() => handleAssignTheme(0, gameState.sabotage.selectedThemes[0]?.id || '')}
+                    onClick={async () => await gameService.startThemeAssignment()}
                     className={styles['btn-start-assignment']}
-                    disabled={!gameState.sabotage.selectedThemes.length}
                   >
                     Start Theme Assignment →
                   </button>

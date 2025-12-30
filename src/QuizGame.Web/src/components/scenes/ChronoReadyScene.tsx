@@ -48,11 +48,11 @@ export function ChronoReadyScene({ gameState }: Props) {
             stiffness: 150
           }}
         >
-          <div className={styles['ready-text-fr']}>
-            Êtes-vous prêts ?
-          </div>
           <div className={styles['ready-text-nl']}>
             Zijn jullie klaar?
+          </div>
+          <div className={styles['ready-text-fr']}>
+            Êtes-vous prêts ?
           </div>
         </motion.div>
 
@@ -63,14 +63,14 @@ export function ChronoReadyScene({ gameState }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
           >
-            <div className={styles['challenge-label-fr']}>
-              Temps à battre
+            <div className={styles['challenge-label-nl']}>
+              Tijd om te verslaan
             </div>
             <div className={styles['best-time']}>
               {formatTime(chrono.bestTimeMs!)}
             </div>
-            <div className={styles['challenge-label-nl']}>
-              Tijd om te verslaan
+            <div className={styles['challenge-label-fr']}>
+              Temps à battre
             </div>
           </motion.div>
         )}

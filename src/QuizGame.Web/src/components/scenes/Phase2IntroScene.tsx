@@ -39,8 +39,8 @@ export function Phase2IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
         >
-          <div className={styles['name-fr']}>Liste</div>
           <div className={styles['name-nl']}>Lijst</div>
+          <div className={styles['name-fr']}>Liste</div>
         </motion.div>
 
         <motion.div
@@ -59,8 +59,8 @@ export function Phase2IntroScene() {
             >
               <div className={styles['rule-bullet']}>•</div>
               <div className={styles['rule-text']}>
-                <div className={styles['rule-fr']}>{rule.fr}</div>
                 <div className={styles['rule-nl']}>{rule.nl}</div>
+                <div className={styles['rule-fr']}>{rule.fr}</div>
               </div>
             </motion.div>
           ))}
@@ -72,8 +72,8 @@ export function Phase2IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-fr']}>Points par élément valide listé</div>
           <div className={styles['scoring-nl']}>Punten per geldig item opgelijst</div>
+          <div className={styles['scoring-fr']}>Points par élément valide listé</div>
         </motion.div>
       </motion.div>
     </div>

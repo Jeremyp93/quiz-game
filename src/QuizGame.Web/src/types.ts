@@ -37,6 +37,7 @@ export enum Scene {
   ChronoQuestion = 15,
   ChronoCompletion = 16,
   ChronoFailure = 17,
+  Welcome = 18
 }
 
 export enum TimerState {

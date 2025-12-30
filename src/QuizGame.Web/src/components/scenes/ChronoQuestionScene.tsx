@@ -92,8 +92,8 @@ export function ChronoQuestionScene({ gameState }: Props) {
         <h1 className={styles['team-name']}>{activeTeam.name}</h1>
         {isCountdownMode && chrono.bestTimeMs && (
           <div className={styles['time-to-beat']}>
-            <span className={styles['label-fr']}>Temps à battre:</span>{' '}
             <span className={styles['label-nl']}>Te kloppen tijd:</span>{' '}
+            <span className={styles['label-fr']}>Temps à battre:</span>{' '}
             <span className={styles['time-value']}>{formatTime(chrono.bestTimeMs)}</span>
           </div>
         )}
@@ -110,13 +110,13 @@ export function ChronoQuestionScene({ gameState }: Props) {
       >
         <div className={styles['question-text']}>
           <div className={styles['question-lang']}>
-            <span className={styles['lang-label']}>FR:</span>
-            <p>{chrono.currentQuestion.textFr}</p>
+            <span className={styles['lang-label']}>NL:</span>
+            <p>{chrono.currentQuestion.textNl}</p>
           </div>
           <div className={styles['question-divider']}></div>
           <div className={styles['question-lang']}>
-            <span className={styles['lang-label']}>NL:</span>
-            <p>{chrono.currentQuestion.textNl}</p>
+            <span className={styles['lang-label']}>FR:</span>
+            <p>{chrono.currentQuestion.textFr}</p>
           </div>
         </div>
       </motion.div>

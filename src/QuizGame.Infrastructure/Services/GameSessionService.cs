@@ -148,7 +148,7 @@ public class GameSessionService : IGameSessionService
         _players.Clear();
         _teams.Clear();
         _currentPhase = Phase.Setup;
-        _currentScene = Scene.TeamCreationLoading;  // Changed from Teams to Scoreboard to prevent auto-showing teams
+        _currentScene = Scene.Welcome;  // Changed from Teams to Scoreboard to prevent auto-showing teams
         _lastSceneBeforeScoreboard = null;
     }
 
@@ -537,6 +537,14 @@ public class GameSessionService : IGameSessionService
         // Update phase and scene
         _currentPhase = Phase.Sabotage;
         _currentScene = Scene.Phase3Intro;
+    }
+
+    public void StartThemeAssignment()
+    {
+        if (_currentScene != Scene.Phase3Intro)
+            throw new InvalidOperationException("Can only start theme assignment from Phase 3 intro scene");
+
+        _currentScene = Scene.SabotageThemeAssignment;
     }
 
     public void AssignThemeToTeam(int teamIndex, Guid themeId)

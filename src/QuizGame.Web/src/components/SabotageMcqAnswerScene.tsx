@@ -3,6 +3,7 @@ import { GameState, McqChoice } from '../types';
 import styles from './SabotageMcqAnswerScene.module.css';
 import sharedStyles from '../styles/shared.module.css';
 import '../styles/animations.module.css';
+import { isDuplicateText } from '../utils/bilingualHelpers';
 
 interface Props {
   gameState: GameState;
@@ -83,8 +84,8 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <div className={sharedStyles['question-fr-dark']}>{question.textFr}</div>
           <div className={sharedStyles['question-nl-dark']}>{question.textNl}</div>
+          <div className={sharedStyles['question-fr-dark']}>{question.textFr}</div>
         </motion.div>
 
         <div className={styles.choices}>
@@ -121,8 +122,14 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
                   {String.fromCharCode(65 + idx)}
                 </motion.div>
                 <div className={styles['choice-text']}>
-                  <div>{choiceText.fr}</div>
-                  <div className={sharedStyles['choice-nl']}>{choiceText.nl}</div>
+                  {isDuplicateText(choiceText.fr, choiceText.nl) ? (
+                    <div>{choiceText.nl}</div>
+                  ) : (
+                    <>
+                      <div>{choiceText.nl}</div>
+                      <div className={sharedStyles['choice-fr']}>{choiceText.fr}</div>
+                    </>
+                  )}
                 </div>
                 <motion.div
                   className={styles['choice-indicator']}

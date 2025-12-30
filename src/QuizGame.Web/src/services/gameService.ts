@@ -6,8 +6,13 @@ class GameService {
   private stateListeners: ((state: GameState) => void)[] = [];
 
   async connect() {
+    // this.connection = new signalR.HubConnectionBuilder()
+    //   .withUrl('http://localhost:5000/gameHub')
+    //   .withAutomaticReconnect()
+    //   .build();
+
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5000/gameHub')
+      .withUrl('/gameHub')
       .withAutomaticReconnect()
       .build();
 
@@ -125,6 +130,10 @@ class GameService {
 
   async startPhase3() {
     await this.connection?.invoke('StartPhase3');
+  }
+
+  async startThemeAssignment() {
+    await this.connection?.invoke('StartThemeAssignment');
   }
 
   async assignThemeToTeam(teamIndex: number, themeId: string) {

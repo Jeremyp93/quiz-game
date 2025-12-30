@@ -36,7 +36,7 @@ export default function QuestionTransitionScene({ currentPhase }: QuestionTransi
         <div className={styles['transition-text']}>
           <div className={styles['transition-lang']}>
             <h1 className={styles['transition-title']}>
-              Prochaine question
+              Volgende vraag
               <motion.span
                 variants={dotVariants}
                 animate="animate"
@@ -65,7 +65,7 @@ export default function QuestionTransitionScene({ currentPhase }: QuestionTransi
 
           <div className={styles['transition-lang']}>
             <h1 className={styles['transition-title']}>
-              Volgende vraag
+              Prochaine question
               <motion.span
                 variants={dotVariants}
                 animate="animate"

@@ -88,13 +88,13 @@ export function ListQuestionScene({ question, timer }: ListQuestionSceneProps) {
       >
         <div className={styles['question-text-container']}>
           <div className={styles['question-lang']}>
-            <span className={styles['lang-label']}>FR:</span>
-            <p className={styles['question-text']}>{question.textFr}</p>
+            <span className={styles['lang-label']}>NL:</span>
+            <p className={styles['question-text']}>{question.textNl}</p>
           </div>
           <div className={styles['question-divider']}></div>
           <div className={styles['question-lang']}>
-            <span className={styles['lang-label']}>NL:</span>
-            <p className={styles['question-text']}>{question.textNl}</p>
+            <span className={styles['lang-label']}>FR:</span>
+            <p className={styles['question-text']}>{question.textFr}</p>
           </div>
         </div>
       </motion.div>

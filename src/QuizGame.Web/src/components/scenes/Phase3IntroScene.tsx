@@ -39,8 +39,8 @@ export function Phase3IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
         >
-          <div className={styles['name-fr']}>Sabotage</div>
           <div className={styles['name-nl']}>Sabotage</div>
+          <div className={styles['name-fr']}>Sabotage</div>
         </motion.div>
 
         <motion.div
@@ -59,8 +59,8 @@ export function Phase3IntroScene() {
             >
               <div className={styles['rule-bullet']}>•</div>
               <div className={styles['rule-text']}>
-                <div className={styles['rule-fr']}>{rule.fr}</div>
                 <div className={styles['rule-nl']}>{rule.nl}</div>
+                <div className={styles['rule-fr']}>{rule.fr}</div>
               </div>
             </motion.div>
           ))}
@@ -72,8 +72,8 @@ export function Phase3IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-fr']}>Points pour réponses QCM correctes</div>
           <div className={styles['scoring-nl']}>Punten voor correcte MCQ-antwoorden</div>
+          <div className={styles['scoring-fr']}>Points pour réponses QCM correctes</div>
         </motion.div>
       </motion.div>
     </div>

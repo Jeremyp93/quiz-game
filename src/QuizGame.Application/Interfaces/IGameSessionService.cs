@@ -35,6 +35,7 @@ public interface IGameSessionService
 
     // Phase 3 (Sabotage)
     Task StartPhase3();
+    void StartThemeAssignment();
     void AssignThemeToTeam(int teamIndex, Guid themeId);
     void UndoLastThemeAssignment();
     Task StartMcqSubphase();

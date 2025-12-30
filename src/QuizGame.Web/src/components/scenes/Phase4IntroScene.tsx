@@ -39,8 +39,8 @@ export function Phase4IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
         >
-          <div className={styles['name-fr']}>Chrono</div>
           <div className={styles['name-nl']}>Chrono</div>
+          <div className={styles['name-fr']}>Chrono</div>
         </motion.div>
 
         <motion.div
@@ -59,8 +59,8 @@ export function Phase4IntroScene() {
             >
               <div className={styles['rule-bullet']}>•</div>
               <div className={styles['rule-text']}>
-                <div className={styles['rule-fr']}>{rule.fr}</div>
                 <div className={styles['rule-nl']}>{rule.nl}</div>
+                <div className={styles['rule-fr']}>{rule.fr}</div>
               </div>
             </motion.div>
           ))}
@@ -72,8 +72,8 @@ export function Phase4IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-fr']}>Classement basé sur le temps (le plus rapide = le plus de points)</div>
           <div className={styles['scoring-nl']}>Ranking op basis van tijd (snelste = meeste punten)</div>
+          <div className={styles['scoring-fr']}>Classement basé sur le temps (le plus rapide = le plus de points)</div>
         </motion.div>
       </motion.div>
     </div>

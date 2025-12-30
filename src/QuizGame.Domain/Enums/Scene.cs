@@ -19,5 +19,6 @@ public enum Scene
     ChronoReady,
     ChronoQuestion,
     ChronoCompletion,
-    ChronoFailure
+    ChronoFailure,
+    Welcome
 }

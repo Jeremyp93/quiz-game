@@ -163,6 +163,12 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    public async Task StartThemeAssignment()
+    {
+        _gameSessionService.StartThemeAssignment();
+        await BroadcastGameState();
+    }
+
     public async Task AssignThemeToTeam(int teamIndex, string themeId)
     {
         _gameSessionService.AssignThemeToTeam(teamIndex, Guid.Parse(themeId));

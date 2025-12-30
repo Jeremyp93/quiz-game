@@ -18,9 +18,10 @@
   text-align: center;
 }
 
-.game-title-fr {
-  font-size: 6rem;
-  font-weight: 900;
+.game-title-fr,
+.game-title-nl {
+  font-size: 5rem;
+  font-weight: 800;
   color: white;
   margin: 0 0 1rem 0;
   text-shadow:
@@ -29,15 +30,6 @@
     0 5px 15px rgba(0, 0, 0, 0.5);
   letter-spacing: 0.1em;
   animation: titleGlow 3s ease-in-out infinite;
-}
-
-.game-title-nl {
-  font-size: 4rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0;
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.05em;
 }
 
 @keyframes titleGlow {
@@ -99,16 +91,11 @@
   gap: 0.25rem;
 }
 
-.phase-name-fr {
-  font-size: 1.6rem;
+.phase-name-fr,
+.phase-name-nl {
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1e293b;
-}
-
-.phase-name-nl {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #475569;
 }
 
 /* Waiting Message */
@@ -122,15 +109,11 @@
 
 .waiting-text-fr,
 .waiting-text-nl {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 600;
   color: white;
   margin: 0.5rem 0;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.waiting-text-fr {
-  font-size: 2rem;
 }
 
 /* Responsive Design */
@@ -140,12 +123,9 @@
     max-width: 600px;
   }
 
-  .game-title-fr {
-    font-size: 4rem;
-  }
-
+  .game-title-fr,
   .game-title-nl {
-    font-size: 3rem;
+    font-size: 3.5rem;
   }
 }
 
@@ -161,12 +141,9 @@
     max-width: 400px;
   }
 
-  .game-title-fr {
-    font-size: 3rem;
-  }
-
+  .game-title-fr,
   .game-title-nl {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .phase-icon {

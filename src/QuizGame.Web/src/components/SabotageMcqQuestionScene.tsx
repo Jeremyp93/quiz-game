@@ -67,8 +67,8 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.4 }}
         >
-          <div className={sharedStyles['question-fr-light']}>{question.textFr}</div>
           <div className={sharedStyles['question-nl-light']}>{question.textNl}</div>
+          <div className={sharedStyles['question-fr-light']}>{question.textFr}</div>
         </motion.div>
 
         <div className={styles.choices}>
@@ -96,8 +96,8 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
               >
                 <div className={styles['choice-letter']}>{letter}</div>
                 <div className={styles['choice-text']}>
-                  <div>{choiceData.fr}</div>
-                  <div className={sharedStyles['choice-nl']}>{choiceData.nl}</div>
+                  <div>{choiceData.nl}</div>
+                  <div className={sharedStyles['choice-fr']}>{choiceData.fr}</div>
                 </div>
               </motion.div>
             );

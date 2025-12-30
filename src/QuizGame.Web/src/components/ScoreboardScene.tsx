@@ -54,7 +54,8 @@ export default function ScoreboardScene({ teams }: Props) {
         transition={{ duration: 0.6, type: 'spring' }}
         className={styles['scoreboard-title']}
       >
-        Scoreboard
+        <div>Scorebord</div>
+        <div>Tableau des scores</div>
       </motion.h1>
 
       <motion.div

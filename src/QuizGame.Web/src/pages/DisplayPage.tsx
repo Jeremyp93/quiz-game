@@ -33,7 +33,7 @@ export default function DisplayPage() {
     );
   }
 
-  if (!gameState.isGameStarted) {
+  if (!gameState.isGameStarted || gameState.currentScene === Scene.Welcome) {
     return <WelcomeScene />;
   }
 

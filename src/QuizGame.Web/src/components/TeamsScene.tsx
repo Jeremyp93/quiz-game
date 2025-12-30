@@ -52,7 +52,8 @@ export default function TeamsScene({ teams }: Props) {
         transition={{ duration: 0.8, type: 'spring' }}
         className={styles['scene-title']}
       >
-        Teams
+        <div>Teams</div>
+        <div>Équipes</div>
       </motion.h1>
 
       <motion.div

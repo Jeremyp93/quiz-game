@@ -18,8 +18,8 @@ export function WelcomeScene() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className={styles['game-title-fr']}>Le Quiz Ultime</h1>
-        <h2 className={styles['game-title-nl']}>De Ultieme Quiz</h2>
+        <h1 className={styles['game-title-nl']}>De Ultieme Quiz</h1>
+        <h2 className={styles['game-title-fr']}>Le Quiz Ultime</h2>
       </motion.div>
 
       {/* Phase logos grid */}
@@ -36,8 +36,8 @@ export function WelcomeScene() {
             <div className={styles['phase-icon']}>{phase.icon}</div>
             <div className={styles['phase-label']}>Phase {phase.number}</div>
             <div className={styles['phase-names']}>
-              <div className={styles['phase-name-fr']}>{phase.nameFr}</div>
               <div className={styles['phase-name-nl']}>{phase.nameNl}</div>
+              <div className={styles['phase-name-fr']}>{phase.nameFr}</div>
             </div>
           </motion.div>
         ))}
@@ -49,8 +49,8 @@ export function WelcomeScene() {
         animate={{ opacity: [0.7, 1, 0.7] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <p className={styles['waiting-text-fr']}>En attente du Game Master...</p>
         <p className={styles['waiting-text-nl']}>Wachten op de Game Master...</p>
+        <p className={styles['waiting-text-fr']}>En attente du Game Master...</p>
       </motion.div>
     </div>
   );

@@ -41,14 +41,15 @@ export function ChronoFailureScene({ gameState }: Props) {
           ⏱️
         </motion.div>
 
-        <motion.h1
+        <motion.div
           className={styles['failure-title']}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          Time's Up!
-        </motion.h1>
+          <div>Tijd is om!</div>
+          <div>Le temps est écoulé !</div>
+        </motion.div>
 
         <motion.div
           className={styles['team-name']}
@@ -65,7 +66,11 @@ export function ChronoFailureScene({ gameState }: Props) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.9, duration: 0.6 }}
         >
-          {chrono.correctCount}/10 Correct
+          <div className={styles['score-value']}>{chrono.correctCount}/10</div>
+          <div className={styles['score-label']}>
+            <div>Juiste Antwoorden</div>
+            <div>Bonnes Réponses</div>
+          </div>
         </motion.div>
 
         <motion.div
@@ -74,7 +79,8 @@ export function ChronoFailureScene({ gameState }: Props) {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.5 }}
         >
-          Better luck next time!
+          <div>Volgende keer beter!</div>
+          <div>Meilleure chance la prochaine fois !</div>
         </motion.div>
       </motion.div>
     </div>

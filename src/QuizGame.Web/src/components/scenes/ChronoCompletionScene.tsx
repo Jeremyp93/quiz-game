@@ -48,14 +48,19 @@ export function ChronoCompletionScene({ gameState }: Props) {
           🏆
         </motion.div>
 
-        <motion.h1
+        <motion.div
           className={styles['completion-title']}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          {activeTeam.name} - Complete!
-        </motion.h1>
+          <div className={styles['title-nl']}>
+            {activeTeam.name} - Voltooid!
+          </div>
+          <div className={styles['title-fr']}>
+            {activeTeam.name} - Terminé !
+          </div>
+        </motion.div>
 
         <motion.div
           className={styles['time-display']}
@@ -73,7 +78,8 @@ export function ChronoCompletionScene({ gameState }: Props) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.5 }}
             >
-              ⭐ BEST TIME ⭐
+              <div>⭐ BESTE TIJD ⭐</div>
+              <div>⭐ MEILLEUR TEMPS ⭐</div>
             </motion.div>
           )}
         </motion.div>
@@ -84,7 +90,8 @@ export function ChronoCompletionScene({ gameState }: Props) {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.5 }}
         >
-          10/10 Correct Answers
+          <div>10/10 Juiste Antwoorden</div>
+          <div>10/10 Bonnes Réponses</div>
         </motion.div>
       </motion.div>
     </div>

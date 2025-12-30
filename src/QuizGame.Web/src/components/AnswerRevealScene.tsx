@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { CurrentQuestion, Team } from '../types';
 import styles from './AnswerRevealScene.module.css';
+import { isDuplicateText } from '../utils/bilingualHelpers';
 
 interface Props {
   question: CurrentQuestion;
@@ -54,15 +55,15 @@ export default function AnswerRevealScene({ question, teams, blockedTeamIndices 
             <div className={styles['section-title']}>Question</div>
             <div className={styles['qa-bilingual']}>
               <div className={styles['qa-lang']}>
-                <div className={styles['lang-label']}>FR</div>
-                <div className={styles['qa-text']}>{question.textFr}</div>
+                <div className={styles['lang-label']}>NL</div>
+                <div className={styles['qa-text']}>{question.textNl}</div>
               </div>
 
               <div className={styles['qa-divider']}></div>
 
               <div className={styles['qa-lang']}>
-                <div className={styles['lang-label']}>NL</div>
-                <div className={styles['qa-text']}>{question.textNl}</div>
+                <div className={styles['lang-label']}>FR</div>
+                <div className={styles['qa-text']}>{question.textFr}</div>
               </div>
             </div>
           </div>
@@ -70,19 +71,27 @@ export default function AnswerRevealScene({ question, teams, blockedTeamIndices 
           {/* Answer Section - Animated Reveal */}
           <motion.div variants={answerReveal} className={`${styles['qa-section']} ${styles['answer-section']}`}>
             <div className={`${styles['section-title']} ${styles['answer-title']}`}>Answer</div>
-            <div className={styles['qa-bilingual']}>
-              <div className={styles['qa-lang']}>
-                <div className={styles['lang-label']}>FR</div>
-                <div className={`${styles['qa-text']} ${styles['answer-text']}`}>{question.answerFr}</div>
+            {isDuplicateText(question.answerFr, question.answerNl) ? (
+              <div className={styles['qa-bilingual']}>
+                <div className={`${styles['qa-text']} ${styles['answer-text']}`}>
+                  {question.answerNl}
+                </div>
               </div>
+            ) : (
+              <div className={styles['qa-bilingual']}>
+                <div className={styles['qa-lang']}>
+                  <div className={styles['lang-label']}>NL</div>
+                  <div className={`${styles['qa-text']} ${styles['answer-text']}`}>{question.answerNl}</div>
+                </div>
 
-              <div className={styles['qa-divider']}></div>
+                <div className={styles['qa-divider']}></div>
 
-              <div className={styles['qa-lang']}>
-                <div className={styles['lang-label']}>NL</div>
-                <div className={`${styles['qa-text']} ${styles['answer-text']}`}>{question.answerNl}</div>
+                <div className={styles['qa-lang']}>
+                  <div className={styles['lang-label']}>FR</div>
+                  <div className={`${styles['qa-text']} ${styles['answer-text']}`}>{question.answerFr}</div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
         </motion.div>
 

@@ -35,8 +35,8 @@ export function BoardsUpOverlay() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <p>Levez les ardoises !</p>
           <p>Borden omhoog!</p>
+          <p>Levez les ardoises !</p>
         </motion.div>
       </motion.div>
     </motion.div>

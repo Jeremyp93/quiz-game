@@ -63,15 +63,15 @@ export default function QuestionScene({ question, teams, blockedTeamIndices }: P
 
           <div className={styles['question-bilingual']}>
             <div className={styles['question-lang']}>
-              <div className={styles['lang-label']}>FR</div>
-              <div className={styles['question-text']}>{question.textFr}</div>
+              <div className={styles['lang-label']}>NL</div>
+              <div className={styles['question-text']}>{question.textNl}</div>
             </div>
 
             <div className={styles['question-divider']}></div>
 
             <div className={styles['question-lang']}>
-              <div className={styles['lang-label']}>NL</div>
-              <div className={styles['question-text']}>{question.textNl}</div>
+              <div className={styles['lang-label']}>FR</div>
+              <div className={styles['question-text']}>{question.textFr}</div>
             </div>
           </div>
         </motion.div>
