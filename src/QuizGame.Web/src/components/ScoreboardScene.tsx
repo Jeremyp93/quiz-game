@@ -85,11 +85,21 @@ export default function ScoreboardScene({ teams }: Props) {
           return (
             <motion.div
               key={team.name}
+              layout
+              layoutId={team.name}
               variants={item}
               className={`${styles['scoreboard-item']} ${index === 0 ? styles['rank-1'] : ''}`}
               style={{
                 ['--team-gradient' as any]: teamColor.gradient,
                 ['--team-glow' as any]: teamColor.glow,
+              }}
+              transition={{
+                layout: {
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                }
               }}
             >
               <div className={styles['rank-badge']}>{index + 1}</div>
