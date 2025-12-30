@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { CurrentQuestion, Team } from '../types';
-import './AnswerRevealScene.css';
+import styles from './AnswerRevealScene.module.css';
 
 interface Props {
   question: CurrentQuestion;
@@ -35,52 +35,52 @@ export default function AnswerRevealScene({ question, teams, blockedTeamIndices 
   };
 
   return (
-    <div className="answer-reveal-scene">
+    <div className={styles['answer-reveal-scene']}>
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="answer-container"
+        className={styles['answer-container']}
       >
-        <motion.div className="answer-card">
-          <div className="answer-header">
-            <div className="difficulty-badge">
+        <motion.div className={styles['answer-card']}>
+          <div className={styles['answer-header']}>
+            <div className={styles['difficulty-badge']}>
               Difficulty: {question.difficulty}
             </div>
           </div>
 
           {/* Question Section */}
-          <div className="qa-section">
-            <div className="section-title">Question</div>
-            <div className="qa-bilingual">
-              <div className="qa-lang">
-                <div className="lang-label">FR</div>
-                <div className="qa-text">{question.textFr}</div>
+          <div className={styles['qa-section']}>
+            <div className={styles['section-title']}>Question</div>
+            <div className={styles['qa-bilingual']}>
+              <div className={styles['qa-lang']}>
+                <div className={styles['lang-label']}>FR</div>
+                <div className={styles['qa-text']}>{question.textFr}</div>
               </div>
 
-              <div className="qa-divider"></div>
+              <div className={styles['qa-divider']}></div>
 
-              <div className="qa-lang">
-                <div className="lang-label">NL</div>
-                <div className="qa-text">{question.textNl}</div>
+              <div className={styles['qa-lang']}>
+                <div className={styles['lang-label']}>NL</div>
+                <div className={styles['qa-text']}>{question.textNl}</div>
               </div>
             </div>
           </div>
 
           {/* Answer Section - Animated Reveal */}
-          <motion.div variants={answerReveal} className="qa-section answer-section">
-            <div className="section-title answer-title">Answer</div>
-            <div className="qa-bilingual">
-              <div className="qa-lang">
-                <div className="lang-label">FR</div>
-                <div className="qa-text answer-text">{question.answerFr}</div>
+          <motion.div variants={answerReveal} className={`${styles['qa-section']} ${styles['answer-section']}`}>
+            <div className={`${styles['section-title']} ${styles['answer-title']}`}>Answer</div>
+            <div className={styles['qa-bilingual']}>
+              <div className={styles['qa-lang']}>
+                <div className={styles['lang-label']}>FR</div>
+                <div className={`${styles['qa-text']} ${styles['answer-text']}`}>{question.answerFr}</div>
               </div>
 
-              <div className="qa-divider"></div>
+              <div className={styles['qa-divider']}></div>
 
-              <div className="qa-lang">
-                <div className="lang-label">NL</div>
-                <div className="qa-text answer-text">{question.answerNl}</div>
+              <div className={styles['qa-lang']}>
+                <div className={styles['lang-label']}>NL</div>
+                <div className={`${styles['qa-text']} ${styles['answer-text']}`}>{question.answerNl}</div>
               </div>
             </div>
           </motion.div>
@@ -90,12 +90,12 @@ export default function AnswerRevealScene({ question, teams, blockedTeamIndices 
           <motion.div
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            className="blocked-teams-section"
+            className={styles['blocked-teams-section']}
           >
-            <div className="blocked-title">Blocked Teams</div>
-            <div className="blocked-teams">
+            <div className={styles['blocked-title']}>Blocked Teams</div>
+            <div className={styles['blocked-teams']}>
               {blockedTeamIndices.map((index) => (
-                <div key={index} className="blocked-team-badge">
+                <div key={index} className={styles['blocked-team-badge']}>
                   {teams[index]?.name || `Team ${index + 1}`}
                 </div>
               ))}

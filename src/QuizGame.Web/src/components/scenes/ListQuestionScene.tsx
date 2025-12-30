@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { CurrentListQuestion, ListTimer, TimerState } from '../../types';
-import './ListQuestionScene.css';
+import styles from './ListQuestionScene.module.css';
 import { useEffect, useState } from 'react';
 
 interface ListQuestionSceneProps {
@@ -74,39 +74,39 @@ export function ListQuestionScene({ question, timer }: ListQuestionSceneProps) {
 
   return (
     <motion.div
-      className="list-question-scene"
+      className={styles['list-question-scene']}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="question-content"
+        className={styles['question-content']}
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.6 }}
       >
-        <div className="question-text-container">
-          <div className="question-lang">
-            <span className="lang-label">FR:</span>
-            <p className="question-text">{question.textFr}</p>
+        <div className={styles['question-text-container']}>
+          <div className={styles['question-lang']}>
+            <span className={styles['lang-label']}>FR:</span>
+            <p className={styles['question-text']}>{question.textFr}</p>
           </div>
-          <div className="question-divider"></div>
-          <div className="question-lang">
-            <span className="lang-label">NL:</span>
-            <p className="question-text">{question.textNl}</p>
+          <div className={styles['question-divider']}></div>
+          <div className={styles['question-lang']}>
+            <span className={styles['lang-label']}>NL:</span>
+            <p className={styles['question-text']}>{question.textNl}</p>
           </div>
         </div>
       </motion.div>
 
       <motion.div
-        className={`timer-display ${isLowTime ? 'low-time' : ''} timer-${timer.state}`}
+        className={`${styles['timer-display']} ${isLowTime ? styles['low-time'] : ''} ${styles[`timer-${timer.state}`]}`}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.6, type: 'spring' }}
       >
-        <div className="timer-status">{getTimerStatus()}</div>
-        <div className="timer-value">
+        <div className={styles['timer-status']}>{getTimerStatus()}</div>
+        <div className={styles['timer-value']}>
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
         </div>
       </motion.div>

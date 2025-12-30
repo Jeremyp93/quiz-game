@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { GameState, McqChoice } from '../types';
-import './SabotageMcqAnswerScene.css';
+import styles from './SabotageMcqAnswerScene.module.css';
+import sharedStyles from '../styles/shared.module.css';
+import '../styles/animations.module.css';
 
 interface Props {
   gameState: GameState;
@@ -43,83 +45,155 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
   const isCorrectAnswer = sabotage.selectedAnswer === question.correctChoice;
 
   return (
-    <div className="sabotage-mcq-answer-scene">
+    <div className={styles['sabotage-mcq-answer-scene']}>
       <motion.div
-        className="mcq-header"
-        initial={{ opacity: 0, y: -50 }}
+        className={sharedStyles['mcq-header']}
+        initial={{ opacity: 0, y: -80 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          type: "spring",
+          stiffness: 100,
+          damping: 15
+        }}
       >
-        <h1 className="phase-title">Phase 3: Sabotage - MCQ</h1>
+        <h1 className={sharedStyles['phase-title']}>Phase 3: Sabotage - MCQ</h1>
 
-        <div className="team-info">
+        <div className={sharedStyles['team-info']}>
           <h2>{currentTeam.name}</h2>
-          <div className="theme-info">
+          <div className={sharedStyles['theme-info']}>
             {themeIcon} {question.theme.icon} {question.theme.nameFr} / {question.theme.nameNl}
-            <span className="theme-type">({themeName})</span>
+            <span className={sharedStyles['theme-type']}>({themeName})</span>
           </div>
-          <div className="progress-info">
+          <div className={sharedStyles['progress-info']}>
             Theme {(sabotage.currentThemeIndex || 0) + 1}/2 · Question {sabotage.currentQuestionInTheme + 1}/4 · {difficultyStars}
           </div>
         </div>
       </motion.div>
 
       <motion.div
-        className="question-container"
-        initial={{ opacity: 0, scale: 0.9 }}
+        className={styles['question-container']}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
+        transition={{ duration: 0.4 }}
       >
-        <div className="question-text">
-          <div className="question-fr">{question.textFr}</div>
-          <div className="question-nl">{question.textNl}</div>
-        </div>
+        <motion.div
+          className={sharedStyles['question-text-dark']}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={sharedStyles['question-fr-dark']}>{question.textFr}</div>
+          <div className={sharedStyles['question-nl-dark']}>{question.textNl}</div>
+        </motion.div>
 
-        <div className="choices">
+        <div className={styles.choices}>
           {[McqChoice.A, McqChoice.B, McqChoice.C].map((choice, idx) => {
             const choiceText = getChoiceText(choice);
             const choiceClass = getChoiceClass(choice);
             const isCorrect = choice === question.correctChoice;
             const isSelected = sabotage.selectedAnswer === choice;
 
+            // Staggered reveal animation
+            const baseDelay = 0.5;
+            const revealDelay = baseDelay + (idx * 0.15);
+
             return (
               <motion.div
                 key={choice}
-                className={`choice ${choiceClass}`}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + idx * 0.2 }}
+                className={`${styles.choice} ${choiceClass ? styles[choiceClass] : ''}`}
+                initial={{ opacity: 0.3, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: revealDelay,
+                  duration: 0.3
+                }}
               >
-                <div className="choice-letter">{String.fromCharCode(65 + idx)}</div>
-                <div className="choice-text">
+                <motion.div
+                  className={styles['choice-letter']}
+                  initial={{ scale: 1 }}
+                  animate={isCorrect ? { scale: [1, 1.2, 1] } : {}}
+                  transition={{
+                    delay: revealDelay + 0.2,
+                    duration: 0.5
+                  }}
+                >
+                  {String.fromCharCode(65 + idx)}
+                </motion.div>
+                <div className={styles['choice-text']}>
                   <div>{choiceText.fr}</div>
-                  <div className="choice-nl">{choiceText.nl}</div>
+                  <div className={sharedStyles['choice-nl']}>{choiceText.nl}</div>
                 </div>
-                <div className="choice-indicator">
-                  {isCorrect && <span className="indicator-icon">✓</span>}
-                  {isSelected && !isCorrect && <span className="indicator-icon">✗</span>}
-                </div>
+                <motion.div
+                  className={styles['choice-indicator']}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: revealDelay + 0.4,
+                    duration: 0.4,
+                    type: "spring",
+                    stiffness: 200
+                  }}
+                >
+                  {isCorrect && <span className={styles['indicator-icon']}>✓</span>}
+                  {isSelected && !isCorrect && <span className={styles['indicator-icon']}>✗</span>}
+                </motion.div>
               </motion.div>
             );
           })}
         </div>
 
         <motion.div
-          className={`result-banner ${isCorrectAnswer ? 'correct-result' : 'incorrect-result'}`}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.3 }}
+          className={`${styles['result-banner']} ${isCorrectAnswer ? styles['correct-result'] : styles['incorrect-result']}`}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 1.5,
+            duration: 0.5,
+            type: "spring",
+            stiffness: 150,
+            damping: 12
+          }}
         >
           {isCorrectAnswer ? (
             <>
-              <span className="result-icon">🎉</span>
-              <span className="result-text">Correct Answer!</span>
-              <span className="result-icon">🎉</span>
+              <motion.span
+                className={styles['result-icon']}
+                initial={{ rotate: -180, scale: 0 }}
+                animate={{ rotate: 0, scale: 1 }}
+                transition={{ delay: 1.6, duration: 0.5 }}
+              >
+                🎉
+              </motion.span>
+              <span className={styles['result-text']}>Correct Answer!</span>
+              <motion.span
+                className={styles['result-icon']}
+                initial={{ rotate: 180, scale: 0 }}
+                animate={{ rotate: 0, scale: 1 }}
+                transition={{ delay: 1.6, duration: 0.5 }}
+              >
+                🎉
+              </motion.span>
             </>
           ) : (
             <>
-              <span className="result-icon">😞</span>
-              <span className="result-text">Wrong Answer</span>
-              <span className="result-icon">😞</span>
+              <motion.span
+                className={styles['result-icon']}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 1.6, duration: 0.4 }}
+              >
+                😞
+              </motion.span>
+              <span className={styles['result-text']}>Wrong Answer</span>
+              <motion.span
+                className={styles['result-icon']}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 1.6, duration: 0.4 }}
+              >
+                😞
+              </motion.span>
             </>
           )}
         </motion.div>

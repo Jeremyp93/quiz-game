@@ -1,0 +1,163 @@
+/* Sabotage MCQ Question Scene - CSS Module */
+
+/* Import animations */
+@import '../styles/animations.module.css';
+
+.sabotage-mcq-question-scene {
+  min-height: 100vh;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 50%, #4c1d95 100%);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animated background effect */
+.sabotage-mcq-question-scene::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+.question-container {
+  max-width: 1200px;
+  width: 100%;
+  max-height: calc(100vh - 280px);
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
+  color: #1f2937;
+  padding: 1.75rem 2rem;
+  border-radius: 20px;
+  border: 4px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.choice::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.choice:hover::before {
+  left: 100%;
+}
+
+.choice.selected {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  color: white;
+  border: 5px solid #fbbf24;
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.8),
+              0 0 60px rgba(251, 191, 36, 0.5),
+              0 12px 32px rgba(0, 0, 0, 0.4);
+  transform: scale(1.03);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.choice.selected .choice-text {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.choice.selected .choice-letter {
+  background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+  color: #d97706;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+              0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.choice-letter {
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s;
+}
+
+.choice-text {
+  flex: 1;
+}
+
+.choice-text > div:first-child {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 1199px) {
+  .choice-text > div:first-child {
+    font-size: 1.4rem;
+  }
+
+  .choice-letter {
+    width: 65px;
+    height: 65px;
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .sabotage-mcq-question-scene {
+    padding: 1rem;
+  }
+
+  .choices {
+    gap: 1rem;
+  }
+
+  .choice {
+    padding: 1.25rem 1.5rem;
+    gap: 1.25rem;
+    border-width: 3px;
+  }
+
+  .choice-letter {
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+  }
+
+  .choice-text > div:first-child {
+    font-size: 1.2rem;
+  }
+}

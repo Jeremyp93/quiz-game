@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { GameState } from '../types';
-import './SabotageMcqQuestionScene.css';
+import styles from './SabotageMcqQuestionScene.module.css';
+import sharedStyles from '../styles/shared.module.css';
+import '../styles/animations.module.css';
 
 interface Props {
   gameState: GameState;
@@ -21,22 +23,28 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
   const difficultyStars = '⭐'.repeat(question.difficulty);
 
   return (
-    <div className="sabotage-mcq-question-scene">
+    <div className={styles['sabotage-mcq-question-scene']}>
       <motion.div
         key="mcq-header"
-        className="mcq-header"
-        initial={{ opacity: 0, y: -50 }}
+        className={sharedStyles['mcq-header']}
+        initial={{ opacity: 0, y: -80 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          type: "spring",
+          stiffness: 100,
+          damping: 15
+        }}
       >
-        <h1 className="phase-title">Phase 3: Sabotage - MCQ</h1>
+        <h1 className={sharedStyles['phase-title']}>Phase 3: Sabotage - MCQ</h1>
 
-        <div className="team-info">
+        <div className={sharedStyles['team-info']}>
           <h2>{currentTeam.name}</h2>
-          <div className="theme-info">
+          <div className={sharedStyles['theme-info']}>
             {themeIcon} {question.theme.icon} {question.theme.nameFr} / {question.theme.nameNl}
-            <span className="theme-type">({themeName})</span>
+            <span className={sharedStyles['theme-type']}>({themeName})</span>
           </div>
-          <div className="progress-info">
+          <div className={sharedStyles['progress-info']}>
             Theme {(sabotage.currentThemeIndex || 0) + 1}/2 · Question {sabotage.currentQuestionInTheme + 1}/4 · {difficultyStars}
           </div>
         </div>
@@ -44,40 +52,56 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
 
       <motion.div
         key={`question-${question.id}`}
-        className="question-container"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        className={sharedStyles['question-container']}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          delay: 0.5,
+          duration: 0.4,
+          ease: "easeOut"
+        }}
       >
-        <div className="question-text">
-          <div className="question-fr">{question.textFr}</div>
-          <div className="question-nl">{question.textNl}</div>
-        </div>
+        <motion.div
+          className={sharedStyles['question-text-light']}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.4 }}
+        >
+          <div className={sharedStyles['question-fr-light']}>{question.textFr}</div>
+          <div className={sharedStyles['question-nl-light']}>{question.textNl}</div>
+        </motion.div>
 
-        <div className="choices">
-          <div className={`choice ${sabotage.selectedAnswer === 0 ? 'selected' : ''}`}>
-            <div className="choice-letter">A</div>
-            <div className="choice-text">
-              <div>{question.choiceAFr}</div>
-              <div className="choice-nl">{question.choiceANl}</div>
-            </div>
-          </div>
+        <div className={styles.choices}>
+          {[0, 1, 2].map((index) => {
+            const isSelected = sabotage.selectedAnswer === index;
+            const letter = String.fromCharCode(65 + index);
+            const choiceData = [
+              { fr: question.choiceAFr, nl: question.choiceANl },
+              { fr: question.choiceBFr, nl: question.choiceBNl },
+              { fr: question.choiceCFr, nl: question.choiceCNl }
+            ][index];
 
-          <div className={`choice ${sabotage.selectedAnswer === 1 ? 'selected' : ''}`}>
-            <div className="choice-letter">B</div>
-            <div className="choice-text">
-              <div>{question.choiceBFr}</div>
-              <div className="choice-nl">{question.choiceBNl}</div>
-            </div>
-          </div>
-
-          <div className={`choice ${sabotage.selectedAnswer === 2 ? 'selected' : ''}`}>
-            <div className="choice-letter">C</div>
-            <div className="choice-text">
-              <div>{question.choiceCFr}</div>
-              <div className="choice-nl">{question.choiceCNl}</div>
-            </div>
-          </div>
+            return (
+              <motion.div
+                key={index}
+                className={`${styles.choice} ${isSelected ? styles.selected : ''}`}
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: 0.8 + (index * 0.2),
+                  duration: 0.5,
+                  type: "spring",
+                  stiffness: 80
+                }}
+              >
+                <div className={styles['choice-letter']}>{letter}</div>
+                <div className={styles['choice-text']}>
+                  <div>{choiceData.fr}</div>
+                  <div className={sharedStyles['choice-nl']}>{choiceData.nl}</div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
     </div>

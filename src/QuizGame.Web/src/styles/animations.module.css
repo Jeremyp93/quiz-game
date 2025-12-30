@@ -1,0 +1,161 @@
+/* Shared Animations Module
+ * Contains all reusable @keyframes animations used across components
+ */
+
+/* Rotation animation - used for background effects */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse animation - used for selected choices */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1.03);
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.8),
+                0 0 60px rgba(251, 191, 36, 0.5),
+                0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(251, 191, 36, 1),
+                0 0 80px rgba(251, 191, 36, 0.6),
+                0 14px 36px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Glow pulse animation - used for phase titles */
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.8),
+                 0 0 40px rgba(139, 92, 246, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(59, 130, 246, 1),
+                 0 0 60px rgba(139, 92, 246, 0.8);
+  }
+}
+
+/* Shake animation - used for wrong answers */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-15px); }
+  40% { transform: translateX(15px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+}
+
+/* Celebrate animation - used for correct answers */
+@keyframes celebrate {
+  0% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  50% {
+    transform: scale(1.12) rotate(3deg);
+  }
+  100% {
+    transform: scale(1.05) rotate(0deg);
+  }
+}
+
+/* Glow correct animation - continuous glow for correct answers */
+@keyframes glow-correct {
+  0%, 100% {
+    box-shadow: 0 0 50px rgba(16, 185, 129, 0.8),
+                0 0 80px rgba(16, 185, 129, 0.5),
+                0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 70px rgba(16, 185, 129, 1),
+                0 0 100px rgba(16, 185, 129, 0.7),
+                0 14px 36px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Spin in animation - used for correct answer indicators */
+@keyframes spin-in {
+  from {
+    transform: rotate(-180deg) scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Bounce in animation - used for choice indicators */
+@keyframes bounce-in {
+  0% {
+    transform: translateX(50px) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-5px) scale(1.2);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Slide up bounce animation - used for result banners */
+@keyframes slide-up-bounce {
+  0% {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-15px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Breathing animation - subtle scale effect */
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Spin scale animation - used for result icons */
+@keyframes spin-scale {
+  0% {
+    transform: rotate(-180deg) scale(0);
+  }
+  70% {
+    transform: rotate(10deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* Fade in animation - general purpose */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide in from left - used for choice reveals */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

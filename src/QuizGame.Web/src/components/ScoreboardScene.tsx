@@ -1,7 +1,7 @@
 import { motion, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Team } from '../types';
-import './ScoreboardScene.css';
+import styles from './ScoreboardScene.module.css';
 
 interface Props {
   teams: Team[];
@@ -47,12 +47,12 @@ export default function ScoreboardScene({ teams }: Props) {
   };
 
   return (
-    <div className="scoreboard-scene">
+    <div className={styles['scoreboard-scene']}>
       <motion.h1
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, type: 'spring' }}
-        className="scoreboard-title"
+        className={styles['scoreboard-title']}
       >
         Scoreboard
       </motion.h1>
@@ -61,25 +61,25 @@ export default function ScoreboardScene({ teams }: Props) {
         variants={container}
         initial="hidden"
         animate="show"
-        className="scoreboard-list"
+        className={styles['scoreboard-list']}
       >
         {sortedTeams.map((team, index) => (
           <motion.div
             key={team.name}
             variants={item}
-            className={`scoreboard-item rank-${index + 1}`}
+            className={`${styles['scoreboard-item']} ${styles[`rank-${index + 1}`]}`}
           >
-            <div className="rank-badge">{index + 1}</div>
+            <div className={styles['rank-badge']}>{index + 1}</div>
 
-            <div className="team-info">
+            <div className={styles['team-info']}>
               <h2>{team.name}</h2>
-              <div className="team-players-list">
+              <div className={styles['team-players-list']}>
                 {team.players.join(', ')}
               </div>
             </div>
 
             <motion.div
-              className="score-display"
+              className={styles['score-display']}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 0.3 }}

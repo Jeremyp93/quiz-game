@@ -1,0 +1,106 @@
+/* CSS Variables Module
+ * Contains CSS custom properties for colors, spacing, typography, etc.
+ * Note: CSS Modules don't export custom properties, but we can still organize them here
+ * and they'll be available globally when imported
+ */
+
+:root {
+  /* Game Show Theme Colors */
+  --color-neon-blue: #3b82f6;
+  --color-neon-purple: #8b5cf6;
+  --color-neon-yellow: #fbbf24;
+
+  /* Correct Answer Colors */
+  --color-correct-primary: #10b981;
+  --color-correct-secondary: #059669;
+  --color-correct-glow: rgba(16, 185, 129, 0.6);
+
+  /* Wrong Answer Colors */
+  --color-wrong-primary: #ef4444;
+  --color-wrong-secondary: #dc2626;
+  --color-wrong-glow: rgba(239, 68, 68, 0.6);
+
+  /* Selected/Highlighted Colors */
+  --color-selected-primary: #fbbf24;
+  --color-selected-secondary: #f59e0b;
+  --color-selected-tertiary: #d97706;
+  --color-selected-glow: rgba(251, 191, 36, 0.8);
+
+  /* Background Colors */
+  --color-bg-dark-blue: #1e3a8a;
+  --color-bg-purple-dark: #312e81;
+  --color-bg-purple-darker: #4c1d95;
+
+  /* Text Colors */
+  --color-text-white: #ffffff;
+  --color-text-gray-dark: #1f2937;
+  --color-text-gray: #374151;
+  --color-text-gray-light: #d1d5db;
+
+  /* Spacing Scale */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 2.5rem;
+  --spacing-3xl: 3rem;
+
+  /* Typography Scale */
+  --font-size-xs: 1rem;
+  --font-size-sm: 1.1rem;
+  --font-size-md: 1.2rem;
+  --font-size-lg: 1.3rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.8rem;
+  --font-size-3xl: 2.2rem;
+  --font-size-4xl: 2.5rem;
+  --font-size-5xl: 2.8rem;
+  --font-size-6xl: 3rem;
+
+  /* Font Weights */
+  --font-weight-normal: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 50%;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.25);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+  /* Glow Effects */
+  --glow-yellow: 0 0 30px rgba(251, 191, 36, 0.4);
+  --glow-yellow-strong: 0 0 50px rgba(251, 191, 36, 1);
+  --glow-green: 0 0 50px rgba(16, 185, 129, 0.8);
+  --glow-red: 0 0 40px rgba(239, 68, 68, 0.7);
+  --glow-blue: 0 0 20px rgba(59, 130, 246, 0.8);
+
+  /* Z-Index Scale */
+  --z-index-base: 1;
+  --z-index-dropdown: 10;
+  --z-index-modal: 100;
+  --z-index-overlay: 1000;
+
+  /* Transitions */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+  --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Breakpoints (for reference in media queries) */
+  --breakpoint-mobile: 767px;
+  --breakpoint-tablet: 1199px;
+  --breakpoint-desktop: 1200px;
+}

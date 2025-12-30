@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Theme, CreateThemeDto } from '../types';
 import { themeService } from '../services/themeService';
-import './ThemesPage.css';
+import styles from './ThemesPage.module.css';
 
 export default function ThemesPage() {
   const [themes, setThemes] = useState<Theme[]>([]);
@@ -111,24 +111,24 @@ export default function ThemesPage() {
   };
 
   return (
-    <div className="themes-page">
+    <div className={styles['themes-page']}>
       <h1>Theme Management</h1>
 
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className={styles['error-message']}>{error}</div>}
 
-      <div className="themes-header">
-        <button onClick={() => setShowForm(!showForm)} className="btn-add-theme">
+      <div className={styles['themes-header']}>
+        <button onClick={() => setShowForm(!showForm)} className={styles['btn-add-theme']}>
           {showForm ? 'Cancel' : '+ Add Theme'}
         </button>
 
-        <div className="theme-filters">
+        <div className={styles['theme-filters']}>
           <select
             value={filterActive === undefined ? 'all' : filterActive ? 'active' : 'inactive'}
             onChange={(e) => {
               const val = e.target.value;
               setFilterActive(val === 'all' ? undefined : val === 'active');
             }}
-            className="filter-select"
+            className={styles['filter-select']}
           >
             <option value="all">All Themes</option>
             <option value="active">Active Only</option>
@@ -140,17 +140,17 @@ export default function ThemesPage() {
             placeholder="Search themes..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className="search-input"
+            className={styles['search-input']}
           />
         </div>
       </div>
 
       {showForm && (
-        <div className="theme-form-container">
+        <div className={styles['theme-form-container']}>
           <h2>{editingTheme ? 'Edit Theme' : 'Create Theme'}</h2>
-          <form onSubmit={handleSubmit} className="theme-form">
-            <div className="form-row">
-              <div className="form-group">
+          <form onSubmit={handleSubmit} className={styles['theme-form']}>
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
                 <label>Name (French) *</label>
                 <input
                   type="text"
@@ -161,7 +161,7 @@ export default function ThemesPage() {
                 />
               </div>
 
-              <div className="form-group">
+              <div className={styles['form-group']}>
                 <label>Name (Dutch) *</label>
                 <input
                   type="text"
@@ -173,8 +173,8 @@ export default function ThemesPage() {
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="form-group">
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
                 <label>Code *</label>
                 <input
                   type="text"
@@ -188,7 +188,7 @@ export default function ThemesPage() {
                 <small>Lowercase letters, numbers, and underscores only</small>
               </div>
 
-              <div className="form-group">
+              <div className={styles['form-group']}>
                 <label>Icon *</label>
                 <input
                   type="text"
@@ -202,8 +202,8 @@ export default function ThemesPage() {
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="form-group">
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
                 <label>Sort Order</label>
                 <input
                   type="number"
@@ -214,8 +214,8 @@ export default function ThemesPage() {
               </div>
             </div>
 
-            <div className="form-group">
-              <label className="checkbox-label">
+            <div className={styles['form-group']}>
+              <label className={styles['checkbox-label']}>
                 <input
                   type="checkbox"
                   checked={formData.isActive}
@@ -225,11 +225,11 @@ export default function ThemesPage() {
               </label>
             </div>
 
-            <div className="form-actions">
-              <button type="submit" className="btn-submit">
+            <div className={styles['form-actions']}>
+              <button type="submit" className={styles['btn-submit']}>
                 {editingTheme ? 'Update' : 'Create'} Theme
               </button>
-              <button type="button" onClick={resetForm} className="btn-cancel">
+              <button type="button" onClick={resetForm} className={styles['btn-cancel']}>
                 Cancel
               </button>
             </div>
@@ -238,10 +238,10 @@ export default function ThemesPage() {
       )}
 
       {loading ? (
-        <div className="loading">Loading themes...</div>
+        <div className={styles['loading']}>Loading themes...</div>
       ) : (
-        <div className="themes-list">
-          <table className="themes-table">
+        <div className={styles['themes-list']}>
+          <table className={styles['themes-table']}>
             <thead>
               <tr>
                 <th>Name (FR)</th>
@@ -256,39 +256,39 @@ export default function ThemesPage() {
             <tbody>
               {themes.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="no-data">
+                  <td colSpan={7} className={styles['no-data']}>
                     No themes found. Create your first theme!
                   </td>
                 </tr>
               ) : (
                 themes.map((theme) => (
-                  <tr key={theme.id} className={!theme.isActive ? 'inactive-row' : ''}>
+                  <tr key={theme.id} className={!theme.isActive ? styles['inactive-row'] : ''}>
                     <td>{theme.nameFr}</td>
                     <td>{theme.nameNl}</td>
                     <td><code>{theme.code}</code></td>
                     <td>
-                      <span className="question-count">
+                      <span className={styles['question-count']}>
                         {theme.questionCount}
                       </span>
                     </td>
                     <td>{theme.sortOrder || '-'}</td>
                     <td>
-                      <span className={`status-badge ${theme.isActive ? 'active' : 'inactive'}`}>
+                      <span className={`${styles['status-badge']} ${theme.isActive ? styles['active'] : styles['inactive']}`}>
                         {theme.isActive ? 'Active' : 'Inactive'}
                       </span>
                     </td>
-                    <td className="actions-cell">
-                      <button onClick={() => handleEdit(theme)} className="btn-edit" title="Edit">
+                    <td className={styles['actions-cell']}>
+                      <button onClick={() => handleEdit(theme)} className={styles['btn-edit']} title="Edit">
                         ✏️
                       </button>
                       <button
                         onClick={() => handleToggleActive(theme)}
-                        className="btn-toggle"
+                        className={styles['btn-toggle']}
                         title={theme.isActive ? 'Deactivate' : 'Activate'}
                       >
                         {theme.isActive ? '👁️' : '🚫'}
                       </button>
-                      <button onClick={() => handleDelete(theme)} className="btn-delete" title="Delete">
+                      <button onClick={() => handleDelete(theme)} className={styles['btn-delete']} title="Delete">
                         🗑️
                       </button>
                     </td>

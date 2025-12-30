@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import './QuestionTransitionScene.css';
+import styles from './QuestionTransitionScene.module.css';
 
 export default function QuestionTransitionScene() {
   const dotVariants = {
@@ -14,16 +14,16 @@ export default function QuestionTransitionScene() {
   };
 
   return (
-    <div className="question-transition-scene">
+    <div className={styles['question-transition-scene']}>
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="transition-container"
+        className={styles['transition-container']}
       >
-        <div className="transition-text">
-          <div className="transition-lang">
-            <h1 className="transition-title">
+        <div className={styles['transition-text']}>
+          <div className={styles['transition-lang']}>
+            <h1 className={styles['transition-title']}>
               Prochaine question
               <motion.span
                 variants={dotVariants}
@@ -49,10 +49,10 @@ export default function QuestionTransitionScene() {
             </h1>
           </div>
 
-          <div className="transition-divider"></div>
+          <div className={styles['transition-divider']}></div>
 
-          <div className="transition-lang">
-            <h1 className="transition-title">
+          <div className={styles['transition-lang']}>
+            <h1 className={styles['transition-title']}>
               Volgende vraag
               <motion.span
                 variants={dotVariants}

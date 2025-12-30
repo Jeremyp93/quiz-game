@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Question, QuestionType, CreateQuestionDto } from '../types';
 import { questionService } from '../services/questionService';
 import QuestionForm from '../components/QuestionForm';
-import './QuestionsPage.css';
+import styles from './QuestionsPage.module.css';
 
 export default function QuestionsPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -102,8 +102,8 @@ export default function QuestionsPage() {
 
   if (showForm) {
     return (
-      <div className="questions-page">
-        <div className="page-header">
+      <div className={styles['questions-page']}>
+        <div className={styles['page-header']}>
           <h1>{editingQuestion ? 'Edit Question' : 'Create Question'}</h1>
           <button onClick={() => setShowForm(false)}>Cancel</button>
         </div>
@@ -113,13 +113,13 @@ export default function QuestionsPage() {
   }
 
   return (
-    <div className="questions-page">
-      <div className="page-header">
+    <div className={styles['questions-page']}>
+      <div className={styles['page-header']}>
         <h1>Question Management</h1>
-        <button onClick={handleCreate} className="btn-primary">Create New Question</button>
+        <button onClick={handleCreate} className={styles['btn-primary']}>Create New Question</button>
       </div>
 
-      <div className="filters">
+      <div className={styles['filters']}>
         <select value={typeFilter} onChange={e => setTypeFilter(e.target.value === '' ? '' : Number(e.target.value))}>
           <option value="">All Types</option>
           <option value={QuestionType.Regular}>Regular</option>
@@ -151,9 +151,9 @@ export default function QuestionsPage() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="questions-list">
+        <div className={styles['questions-list']}>
           {filteredQuestions.length === 0 ? (
-            <div className="empty-state">No questions found</div>
+            <div className={styles['empty-state']}>No questions found</div>
           ) : (
             <table>
               <thead>
@@ -174,27 +174,27 @@ export default function QuestionsPage() {
                     <td>{question.difficulty}</td>
                     <td>
                       {question.theme ? (
-                        <span className="theme-badge" title={`${question.theme.nameFr} / ${question.theme.nameNl}`}>
+                        <span className={styles['theme-badge']} title={`${question.theme.nameFr} / ${question.theme.nameNl}`}>
                           {question.theme.nameFr}
                         </span>
                       ) : (
-                        <span className="no-theme">-</span>
+                        <span className={styles['no-theme']}>-</span>
                       )}
                     </td>
                     <td>{question.textFr}</td>
                     <td>{question.textNl}</td>
                     <td>
-                      <span className={`status ${question.isActive ? 'active' : 'inactive'}`}>
+                      <span className={`${styles['status']} ${question.isActive ? styles['active'] : styles['inactive']}`}>
                         {question.isActive ? 'Active' : 'Inactive'}
                       </span>
                     </td>
                     <td>
-                      <div className="actions">
-                        <button onClick={() => handleEdit(question)} className="btn-edit">Edit</button>
-                        <button onClick={() => handleToggleActive(question.id)} className="btn-toggle">
+                      <div className={styles['actions']}>
+                        <button onClick={() => handleEdit(question)} className={styles['btn-edit']}>Edit</button>
+                        <button onClick={() => handleToggleActive(question.id)} className={styles['btn-toggle']}>
                           {question.isActive ? 'Deactivate' : 'Activate'}
                         </button>
-                        <button onClick={() => handleDelete(question.id)} className="btn-delete">Delete</button>
+                        <button onClick={() => handleDelete(question.id)} className={styles['btn-delete']}>Delete</button>
                       </div>
                     </td>
                   </tr>

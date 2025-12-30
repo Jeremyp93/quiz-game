@@ -11,23 +11,23 @@ import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentS
 import SabotageMcqQuestionScene from '../components/SabotageMcqQuestionScene';
 import SabotageMcqAnswerScene from '../components/SabotageMcqAnswerScene';
 import QuestionTransitionScene from '../components/QuestionTransitionScene';
-import './DisplayPage.css';
+import styles from './DisplayPage.module.css';
 
 export default function DisplayPage() {
   const { gameState, isConnected } = useGameState();
 
   if (!isConnected) {
     return (
-      <div className="display-page">
-        <div className="loading-display">Connecting...</div>
+      <div className={styles['display-page']}>
+        <div className={styles['loading-display']}>Connecting...</div>
       </div>
     );
   }
 
   if (!gameState.isGameStarted) {
     return (
-      <div className="display-page">
-        <div className="waiting-display">
+      <div className={styles['display-page']}>
+        <div className={styles['waiting-display']}>
           <h1>Waiting for Game to Start...</h1>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default function DisplayPage() {
                        new Date(gameState.listTimer.boardsUpVisibleUntilUtc).getTime() > Date.now();
 
   return (
-    <div className="display-page">
+    <div className={styles['display-page']}>
       {gameState.currentScene === Scene.Teams && <TeamsScene teams={gameState.teams} />}
       {gameState.currentScene === Scene.Scoreboard && <ScoreboardScene teams={gameState.teams} />}
       {gameState.currentScene === Scene.TeamCreationLoading && <TeamCreationLoadingScene />}

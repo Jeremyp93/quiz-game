@@ -1,0 +1,105 @@
+.scoreboard-scene {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.scoreboard-title {
+  color: white;
+  font-size: 4.5rem;
+  margin-bottom: 3rem;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.scoreboard-list {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.scoreboard-item {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.scoreboard-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.scoreboard-item.rank-1::before {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.scoreboard-item.rank-1 {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+}
+
+.rank-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.rank-1 .rank-badge {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  width: 70px;
+  height: 70px;
+  font-size: 2.5rem;
+}
+
+.team-info {
+  flex: 1;
+}
+
+.team-info h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+.team-players-list {
+  color: #666;
+  font-size: 1.2rem;
+}
+
+.score-display {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #667eea;
+  min-width: 120px;
+  text-align: right;
+}
+
+.rank-1 .score-display {
+  color: #fda085;
+  font-size: 4.5rem;
+}

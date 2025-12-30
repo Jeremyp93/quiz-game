@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Question, QuestionType, CreateQuestionDto, McqChoice, ListQuestionAnswer, Theme } from '../types';
 import { themeService } from '../services/themeService';
-import './QuestionForm.css';
+import styles from './QuestionForm.module.css';
 
 interface Props {
   question: Question | null;
@@ -138,11 +138,11 @@ export default function QuestionForm({ question, onSubmit }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="question-form">
-      <div className="form-section">
+    <form onSubmit={handleSubmit} className={styles['question-form']}>
+      <div className={styles['form-section']}>
         <h3>Question Type & Settings</h3>
 
-        <div className="form-group">
+        <div className={styles['form-group']}>
           <label>Question Type *</label>
           <select value={type} onChange={e => setType(Number(e.target.value))} required>
             <option value={QuestionType.Regular}>Regular (Q&A)</option>
@@ -151,9 +151,9 @@ export default function QuestionForm({ question, onSubmit }: Props) {
           </select>
         </div>
 
-        <div className="form-group">
+        <div className={styles['form-group']}>
           <label>
-            Theme {type === QuestionType.Mcq && <span className="required-mark">*</span>}
+            Theme {type === QuestionType.Mcq && <span className={styles['required-mark']}>*</span>}
           </label>
           <select
             value={themeId}
@@ -174,8 +174,8 @@ export default function QuestionForm({ question, onSubmit }: Props) {
           )}
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
+        <div className={styles['form-row']}>
+          <div className={styles['form-group']}>
             <label>Difficulty (1-3) *</label>
             <select value={difficulty} onChange={e => setDifficulty(Number(e.target.value))} required>
               <option value="1">1</option>
@@ -184,7 +184,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
             </select>
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>
               <input type="checkbox" checked={isActive} onChange={e => setIsActive(e.target.checked)} />
               Active
@@ -192,43 +192,43 @@ export default function QuestionForm({ question, onSubmit }: Props) {
           </div>
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
+        <div className={styles['form-row']}>
+          <div className={styles['form-group']}>
             <label>Category</label>
             <input type="text" value={category} onChange={e => setCategory(e.target.value)} />
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>Tags (semicolon-separated)</label>
             <input type="text" value={tags} onChange={e => setTags(e.target.value)} />
           </div>
         </div>
       </div>
 
-      <div className="form-section">
+      <div className={styles['form-section']}>
         <h3>Question Text (Bilingual)</h3>
 
-        <div className="form-group">
+        <div className={styles['form-group']}>
           <label>Text (French) *</label>
           <textarea value={textFr} onChange={e => setTextFr(e.target.value)} required rows={3} />
         </div>
 
-        <div className="form-group">
+        <div className={styles['form-group']}>
           <label>Text (Dutch) *</label>
           <textarea value={textNl} onChange={e => setTextNl(e.target.value)} required rows={3} />
         </div>
       </div>
 
       {type === QuestionType.Regular && (
-        <div className="form-section">
+        <div className={styles['form-section']}>
           <h3>Answer (Regular)</h3>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>Answer (French) *</label>
             <input type="text" value={answerFr} onChange={e => setAnswerFr(e.target.value)} required />
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>Answer (Dutch) *</label>
             <input type="text" value={answerNl} onChange={e => setAnswerNl(e.target.value)} required />
           </div>
@@ -236,52 +236,52 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       )}
 
       {type === QuestionType.Mcq && (
-        <div className="form-section">
+        <div className={styles['form-section']}>
           <h3>Multiple Choice Options</h3>
 
-          <div className="mcq-choice">
+          <div className={styles['mcq-choice']}>
             <h4>Choice A</h4>
-            <div className="form-row">
-              <div className="form-group">
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
                 <label>Choice A (French) *</label>
                 <input type="text" value={choiceAFr} onChange={e => setChoiceAFr(e.target.value)} required />
               </div>
-              <div className="form-group">
+              <div className={styles['form-group']}>
                 <label>Choice A (Dutch) *</label>
                 <input type="text" value={choiceANl} onChange={e => setChoiceANl(e.target.value)} required />
               </div>
             </div>
           </div>
 
-          <div className="mcq-choice">
+          <div className={styles['mcq-choice']}>
             <h4>Choice B</h4>
-            <div className="form-row">
-              <div className="form-group">
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
                 <label>Choice B (French) *</label>
                 <input type="text" value={choiceBFr} onChange={e => setChoiceBFr(e.target.value)} required />
               </div>
-              <div className="form-group">
+              <div className={styles['form-group']}>
                 <label>Choice B (Dutch) *</label>
                 <input type="text" value={choiceBNl} onChange={e => setChoiceBNl(e.target.value)} required />
               </div>
             </div>
           </div>
 
-          <div className="mcq-choice">
+          <div className={styles['mcq-choice']}>
             <h4>Choice C</h4>
-            <div className="form-row">
-              <div className="form-group">
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
                 <label>Choice C (French) *</label>
                 <input type="text" value={choiceCFr} onChange={e => setChoiceCFr(e.target.value)} required />
               </div>
-              <div className="form-group">
+              <div className={styles['form-group']}>
                 <label>Choice C (Dutch) *</label>
                 <input type="text" value={choiceCNl} onChange={e => setChoiceCNl(e.target.value)} required />
               </div>
             </div>
           </div>
 
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label>Correct Choice *</label>
             <select value={correctChoice} onChange={e => setCorrectChoice(Number(e.target.value))} required>
               <option value={McqChoice.A}>A</option>
@@ -293,13 +293,13 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       )}
 
       {type === QuestionType.List && (
-        <div className="form-section">
+        <div className={styles['form-section']}>
           <h3>List Answers</h3>
 
           {listAnswers.map((answer, index) => (
-            <div key={answer.id} className="list-answer-item">
-              <div className="form-row">
-                <div className="form-group">
+            <div key={answer.id} className={styles['list-answer-item']}>
+              <div className={styles['form-row']}>
+                <div className={styles['form-group']}>
                   <label>Answer {index + 1} (French) *</label>
                   <input
                     type="text"
@@ -308,7 +308,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
                     required
                   />
                 </div>
-                <div className="form-group">
+                <div className={styles['form-group']}>
                   <label>Answer {index + 1} (Dutch) *</label>
                   <input
                     type="text"
@@ -318,7 +318,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div className={styles['form-group']}>
                 <label>Alternative Spellings</label>
                 <input
                   type="text"
@@ -326,20 +326,20 @@ export default function QuestionForm({ question, onSubmit }: Props) {
                   onChange={e => updateListAnswer(index, 'altSpellings', e.target.value)}
                 />
               </div>
-              <button type="button" onClick={() => removeListAnswer(index)} className="btn-remove">
+              <button type="button" onClick={() => removeListAnswer(index)} className={styles['btn-remove']}>
                 Remove
               </button>
             </div>
           ))}
 
-          <button type="button" onClick={addListAnswer} className="btn-add">
+          <button type="button" onClick={addListAnswer} className={styles['btn-add']}>
             Add Answer
           </button>
         </div>
       )}
 
-      <div className="form-actions">
-        <button type="submit" className="btn-submit">
+      <div className={styles['form-actions']}>
+        <button type="submit" className={styles['btn-submit']}>
           {question ? 'Update Question' : 'Create Question'}
         </button>
       </div>

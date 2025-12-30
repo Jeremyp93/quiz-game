@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Team } from '../types';
-import './TeamsScene.css';
+import styles from './TeamsScene.module.css';
 
 interface Props {
   teams: Team[];
@@ -45,12 +45,12 @@ export default function TeamsScene({ teams }: Props) {
   };
 
   return (
-    <div className="teams-scene">
+    <div className={styles['teams-scene']}>
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, type: 'spring' }}
-        className="scene-title"
+        className={styles['scene-title']}
       >
         Teams
       </motion.h1>
@@ -59,22 +59,22 @@ export default function TeamsScene({ teams }: Props) {
         variants={container}
         initial="hidden"
         animate="show"
-        className="teams-grid"
+        className={styles['teams-grid']}
       >
         {teams.map((team, index) => (
-          <motion.div key={index} variants={item} className="team-display-card">
-            <div className="team-display-header">
+          <motion.div key={index} variants={item} className={styles['team-display-card']}>
+            <div className={styles['team-display-header']}>
               <h2>{team.name}</h2>
             </div>
 
             <motion.div
-              className="team-display-players"
+              className={styles['team-display-players']}
               variants={container}
               initial="hidden"
               animate="show"
             >
               {team.players.map((player, playerIndex) => (
-                <motion.div key={playerIndex} variants={playerItem} className="player-display-item">
+                <motion.div key={playerIndex} variants={playerItem} className={styles['player-display-item']}>
                   {player}
                 </motion.div>
               ))}

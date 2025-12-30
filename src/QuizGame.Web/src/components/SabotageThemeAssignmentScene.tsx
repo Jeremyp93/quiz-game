@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { GameState } from '../types';
-import './SabotageThemeAssignmentScene.css';
+import styles from './SabotageThemeAssignmentScene.module.css';
 
 interface Props {
   gameState: GameState;
@@ -10,11 +10,11 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
   const { teams, sabotage } = gameState;
 
   return (
-    <div className="sabotage-theme-assignment-scene">
+    <div className={styles['sabotage-theme-assignment-scene']}>
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        className="phase-title"
+        className={styles['phase-title']}
       >
         Phase 3: Sabotage
       </motion.h1>
@@ -23,13 +23,13 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="subphase-title"
+        className={styles['subphase-title']}
       >
         Theme Assignment
       </motion.h2>
 
-      <div className="assignment-container">
-        <div className="teams-section">
+      <div className={styles['assignment-container']}>
+        <div className={styles['teams-section']}>
           {teams.map((team, idx) => {
             const assignment = sabotage.teamThemeAssignments.find(ta => ta.teamIndex === idx);
             const isCurrentPicker = sabotage.currentPickingTeamIndex === idx;
@@ -37,55 +37,55 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
             return (
               <motion.div
                 key={idx}
-                className={`team-assignment ${isCurrentPicker ? 'active-picker' : ''}`}
+                className={`${styles['team-assignment']} ${isCurrentPicker ? styles['active-picker'] : ''}`}
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 + idx * 0.1 }}
               >
-                <div className="team-header">
+                <div className={styles['team-header']}>
                   <h3>{team.name}</h3>
                 </div>
 
-                <div className="assigned-themes">
+                <div className={styles['assigned-themes']}>
                   {assignment?.selfSelectedTheme && (
                     <motion.div
-                      className="theme-badge self-selected"
+                      className={`${styles['theme-badge']} ${styles['self-selected']}`}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.8 }}
                     >
-                      <div className="theme-type-icon">✨</div>
-                      <div className="theme-icon">{assignment.selfSelectedTheme.icon}</div>
-                      <div className="theme-content">
-                        <div className="theme-name-fr">{assignment.selfSelectedTheme.nameFr}</div>
-                        <div className="theme-name-nl">{assignment.selfSelectedTheme.nameNl}</div>
+                      <div className={styles['theme-type-icon']}>✨</div>
+                      <div className={styles['theme-icon']}>{assignment.selfSelectedTheme.icon}</div>
+                      <div className={styles['theme-content']}>
+                        <div className={styles['theme-name-fr']}>{assignment.selfSelectedTheme.nameFr}</div>
+                        <div className={styles['theme-name-nl']}>{assignment.selfSelectedTheme.nameNl}</div>
                       </div>
                     </motion.div>
                   )}
                   {!assignment?.selfSelectedTheme && (
-                    <div className="theme-slot-empty">
-                      <span className="slot-icon">✨</span> ?
+                    <div className={styles['theme-slot-empty']}>
+                      <span className={styles['slot-icon']}>✨</span> ?
                     </div>
                   )}
 
                   {assignment?.sabotageTheme && (
                     <motion.div
-                      className="theme-badge sabotage"
+                      className={`${styles['theme-badge']} ${styles['sabotage']}`}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 1.0 }}
                     >
-                      <div className="theme-type-icon">💣</div>
-                      <div className="theme-icon">{assignment.sabotageTheme.icon}</div>
-                      <div className="theme-content">
-                        <div className="theme-name-fr">{assignment.sabotageTheme.nameFr}</div>
-                        <div className="theme-name-nl">{assignment.sabotageTheme.nameNl}</div>
+                      <div className={styles['theme-type-icon']}>💣</div>
+                      <div className={styles['theme-icon']}>{assignment.sabotageTheme.icon}</div>
+                      <div className={styles['theme-content']}>
+                        <div className={styles['theme-name-fr']}>{assignment.sabotageTheme.nameFr}</div>
+                        <div className={styles['theme-name-nl']}>{assignment.sabotageTheme.nameNl}</div>
                       </div>
                     </motion.div>
                   )}
                   {!assignment?.sabotageTheme && (
-                    <div className="theme-slot-empty">
-                      <span className="slot-icon">💣</span> ?
+                    <div className={styles['theme-slot-empty']}>
+                      <span className={styles['slot-icon']}>💣</span> ?
                     </div>
                   )}
                 </div>
@@ -94,11 +94,11 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
           })}
         </div>
 
-        <div className="available-themes">
+        <div className={styles['available-themes']}>
           {!sabotage.isThemeAssignmentComplete && (
-            <div className='theme-action'>
+            <div className={styles['theme-action']}>
                     <motion.div
-                      className="picker-indicator"
+                      className={styles['picker-indicator']}
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ repeat: Infinity, duration: 1.5 }}
                     >
@@ -106,7 +106,7 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                     </motion.div></div>
                   )}
           <h3>Available Themes</h3>
-          <div className="themes-grid">
+          <div className={styles['themes-grid']}>
             {sabotage.selectedThemes.map((theme, idx) => {
               const isAssigned = sabotage.teamThemeAssignments.some(
                 ta => (ta.selfSelectedTheme?.id === theme.id) || (ta.sabotageTheme?.id === theme.id)
@@ -115,15 +115,15 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
               return (
                 <motion.div
                   key={theme.id}
-                  className={`available-theme ${isAssigned ? 'assigned' : ''}`}
+                  className={`${styles['available-theme']} ${isAssigned ? styles['assigned'] : ''}`}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: isAssigned ? 0.3 : 1, scale: 1 }}
                   transition={{ delay: 0.6 + idx * 0.05 }}
                 >
-                  <span className="available-theme-icon">{theme.icon}</span>
-                  <div className="available-theme-text">
-                    <div className="theme-name-fr">{theme.nameFr}</div>
-                    <div className="theme-name-nl">{theme.nameNl}</div>
+                  <span className={styles['available-theme-icon']}>{theme.icon}</span>
+                  <div className={styles['available-theme-text']}>
+                    <div className={styles['theme-name-fr']}>{theme.nameFr}</div>
+                    <div className={styles['theme-name-nl']}>{theme.nameNl}</div>
                   </div>
                 </motion.div>
               );
@@ -133,7 +133,7 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
       </div>
       {sabotage.isThemeAssignmentComplete && (
         <motion.div
-          className="completion-message"
+          className={styles['completion-message']}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
         >

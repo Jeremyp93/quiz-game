@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { CurrentQuestion, Team } from '../types';
-import './QuestionScene.css';
+import styles from './QuestionScene.module.css';
 
 interface Props {
   question: CurrentQuestion;
@@ -47,31 +47,31 @@ export default function QuestionScene({ question, teams, blockedTeamIndices }: P
   };
 
   return (
-    <div className="question-scene">
+    <div className={styles['question-scene']}>
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="question-container"
+        className={styles['question-container']}
       >
-        <motion.div variants={questionCard} className="question-card">
-          <div className="question-header">
-            <div className="difficulty-badge">
+        <motion.div variants={questionCard} className={styles['question-card']}>
+          <div className={styles['question-header']}>
+            <div className={styles['difficulty-badge']}>
               Difficulty: {question.difficulty}
             </div>
           </div>
 
-          <div className="question-bilingual">
-            <div className="question-lang">
-              <div className="lang-label">FR</div>
-              <div className="question-text">{question.textFr}</div>
+          <div className={styles['question-bilingual']}>
+            <div className={styles['question-lang']}>
+              <div className={styles['lang-label']}>FR</div>
+              <div className={styles['question-text']}>{question.textFr}</div>
             </div>
 
-            <div className="question-divider"></div>
+            <div className={styles['question-divider']}></div>
 
-            <div className="question-lang">
-              <div className="lang-label">NL</div>
-              <div className="question-text">{question.textNl}</div>
+            <div className={styles['question-lang']}>
+              <div className={styles['lang-label']}>NL</div>
+              <div className={styles['question-text']}>{question.textNl}</div>
             </div>
           </div>
         </motion.div>
@@ -81,15 +81,15 @@ export default function QuestionScene({ question, teams, blockedTeamIndices }: P
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="blocked-teams-section"
+            className={styles['blocked-teams-section']}
           >
-            <div className="blocked-title">Blocked Teams</div>
-            <div className="blocked-teams">
+            <div className={styles['blocked-title']}>Blocked Teams</div>
+            <div className={styles['blocked-teams']}>
               {blockedTeamIndices.map((index) => (
                 <motion.div
                   key={index}
                   variants={teamBadge}
-                  className="blocked-team-badge"
+                  className={styles['blocked-team-badge']}
                 >
                   {teams[index]?.name || `Team ${index + 1}`}
                 </motion.div>

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import './TeamCreationLoadingScene.css';
+import styles from './TeamCreationLoadingScene.module.css';
 
 export default function TeamCreationLoadingScene() {
   const spinnerVariants = {
@@ -25,24 +25,24 @@ export default function TeamCreationLoadingScene() {
   };
 
   return (
-    <div className="team-creation-loading-scene">
+    <div className={styles['team-creation-loading-scene']}>
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="loading-container"
+        className={styles['loading-container']}
       >
         <motion.div
           variants={spinnerVariants}
           animate="animate"
-          className="spinner"
+          className={styles['spinner']}
         >
-          <div className="spinner-circle"></div>
+          <div className={styles['spinner-circle']}></div>
         </motion.div>
 
-        <div className="loading-text">
-          <div className="loading-lang">
-            <h1 className="loading-title">
+        <div className={styles['loading-text']}>
+          <div className={styles['loading-lang']}>
+            <h1 className={styles['loading-title']}>
               Création des équipes
               <motion.span
                 variants={dotVariants}
@@ -66,13 +66,13 @@ export default function TeamCreationLoadingScene() {
                 .
               </motion.span>
             </h1>
-            <p className="loading-subtitle">Distribution des joueurs en équipes...</p>
+            <p className={styles['loading-subtitle']}>Distribution des joueurs en équipes...</p>
           </div>
 
-          <div className="loading-divider"></div>
+          <div className={styles['loading-divider']}></div>
 
-          <div className="loading-lang">
-            <h1 className="loading-title">
+          <div className={styles['loading-lang']}>
+            <h1 className={styles['loading-title']}>
               Teams worden gemaakt
               <motion.span
                 variants={dotVariants}
@@ -96,7 +96,7 @@ export default function TeamCreationLoadingScene() {
                 .
               </motion.span>
             </h1>
-            <p className="loading-subtitle">Spelers worden in teams verdeeld...</p>
+            <p className={styles['loading-subtitle']}>Spelers worden in teams verdeeld...</p>
           </div>
         </div>
       </motion.div>
