@@ -1,0 +1,200 @@
+/* Phase 1 Introduction Scene - CSS Module */
+
+.intro-scene {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); /* Red/Orange */
+  padding: 4rem;
+  box-sizing: border-box;
+}
+
+.intro-container {
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.phase-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.phase-icon {
+  font-size: 12rem;
+  filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.4));
+}
+
+.phase-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.name-fr {
+  font-size: 5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+}
+
+.name-nl {
+  font-size: 4rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.rules-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 2rem;
+}
+
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  border-left: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.rule-bullet {
+  font-size: 3rem;
+  color: white;
+  margin-right: 1.5rem;
+  line-height: 1;
+}
+
+.rule-text {
+  flex: 1;
+  text-align: left;
+}
+
+.rule-fr {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.rule-nl {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.scoring {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  margin-top: 1rem;
+}
+
+.scoring-fr {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+}
+
+.scoring-nl {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #f97316;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .phase-icon {
+    font-size: 10rem;
+  }
+
+  .name-fr {
+    font-size: 3.5rem;
+  }
+
+  .name-nl {
+    font-size: 3rem;
+  }
+
+  .rule-fr {
+    font-size: 1.6rem;
+  }
+
+  .rule-nl {
+    font-size: 1.3rem;
+  }
+
+  .scoring-fr {
+    font-size: 1.5rem;
+  }
+
+  .scoring-nl {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-scene {
+    padding: 2rem;
+  }
+
+  .phase-number {
+    font-size: 2rem;
+  }
+
+  .phase-icon {
+    font-size: 8rem;
+  }
+
+  .name-fr {
+    font-size: 2.5rem;
+  }
+
+  .name-nl {
+    font-size: 2rem;
+  }
+
+  .rule-item {
+    padding: 1rem 1.5rem;
+  }
+
+  .rule-bullet {
+    font-size: 2rem;
+  }
+
+  .rule-fr {
+    font-size: 1.3rem;
+  }
+
+  .rule-nl {
+    font-size: 1.1rem;
+  }
+
+  .scoring {
+    padding: 1rem 1.5rem;
+  }
+
+  .scoring-fr {
+    font-size: 1.3rem;
+  }
+
+  .scoring-nl {
+    font-size: 1.1rem;
+  }
+}

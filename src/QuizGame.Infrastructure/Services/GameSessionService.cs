@@ -248,6 +248,7 @@ public class GameSessionService : IGameSessionService
     public Task StartPhase1()
     {
         _currentPhase = Phase.FastBuzzer;
+        _currentScene = Scene.Phase1Intro;
         _currentQuestion = null;
         _isCurrentQuestionVisibleOnDisplay = false;
         _lastQuestionId = null;
@@ -355,6 +356,7 @@ public class GameSessionService : IGameSessionService
     public Task StartPhase2()
     {
         _currentPhase = Phase.List;
+        _currentScene = Scene.Phase2Intro;
         _currentListQuestion = null;
         _isCurrentListQuestionVisibleOnDisplay = false;
         _lastListQuestionId = null;
@@ -533,11 +535,17 @@ public class GameSessionService : IGameSessionService
 
         // Update phase and scene
         _currentPhase = Phase.Sabotage;
-        _currentScene = Scene.SabotageThemeAssignment;
+        _currentScene = Scene.Phase3Intro;
     }
 
     public void AssignThemeToTeam(int teamIndex, Guid themeId)
     {
+        // Transition from intro scene to theme assignment scene on first assignment
+        if (_currentScene == Scene.Phase3Intro)
+        {
+            _currentScene = Scene.SabotageThemeAssignment;
+        }
+
         if (_sabotageIsThemeAssignmentComplete)
             throw new InvalidOperationException("Theme assignment is already complete");
 
@@ -866,7 +874,7 @@ public class GameSessionService : IGameSessionService
     public Task StartPhase4()
     {
         _currentPhase = Phase.Chrono;
-        _currentScene = Scene.Scoreboard;
+        _currentScene = Scene.Phase4Intro;
 
         // Reset all state
         _chronoActiveTeamIndex = null;

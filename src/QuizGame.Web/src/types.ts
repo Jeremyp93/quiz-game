@@ -29,10 +29,14 @@ export enum Scene {
   SabotageMcqQuestion = 7,
   SabotageMcqAnswer = 8,
   QuestionTransition = 9,
-  ChronoReady = 10,
-  ChronoQuestion = 11,
-  ChronoCompletion = 12,
-  ChronoFailure = 13,
+  Phase1Intro = 10,
+  Phase2Intro = 11,
+  Phase3Intro = 12,
+  Phase4Intro = 13,
+  ChronoReady = 14,
+  ChronoQuestion = 15,
+  ChronoCompletion = 16,
+  ChronoFailure = 17,
 }
 
 export enum TimerState {

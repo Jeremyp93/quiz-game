@@ -11,6 +11,10 @@ import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentS
 import SabotageMcqQuestionScene from '../components/SabotageMcqQuestionScene';
 import SabotageMcqAnswerScene from '../components/SabotageMcqAnswerScene';
 import QuestionTransitionScene from '../components/QuestionTransitionScene';
+import { Phase1IntroScene } from '../components/scenes/Phase1IntroScene';
+import { Phase2IntroScene } from '../components/scenes/Phase2IntroScene';
+import { Phase3IntroScene } from '../components/scenes/Phase3IntroScene';
+import { Phase4IntroScene } from '../components/scenes/Phase4IntroScene';
 import { ChronoReadyScene } from '../components/scenes/ChronoReadyScene';
 import { ChronoQuestionScene } from '../components/scenes/ChronoQuestionScene';
 import { ChronoCompletionScene } from '../components/scenes/ChronoCompletionScene';
@@ -79,6 +83,10 @@ export default function DisplayPage() {
       {gameState.currentScene === Scene.QuestionTransition && (
         <QuestionTransitionScene />
       )}
+      {gameState.currentScene === Scene.Phase1Intro && <Phase1IntroScene />}
+      {gameState.currentScene === Scene.Phase2Intro && <Phase2IntroScene />}
+      {gameState.currentScene === Scene.Phase3Intro && <Phase3IntroScene />}
+      {gameState.currentScene === Scene.Phase4Intro && <Phase4IntroScene />}
       {gameState.currentScene === Scene.ChronoReady && (
         <ChronoReadyScene gameState={gameState} />
       )}
