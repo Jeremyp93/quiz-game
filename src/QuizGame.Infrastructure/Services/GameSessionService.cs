@@ -50,6 +50,20 @@ public class GameSessionService : IGameSessionService
     private int _sabotageCurrentQuestionInTheme;
     private List<Guid> _sabotageThemeAssignmentHistory = new(); // For undo
 
+    // Phase 4 (Chrono) state
+    private int? _chronoActiveTeamIndex;
+    private ChronoRunStatus _chronoRunStatus = ChronoRunStatus.Idle;
+    private int _chronoCorrectCount;
+    private CurrentQuestionDto? _chronoCurrentQuestion;
+    private Guid? _chronoLastQuestionId;
+    private TimerState _chronoTimerState = TimerState.Idle;
+    private DateTime? _chronoTimerStartedAtUtc;
+    private DateTime? _chronoTimerPausedAtUtc;
+    private long _chronoTimerAccumulatedPausedMs;
+    private DateTime? _chronoTimerFinishedAtUtc;
+    private long? _chronoBestTimeMs;
+    private Dictionary<int, ChronoTeamResult> _chronoTeamResults = new();
+
     public GameSessionService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -109,6 +123,21 @@ public class GameSessionService : IGameSessionService
                 SelectedAnswer = _sabotageSelectedAnswer,
                 IsAnswerRevealed = _sabotageIsAnswerRevealed,
                 CurrentQuestionInTheme = _sabotageCurrentQuestionInTheme
+            },
+            Chrono = new ChronoStateDto
+            {
+                ActiveTeamIndex = _chronoActiveTeamIndex,
+                RunStatus = _chronoRunStatus,
+                CorrectCount = _chronoCorrectCount,
+                CurrentQuestion = _chronoCurrentQuestion,
+                LastQuestionId = _chronoLastQuestionId,
+                TimerState = _chronoTimerState,
+                TimerStartedAtUtc = _chronoTimerStartedAtUtc,
+                TimerPausedAtUtc = _chronoTimerPausedAtUtc,
+                TimerAccumulatedPausedMs = _chronoTimerAccumulatedPausedMs,
+                TimerFinishedAtUtc = _chronoTimerFinishedAtUtc,
+                BestTimeMs = _chronoBestTimeMs,
+                TeamResults = new Dictionary<int, ChronoTeamResult>(_chronoTeamResults)
             }
         };
     }
@@ -828,5 +857,305 @@ public class GameSessionService : IGameSessionService
 
         // Reset scene to QuestionTransition so GM can preview and show next question
         _currentScene = Scene.QuestionTransition;
+    }
+
+    // ============================================================
+    // Phase 4 (Chrono) Methods
+    // ============================================================
+
+    public Task StartPhase4()
+    {
+        _currentPhase = Phase.Chrono;
+        _currentScene = Scene.Scoreboard;
+
+        // Reset all state
+        _chronoActiveTeamIndex = null;
+        _chronoRunStatus = ChronoRunStatus.Idle;
+        _chronoCorrectCount = 0;
+        _chronoCurrentQuestion = null;
+        _chronoLastQuestionId = null;
+        ResetChronoTimerState();
+        _chronoBestTimeMs = null;
+        _chronoTeamResults.Clear();
+
+        // Initialize team results
+        for (int i = 0; i < _teams.Count; i++)
+        {
+            _chronoTeamResults[i] = new ChronoTeamResult
+            {
+                Status = ChronoResultStatus.NotStarted,
+                TimeMs = null
+            };
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public void SelectTeamForRun(int teamIndex)
+    {
+        if (teamIndex < 0 || teamIndex >= _teams.Count)
+            throw new ArgumentException("Invalid team index");
+
+        // Always reset the run state when selecting a team (unless already Idle)
+        if (_chronoRunStatus != ChronoRunStatus.Idle)
+        {
+            ResetCurrentChronoRun();
+        }
+
+        _chronoActiveTeamIndex = teamIndex;
+        _chronoRunStatus = ChronoRunStatus.Idle;
+
+        // Show "Are You Ready?" scene when selecting a new team
+        _currentScene = Scene.ChronoReady;
+    }
+
+    public async Task ShowNextChronoQuestion()
+    {
+        if (!_chronoActiveTeamIndex.HasValue)
+            throw new InvalidOperationException("No team selected for run");
+
+        using var scope = _serviceProvider.CreateScope();
+        var questionService = scope.ServiceProvider.GetRequiredService<IQuestionService>();
+
+        // Get random Regular question (avoid immediate repeat)
+        var question = await questionService.GetRandomRegularQuestionAsync(_chronoLastQuestionId);
+
+        if (question == null)
+            throw new InvalidOperationException("No active Regular questions available");
+
+        if (question.RegularDetails == null)
+            throw new InvalidOperationException("Question missing Regular details");
+
+        // Set current question
+        _chronoCurrentQuestion = new CurrentQuestionDto
+        {
+            Id = question.Id,
+            TextFr = question.TextFr,
+            TextNl = question.TextNl,
+            AnswerFr = question.RegularDetails.AnswerFr,
+            AnswerNl = question.RegularDetails.AnswerNl,
+            Difficulty = question.Difficulty
+        };
+
+        _chronoLastQuestionId = question.Id;
+
+        // Auto-start timer on first question
+        if (_chronoTimerState == TimerState.Idle)
+        {
+            _chronoTimerState = TimerState.Running;
+            _chronoTimerStartedAtUtc = DateTime.UtcNow;
+            _chronoTimerAccumulatedPausedMs = 0;
+            _chronoRunStatus = ChronoRunStatus.Running;
+        }
+
+        // Show on display
+        if (_currentScene == Scene.Scoreboard)
+        {
+            _lastSceneBeforeScoreboard = null;
+        }
+        _currentScene = Scene.ChronoQuestion;
+    }
+
+    public void MarkChronoCorrect()
+    {
+        if (_chronoRunStatus != ChronoRunStatus.Running && _chronoRunStatus != ChronoRunStatus.Paused)
+            throw new InvalidOperationException("No run in progress");
+
+        if (_chronoCorrectCount >= 10)
+            throw new InvalidOperationException("Already at 10 correct answers");
+
+        _chronoCorrectCount++;
+
+        // Auto-detect success
+        if (_chronoCorrectCount == 10)
+        {
+            AutoFinishChronoSuccess();
+        }
+    }
+
+    public void PauseChronoTimer()
+    {
+        if (_chronoTimerState != TimerState.Running)
+            throw new InvalidOperationException("Timer must be Running to pause");
+
+        _chronoTimerState = TimerState.Paused;
+        _chronoTimerPausedAtUtc = DateTime.UtcNow;
+        _chronoRunStatus = ChronoRunStatus.Paused;
+    }
+
+    public void ResumeChronoTimer()
+    {
+        if (_chronoTimerState != TimerState.Paused)
+            throw new InvalidOperationException("Timer must be Paused to resume");
+
+        if (_chronoTimerPausedAtUtc.HasValue && _chronoTimerStartedAtUtc.HasValue)
+        {
+            var pauseDuration = (DateTime.UtcNow - _chronoTimerPausedAtUtc.Value).TotalMilliseconds;
+            _chronoTimerAccumulatedPausedMs += (long)pauseDuration;
+        }
+
+        _chronoTimerState = TimerState.Running;
+        _chronoTimerPausedAtUtc = null;
+        _chronoRunStatus = ChronoRunStatus.Running;
+    }
+
+    public void ResetChronoRun()
+    {
+        if (_chronoRunStatus == ChronoRunStatus.Idle)
+            throw new InvalidOperationException("No run to reset");
+
+        ResetCurrentChronoRun();
+        _currentScene = Scene.Scoreboard;
+    }
+
+    public void AbortChronoRun()
+    {
+        if (!_chronoActiveTeamIndex.HasValue)
+            throw new InvalidOperationException("No team selected");
+
+        if (_chronoRunStatus == ChronoRunStatus.Idle)
+            throw new InvalidOperationException("No run to abort");
+
+        // Save as aborted
+        _chronoTeamResults[_chronoActiveTeamIndex.Value] = new ChronoTeamResult
+        {
+            Status = ChronoResultStatus.Aborted,
+            TimeMs = null
+        };
+
+        ResetCurrentChronoRun();
+        _currentScene = Scene.Scoreboard;
+    }
+
+    public void ForceFinishChronoRun()
+    {
+        if (!_chronoActiveTeamIndex.HasValue)
+            throw new InvalidOperationException("No team selected");
+
+        if (_chronoRunStatus == ChronoRunStatus.Idle)
+            throw new InvalidOperationException("No run to finish");
+
+        // Stop timer if running
+        if (_chronoTimerState == TimerState.Running)
+        {
+            _chronoTimerState = TimerState.Finished;
+            _chronoTimerFinishedAtUtc = DateTime.UtcNow;
+        }
+        else if (_chronoTimerState == TimerState.Paused)
+        {
+            _chronoTimerState = TimerState.Finished;
+            _chronoTimerFinishedAtUtc = _chronoTimerPausedAtUtc;
+        }
+
+        long finalTimeMs = CalculateChronoElapsedMs();
+
+        _chronoTeamResults[_chronoActiveTeamIndex.Value] = new ChronoTeamResult
+        {
+            Status = ChronoResultStatus.Finished,
+            TimeMs = finalTimeMs
+        };
+
+        // Update best time if beaten
+        if (!_chronoBestTimeMs.HasValue || finalTimeMs < _chronoBestTimeMs.Value)
+        {
+            _chronoBestTimeMs = finalTimeMs;
+        }
+
+        _chronoRunStatus = ChronoRunStatus.Finished;
+        _currentScene = Scene.ChronoCompletion;
+    }
+
+    public void FinishChronoTimerAsNotFinished()
+    {
+        if (!_chronoActiveTeamIndex.HasValue)
+            return;
+
+        if (_chronoTimerState != TimerState.Running)
+            return;
+
+        _chronoTimerState = TimerState.Finished;
+        _chronoTimerFinishedAtUtc = DateTime.UtcNow;
+
+        _chronoTeamResults[_chronoActiveTeamIndex.Value] = new ChronoTeamResult
+        {
+            Status = ChronoResultStatus.NotFinished,
+            TimeMs = null
+        };
+
+        _chronoRunStatus = ChronoRunStatus.NotFinished;
+        _currentScene = Scene.ChronoFailure;
+    }
+
+    private void AutoFinishChronoSuccess()
+    {
+        if (!_chronoActiveTeamIndex.HasValue)
+            return;
+
+        // Stop timer
+        if (_chronoTimerState == TimerState.Running)
+        {
+            _chronoTimerState = TimerState.Finished;
+            _chronoTimerFinishedAtUtc = DateTime.UtcNow;
+        }
+        else if (_chronoTimerState == TimerState.Paused)
+        {
+            // If paused, use paused time as finish time
+            _chronoTimerState = TimerState.Finished;
+            _chronoTimerFinishedAtUtc = _chronoTimerPausedAtUtc;
+        }
+
+        // Calculate final time
+        long finalTimeMs = CalculateChronoElapsedMs();
+
+        // Save result
+        _chronoTeamResults[_chronoActiveTeamIndex.Value] = new ChronoTeamResult
+        {
+            Status = ChronoResultStatus.Finished,
+            TimeMs = finalTimeMs
+        };
+
+        // Update best time if this is better
+        if (!_chronoBestTimeMs.HasValue || finalTimeMs < _chronoBestTimeMs.Value)
+        {
+            _chronoBestTimeMs = finalTimeMs;
+        }
+
+        _chronoRunStatus = ChronoRunStatus.Finished;
+        _currentScene = Scene.ChronoCompletion;
+    }
+
+    private void ResetCurrentChronoRun()
+    {
+        _chronoCorrectCount = 0;
+        _chronoCurrentQuestion = null;
+        _chronoLastQuestionId = null;
+        ResetChronoTimerState();
+        _chronoRunStatus = ChronoRunStatus.Idle;
+    }
+
+    private void ResetChronoTimerState()
+    {
+        _chronoTimerState = TimerState.Idle;
+        _chronoTimerStartedAtUtc = null;
+        _chronoTimerPausedAtUtc = null;
+        _chronoTimerAccumulatedPausedMs = 0;
+        _chronoTimerFinishedAtUtc = null;
+    }
+
+    private long CalculateChronoElapsedMs()
+    {
+        if (!_chronoTimerStartedAtUtc.HasValue)
+            return 0;
+
+        DateTime endTime;
+        if (_chronoTimerFinishedAtUtc.HasValue)
+            endTime = _chronoTimerFinishedAtUtc.Value;
+        else if (_chronoTimerPausedAtUtc.HasValue)
+            endTime = _chronoTimerPausedAtUtc.Value;
+        else
+            endTime = DateTime.UtcNow;
+
+        var elapsed = (endTime - _chronoTimerStartedAtUtc.Value).TotalMilliseconds;
+        return (long)(elapsed - _chronoTimerAccumulatedPausedMs);
     }
 }

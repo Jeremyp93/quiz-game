@@ -217,6 +217,64 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    // ============================================================
+    // Phase 4 (Chrono) Hub Methods
+    // ============================================================
+
+    public async Task StartPhase4()
+    {
+        await _gameSessionService.StartPhase4();
+        await BroadcastGameState();
+    }
+
+    public async Task SelectTeamForChronoRun(int teamIndex)
+    {
+        _gameSessionService.SelectTeamForRun(teamIndex);
+        await BroadcastGameState();
+    }
+
+    public async Task ShowNextChronoQuestion()
+    {
+        await _gameSessionService.ShowNextChronoQuestion();
+        await BroadcastGameState();
+    }
+
+    public async Task MarkChronoCorrect()
+    {
+        _gameSessionService.MarkChronoCorrect();
+        await BroadcastGameState();
+    }
+
+    public async Task PauseChronoTimer()
+    {
+        _gameSessionService.PauseChronoTimer();
+        await BroadcastGameState();
+    }
+
+    public async Task ResumeChronoTimer()
+    {
+        _gameSessionService.ResumeChronoTimer();
+        await BroadcastGameState();
+    }
+
+    public async Task ResetChronoRun()
+    {
+        _gameSessionService.ResetChronoRun();
+        await BroadcastGameState();
+    }
+
+    public async Task AbortChronoRun()
+    {
+        _gameSessionService.AbortChronoRun();
+        await BroadcastGameState();
+    }
+
+    public async Task ForceFinishChronoRun()
+    {
+        _gameSessionService.ForceFinishChronoRun();
+        await BroadcastGameState();
+    }
+
     private async Task BroadcastGameState()
     {
         var state = _gameSessionService.GetCurrentState();

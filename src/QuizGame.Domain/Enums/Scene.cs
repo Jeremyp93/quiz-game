@@ -11,5 +11,9 @@ public enum Scene
     SabotageThemeAssignment,
     SabotageMcqQuestion,
     SabotageMcqAnswer,
-    QuestionTransition
+    QuestionTransition,
+    ChronoReady,
+    ChronoQuestion,
+    ChronoCompletion,
+    ChronoFailure
 }

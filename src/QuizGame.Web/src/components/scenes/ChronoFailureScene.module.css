@@ -1,0 +1,102 @@
+/* Chrono Failure Scene - CSS Module */
+
+.failure-scene {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  padding: 4rem;
+  box-sizing: border-box;
+}
+
+.failure-container {
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+}
+
+.timeout-icon {
+  font-size: 10rem;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px) rotate(-5deg);
+  }
+  75% {
+    transform: translateX(10px) rotate(5deg);
+  }
+}
+
+.failure-title {
+  font-size: 5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin: 0 0 2rem 0;
+}
+
+.team-name {
+  font-size: 3rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.score-reached {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+
+.score-reached {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #ef4444;
+  font-family: 'Courier New', monospace;
+}
+
+.encouragement {
+  font-size: 2rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .timeout-icon {
+    font-size: 8rem;
+  }
+
+  .failure-title {
+    font-size: 3.5rem;
+  }
+
+  .team-name {
+    font-size: 2rem;
+  }
+
+  .score-reached {
+    font-size: 2.5rem;
+  }
+
+  .encouragement {
+    font-size: 1.5rem;
+  }
+}

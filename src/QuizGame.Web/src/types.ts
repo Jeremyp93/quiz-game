@@ -29,6 +29,10 @@ export enum Scene {
   SabotageMcqQuestion = 7,
   SabotageMcqAnswer = 8,
   QuestionTransition = 9,
+  ChronoReady = 10,
+  ChronoQuestion = 11,
+  ChronoCompletion = 12,
+  ChronoFailure = 13,
 }
 
 export enum TimerState {
@@ -171,6 +175,45 @@ export interface GameState {
 
   // Phase 3 (Sabotage) state
   sabotage: SabotageState;
+
+  // Phase 4 (Chrono) state
+  chrono: ChronoState;
+}
+
+export enum ChronoRunStatus {
+  Idle = 0,
+  Running = 1,
+  Paused = 2,
+  Finished = 3,
+  NotFinished = 4,
+  Aborted = 5,
+}
+
+export enum ChronoResultStatus {
+  NotStarted = 0,
+  Finished = 1,
+  NotFinished = 2,
+  Aborted = 3,
+}
+
+export interface ChronoTeamResult {
+  status: ChronoResultStatus;
+  timeMs?: number;
+}
+
+export interface ChronoState {
+  activeTeamIndex?: number;
+  runStatus: ChronoRunStatus;
+  correctCount: number;
+  currentQuestion?: CurrentQuestion;
+  lastQuestionId?: string;
+  timerState: TimerState;
+  timerStartedAtUtc?: string;
+  timerPausedAtUtc?: string;
+  timerAccumulatedPausedMs: number;
+  timerFinishedAtUtc?: string;
+  bestTimeMs?: number;
+  teamResults: Record<number, ChronoTeamResult>;
 }
 
 export enum SabotageSubphase {

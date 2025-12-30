@@ -44,4 +44,16 @@ public interface IGameSessionService
     void ClearMcqAnswer();
     void RevealMcqAnswer();
     Task AdvanceToNextMcqQuestion();
+
+    // Phase 4 (Chrono)
+    Task StartPhase4();
+    void SelectTeamForRun(int teamIndex);
+    Task ShowNextChronoQuestion();
+    void MarkChronoCorrect();
+    void PauseChronoTimer();
+    void ResumeChronoTimer();
+    void ResetChronoRun();
+    void AbortChronoRun();
+    void ForceFinishChronoRun();
+    void FinishChronoTimerAsNotFinished();
 }

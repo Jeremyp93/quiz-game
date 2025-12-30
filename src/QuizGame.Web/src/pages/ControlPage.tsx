@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { gameService } from '../services/gameService';
-import { Scene, Phase } from '../types';
+import { Scene, Phase, ChronoRunStatus, ChronoResultStatus } from '../types';
 import styles from './ControlPage.module.css';
 
 export default function ControlPage() {
@@ -165,6 +165,70 @@ export default function ControlPage() {
     await gameService.advanceToNextMcqQuestion();
   };
 
+  // Phase 4 (Chrono) handlers
+  const handleStartPhase4 = async () => {
+    await gameService.startPhase4();
+  };
+
+  const handleSelectChronoTeam = async (teamIndex: number) => {
+    const chrono = gameState.chrono;
+
+    // Confirm if switching mid-run
+    if (chrono.runStatus === 1 || chrono.runStatus === 2) { // Running or Paused
+      if (!confirm('Switching teams will reset the current run. Continue?')) {
+        return;
+      }
+    }
+
+    await gameService.selectTeamForChronoRun(teamIndex);
+  };
+
+  const handleShowNextChronoQuestion = async () => {
+    await gameService.showNextChronoQuestion();
+  };
+
+  const handleMarkChronoCorrect = async () => {
+    await gameService.markChronoCorrect();
+  };
+
+  const handlePauseChronoTimer = async () => {
+    await gameService.pauseChronoTimer();
+  };
+
+  const handleResumeChronoTimer = async () => {
+    await gameService.resumeChronoTimer();
+  };
+
+  const handleResetChronoRun = async () => {
+    if (!confirm('Reset will clear this attempt but preserve all team results. Continue?')) {
+      return;
+    }
+    await gameService.resetChronoRun();
+  };
+
+  const handleAbortChronoRun = async () => {
+    if (!confirm('Abort will save this run as Aborted. This cannot be undone. Continue?')) {
+      return;
+    }
+    await gameService.abortChronoRun();
+  };
+
+  const handleForceFinishChronoRun = async () => {
+    if (!confirm('Force Finish will save the current time even if not at 10/10. Continue?')) {
+      return;
+    }
+    await gameService.forceFinishChronoRun();
+  };
+
+  const formatTime = (ms: number): string => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const milliseconds = Math.floor((ms % 1000) / 10);
+
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}`;
+  };
+
   if (!isConnected) {
     return (
       <div className={styles['control-page']}>
@@ -276,6 +340,9 @@ export default function ControlPage() {
               </button>
               <button onClick={handleStartPhase3} className={styles['btn-phase']} style={{ marginTop: '1rem' }}>
                 Start Sabotage Phase
+              </button>
+              <button onClick={handleStartPhase4} className={styles['btn-phase']} style={{ marginTop: '1rem' }}>
+                Start Chrono Phase
               </button>
             </div>
           )}
@@ -702,6 +769,186 @@ export default function ControlPage() {
                   )}
                 </>
               )}
+
+              <button onClick={handleEndPhase} className={styles['btn-end-phase']} style={{ marginTop: '2rem' }}>
+                End Phase
+              </button>
+            </div>
+          )}
+
+          {gameState.currentPhase === Phase.Chrono && (
+            <div className={styles['phase-panel']}>
+              <h2>Phase 4: Chrono</h2>
+
+              {/* Team Selection */}
+              <div className={styles['chrono-team-selection']}>
+                <h3>Select Team for Run</h3>
+                <div className={styles['team-selector-grid']}>
+                  {gameState.teams.map((team, idx) => {
+                    const result = gameState.chrono.teamResults[idx];
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => handleSelectChronoTeam(idx)}
+                        className={`${styles['team-select-btn']} ${
+                          gameState.chrono.activeTeamIndex === idx ? styles['active'] : ''
+                        }`}
+                        disabled={gameState.chrono.runStatus === ChronoRunStatus.Running}
+                      >
+                        {team.name}
+                        {result && result.status !== ChronoResultStatus.NotStarted && (
+                          <div className={styles['team-result-badge']}>
+                            {result.status === ChronoResultStatus.Finished && result.timeMs && (
+                              <span className={styles['finished']}>✓ {formatTime(result.timeMs)}</span>
+                            )}
+                            {result.status === ChronoResultStatus.NotFinished && (
+                              <span className={styles['not-finished']}>✗ Not Finished</span>
+                            )}
+                            {result.status === ChronoResultStatus.Aborted && (
+                              <span className={styles['aborted']}>⊘ Aborted</span>
+                            )}
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Current Question Preview (GM only) */}
+              {gameState.chrono.currentQuestion && (
+                <div className={styles['current-question-gm']}>
+                  <h3>Current Question (GM View)</h3>
+                  <div className={styles['question-preview']}>
+                    <div className={styles['q-lang']}>
+                      <strong>FR:</strong> {gameState.chrono.currentQuestion.textFr}
+                    </div>
+                    <div className={styles['q-lang']}>
+                      <strong>NL:</strong> {gameState.chrono.currentQuestion.textNl}
+                    </div>
+                    <div className={styles['answer-preview']}>
+                      <div className={styles['q-lang']}>
+                        <strong>Answer FR:</strong> {gameState.chrono.currentQuestion.answerFr}
+                      </div>
+                      <div className={styles['q-lang']}>
+                        <strong>Answer NL:</strong> {gameState.chrono.currentQuestion.answerNl}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Run Controls */}
+              {gameState.chrono.activeTeamIndex !== null && gameState.chrono.activeTeamIndex !== undefined && (
+                <div className={styles['chrono-controls']}>
+                  <div className={styles['run-status']}>
+                    <h3>
+                      Run Status: {ChronoRunStatus[gameState.chrono.runStatus]} ({gameState.chrono.correctCount}/10)
+                    </h3>
+                    {gameState.chrono.bestTimeMs && (
+                      <div className={styles['best-time-indicator']}>
+                        Time to Beat: {formatTime(gameState.chrono.bestTimeMs)}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className={styles['phase-controls']}>
+                    <button
+                      onClick={handleShowNextChronoQuestion}
+                      className={`${styles['btn-phase-action']} ${styles['btn-show-question']}`}
+                      disabled={
+                        [ChronoRunStatus.Finished, ChronoRunStatus.NotFinished, ChronoRunStatus.Aborted].includes(
+                          gameState.chrono.runStatus
+                        ) || gameState.chrono.correctCount >= 10
+                      }
+                    >
+                      Show Next Question
+                    </button>
+
+                    <button
+                      onClick={handleMarkChronoCorrect}
+                      className={`${styles['btn-phase-action']} ${styles['btn-mark-correct']}`}
+                      disabled={
+                        ![ChronoRunStatus.Running, ChronoRunStatus.Paused].includes(gameState.chrono.runStatus) ||
+                        !gameState.chrono.currentQuestion ||
+                        gameState.chrono.correctCount >= 10
+                      }
+                    >
+                      Mark Correct ({gameState.chrono.correctCount + 1}/10)
+                    </button>
+
+                    <button
+                      onClick={handlePauseChronoTimer}
+                      className={`${styles['btn-phase-action']} ${styles['btn-pause']}`}
+                      disabled={gameState.chrono.timerState !== 1} // TimerState.Running
+                    >
+                      Pause Timer
+                    </button>
+
+                    <button
+                      onClick={handleResumeChronoTimer}
+                      className={`${styles['btn-phase-action']} ${styles['btn-resume']}`}
+                      disabled={gameState.chrono.timerState !== 2} // TimerState.Paused
+                    >
+                      Resume Timer
+                    </button>
+                  </div>
+
+                  {/* Override Controls */}
+                  <div className={styles['chrono-overrides']}>
+                    <h4>Override Actions</h4>
+                    <button
+                      onClick={handleResetChronoRun}
+                      className={styles['btn-reset']}
+                      disabled={gameState.chrono.runStatus === ChronoRunStatus.Idle}
+                    >
+                      Reset Run
+                    </button>
+                    <button
+                      onClick={handleAbortChronoRun}
+                      className={styles['btn-abort']}
+                      disabled={gameState.chrono.runStatus === ChronoRunStatus.Idle}
+                    >
+                      Abort Run
+                    </button>
+                    <button
+                      onClick={handleForceFinishChronoRun}
+                      className={styles['btn-force-finish']}
+                      disabled={
+                        ![ChronoRunStatus.Running, ChronoRunStatus.Paused].includes(gameState.chrono.runStatus)
+                      }
+                    >
+                      Force Finish
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Team Results Summary */}
+              <div className={styles['chrono-results-summary']}>
+                <h3>Team Results</h3>
+                <table className={styles['results-table']}>
+                  <thead>
+                    <tr>
+                      <th>Team</th>
+                      <th>Status</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {gameState.teams.map((team, idx) => {
+                      const result = gameState.chrono.teamResults[idx];
+                      return (
+                        <tr key={idx}>
+                          <td>{team.name}</td>
+                          <td>{result ? ChronoResultStatus[result.status] : 'NotStarted'}</td>
+                          <td>{result?.timeMs ? formatTime(result.timeMs) : '-'}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
 
               <button onClick={handleEndPhase} className={styles['btn-end-phase']} style={{ marginTop: '2rem' }}>
                 End Phase

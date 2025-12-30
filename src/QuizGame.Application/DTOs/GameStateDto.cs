@@ -26,6 +26,9 @@ public class GameStateDto
 
     // Phase 3 (Sabotage) state
     public SabotageStateDto Sabotage { get; set; } = new();
+
+    // Phase 4 (Chrono) state
+    public ChronoStateDto Chrono { get; set; } = new();
 }
 
 public class CurrentQuestionDto
@@ -128,4 +131,53 @@ public class CurrentMcqQuestionDto
     public McqChoice CorrectChoice { get; set; }
     public int Difficulty { get; set; }
     public SabotageThemeDto Theme { get; set; } = new();
+}
+
+public class ChronoStateDto
+{
+    // Team Selection
+    public int? ActiveTeamIndex { get; set; }
+
+    // Current Run State
+    public ChronoRunStatus RunStatus { get; set; } = ChronoRunStatus.Idle;
+    public int CorrectCount { get; set; } = 0;
+    public CurrentQuestionDto? CurrentQuestion { get; set; }
+    public Guid? LastQuestionId { get; set; }
+
+    // Timer State (reuse TimerState enum)
+    public TimerState TimerState { get; set; } = TimerState.Idle;
+    public DateTime? TimerStartedAtUtc { get; set; }
+    public DateTime? TimerPausedAtUtc { get; set; }
+    public long TimerAccumulatedPausedMs { get; set; }
+    public DateTime? TimerFinishedAtUtc { get; set; }
+
+    // Best Time Tracking (for countdown mode)
+    public long? BestTimeMs { get; set; }
+
+    // Team Results Tracking
+    public Dictionary<int, ChronoTeamResult> TeamResults { get; set; } = new();
+}
+
+public enum ChronoRunStatus
+{
+    Idle,
+    Running,
+    Paused,
+    Finished,
+    NotFinished,
+    Aborted
+}
+
+public class ChronoTeamResult
+{
+    public ChronoResultStatus Status { get; set; }
+    public long? TimeMs { get; set; }
+}
+
+public enum ChronoResultStatus
+{
+    NotStarted,
+    Finished,
+    NotFinished,
+    Aborted
 }

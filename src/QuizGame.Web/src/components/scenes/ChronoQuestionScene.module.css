@@ -1,0 +1,245 @@
+/* Chrono Question Scene - CSS Module */
+
+.chrono-scene {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  padding: 3rem;
+  box-sizing: border-box;
+  gap: 2rem;
+}
+
+/* Team Header */
+.team-header {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.team-name {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin: 0 0 1rem 0;
+}
+
+.time-to-beat {
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.label-fr,
+.label-nl {
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.time-value {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #ffd700;
+  margin-left: 0.5rem;
+}
+
+/* Question Display */
+.question-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 1rem;
+}
+
+.question-text {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.question-lang {
+  margin-bottom: 1.5rem;
+}
+
+.question-lang:last-child {
+  margin-bottom: 0;
+}
+
+.lang-label {
+  display: inline-block;
+  background: #f5576c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.question-lang p {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.question-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(245, 87, 108, 0.3), transparent);
+  margin: 1.5rem 0;
+}
+
+/* Milestone Progress */
+.milestone-container {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 1rem;
+}
+
+.milestone-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.milestone-circle {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.milestone-circle.completed {
+  background: #22c55e;
+  border-color: #16a34a;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+}
+
+.checkmark {
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+}
+
+.milestone-number {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.milestone-circle.completed .milestone-number {
+  opacity: 0;
+}
+
+.progress-label {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Timer Display */
+.timer-display {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.timer-status {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.timer-value {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.1em;
+}
+
+.timer-mode {
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+/* Timer States */
+.timer-1 .timer-value {
+  /* Running */
+  color: #3b82f6;
+}
+
+.timer-2 .timer-value {
+  /* Paused */
+  color: #f59e0b;
+}
+
+.timer-3 .timer-value {
+  /* Finished */
+  color: #22c55e;
+}
+
+/* Low Time Warning */
+.timer-display.low-time {
+  animation: pulse-red 0.5s ease-in-out infinite alternate;
+  border: 4px solid #ef4444;
+}
+
+.timer-display.low-time .timer-value {
+  color: #dc2626;
+}
+
+@keyframes pulse-red {
+  from {
+    box-shadow: 0 20px 60px rgba(239, 68, 68, 0.4);
+  }
+  to {
+    box-shadow: 0 20px 60px rgba(239, 68, 68, 0.8);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .team-name {
+    font-size: 3rem;
+  }
+
+  .question-lang p {
+    font-size: 1.5rem;
+  }
+
+  .timer-value {
+    font-size: 4rem;
+  }
+
+  .milestone-grid {
+    gap: 0.5rem;
+  }
+}

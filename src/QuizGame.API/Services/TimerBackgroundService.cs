@@ -77,6 +77,24 @@ public class TimerBackgroundService : BackgroundService
             needsBroadcast = true;
         }
 
+        // Check Chrono countdown timer
+        if (state.CurrentPhase == Phase.Chrono &&
+            state.Chrono.TimerState == TimerState.Running &&
+            state.Chrono.BestTimeMs.HasValue &&
+            state.Chrono.TimerStartedAtUtc.HasValue)
+        {
+            var elapsed = (now - state.Chrono.TimerStartedAtUtc.Value).TotalMilliseconds -
+                          state.Chrono.TimerAccumulatedPausedMs;
+            var remaining = state.Chrono.BestTimeMs.Value - elapsed;
+
+            if (remaining <= 0 && state.Chrono.CorrectCount < 10)
+            {
+                // Time expired without reaching 10 - auto-mark as NotFinished
+                await FinishChronoTimerAsNotFinished(gameSessionService);
+                needsBroadcast = true;
+            }
+        }
+
         if (needsBroadcast)
         {
             var updatedState = gameSessionService.GetCurrentState();
@@ -97,6 +115,13 @@ public class TimerBackgroundService : BackgroundService
     private Task ClearBoardsUpOverlay(IGameSessionService gameSessionService)
     {
         var method = gameSessionService.GetType().GetMethod("ClearBoardsUpOverlay");
+        method?.Invoke(gameSessionService, null);
+        return Task.CompletedTask;
+    }
+
+    private Task FinishChronoTimerAsNotFinished(IGameSessionService gameSessionService)
+    {
+        var method = gameSessionService.GetType().GetMethod("FinishChronoTimerAsNotFinished");
         method?.Invoke(gameSessionService, null);
         return Task.CompletedTask;
     }

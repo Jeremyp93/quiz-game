@@ -162,6 +162,46 @@ class GameService {
   async advanceToNextMcqQuestion() {
     await this.connection?.invoke('AdvanceToNextMcqQuestion');
   }
+
+  // ============================================================
+  // Phase 4 (Chrono) Methods
+  // ============================================================
+
+  async startPhase4() {
+    await this.connection?.invoke('StartPhase4');
+  }
+
+  async selectTeamForChronoRun(teamIndex: number) {
+    await this.connection?.invoke('SelectTeamForChronoRun', teamIndex);
+  }
+
+  async showNextChronoQuestion() {
+    await this.connection?.invoke('ShowNextChronoQuestion');
+  }
+
+  async markChronoCorrect() {
+    await this.connection?.invoke('MarkChronoCorrect');
+  }
+
+  async pauseChronoTimer() {
+    await this.connection?.invoke('PauseChronoTimer');
+  }
+
+  async resumeChronoTimer() {
+    await this.connection?.invoke('ResumeChronoTimer');
+  }
+
+  async resetChronoRun() {
+    await this.connection?.invoke('ResetChronoRun');
+  }
+
+  async abortChronoRun() {
+    await this.connection?.invoke('AbortChronoRun');
+  }
+
+  async forceFinishChronoRun() {
+    await this.connection?.invoke('ForceFinishChronoRun');
+  }
 }
 
 export const gameService = new GameService();

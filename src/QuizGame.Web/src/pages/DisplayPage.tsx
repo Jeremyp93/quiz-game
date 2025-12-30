@@ -11,6 +11,10 @@ import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentS
 import SabotageMcqQuestionScene from '../components/SabotageMcqQuestionScene';
 import SabotageMcqAnswerScene from '../components/SabotageMcqAnswerScene';
 import QuestionTransitionScene from '../components/QuestionTransitionScene';
+import { ChronoReadyScene } from '../components/scenes/ChronoReadyScene';
+import { ChronoQuestionScene } from '../components/scenes/ChronoQuestionScene';
+import { ChronoCompletionScene } from '../components/scenes/ChronoCompletionScene';
+import { ChronoFailureScene } from '../components/scenes/ChronoFailureScene';
 import styles from './DisplayPage.module.css';
 
 export default function DisplayPage() {
@@ -74,6 +78,18 @@ export default function DisplayPage() {
       )}
       {gameState.currentScene === Scene.QuestionTransition && (
         <QuestionTransitionScene />
+      )}
+      {gameState.currentScene === Scene.ChronoReady && (
+        <ChronoReadyScene gameState={gameState} />
+      )}
+      {gameState.currentScene === Scene.ChronoQuestion && (
+        <ChronoQuestionScene gameState={gameState} />
+      )}
+      {gameState.currentScene === Scene.ChronoCompletion && (
+        <ChronoCompletionScene gameState={gameState} />
+      )}
+      {gameState.currentScene === Scene.ChronoFailure && (
+        <ChronoFailureScene gameState={gameState} />
       )}
       {showBoardsUp && <BoardsUpOverlay />}
     </div>
