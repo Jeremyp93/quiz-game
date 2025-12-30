@@ -290,7 +290,8 @@ public class GameSessionService : IGameSessionService
         _lastQuestionId = question.Id;
         _isCurrentQuestionVisibleOnDisplay = false;
 
-        // Don't change scene - GM just sees it in their panel
+        // Show transition scene
+        _currentScene = Scene.QuestionTransition;
     }
 
     public void ShowQuestion()

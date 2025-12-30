@@ -9,6 +9,32 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+/* Phase 1 (Fast Buzzer) - Red/Orange gradient */
+.question-transition-scene.phase-1 {
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+}
+
+.question-transition-scene.phase-1 .transition-title {
+  color: #f97316;
+}
+
+.question-transition-scene.phase-1 .transition-divider {
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3), transparent);
+}
+
+/* Phase 3 (Sabotage) - Dark purple/black gradient */
+.question-transition-scene.phase-3 {
+  background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+}
+
+.question-transition-scene.phase-3 .transition-title {
+  color: #a855f7;
+}
+
+.question-transition-scene.phase-3 .transition-divider {
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+}
+
 .transition-container {
   display: flex;
   flex-direction: column;

@@ -532,7 +532,20 @@ export default function ControlPage() {
             <div className={styles['phase-panel']}>
               <h2>Phase 3: Sabotage</h2>
 
-              {gameState.sabotage.currentSubphase === 0 && (
+              {gameState.currentScene === Scene.Phase3Intro && (
+                <div className={styles['phase-intro-controls']}>
+                  <p>Phase 3 introduction is showing on display.</p>
+                  <button
+                    onClick={() => handleAssignTheme(0, gameState.sabotage.selectedThemes[0]?.id || '')}
+                    className={styles['btn-start-assignment']}
+                    disabled={!gameState.sabotage.selectedThemes.length}
+                  >
+                    Start Theme Assignment →
+                  </button>
+                </div>
+              )}
+
+              {gameState.sabotage.currentSubphase === 0 && gameState.currentScene !== Scene.Phase3Intro && (
                 <>
                   <h3>Subphase 1: Theme Assignment</h3>
 

@@ -1,0 +1,183 @@
+/* Welcome Scene - CSS Module */
+
+.welcome-scene {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 4rem;
+  box-sizing: border-box;
+  gap: 4rem;
+}
+
+/* Title Section */
+.title-container {
+  text-align: center;
+}
+
+.game-title-fr {
+  font-size: 6rem;
+  font-weight: 900;
+  color: white;
+  margin: 0 0 1rem 0;
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(59, 130, 246, 0.3),
+    0 5px 15px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.1em;
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+.game-title-nl {
+  font-size: 4rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.05em;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 0.5),
+      0 0 40px rgba(59, 130, 246, 0.3),
+      0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(255, 255, 255, 0.8),
+      0 0 60px rgba(59, 130, 246, 0.6),
+      0 5px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Phase Cards Grid */
+.phases-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.phase-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border-top: 5px solid;
+  transition: transform 0.3s ease;
+}
+
+.phase-card:hover {
+  transform: translateY(-5px);
+}
+
+.phase-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+}
+
+.phase-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.phase-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.phase-name-fr {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.phase-name-nl {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Waiting Message */
+.waiting-message {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 3rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.waiting-text-fr,
+.waiting-text-nl {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+  margin: 0.5rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.waiting-text-fr {
+  font-size: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .phases-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+  }
+
+  .game-title-fr {
+    font-size: 4rem;
+  }
+
+  .game-title-nl {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-scene {
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .phases-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 400px;
+  }
+
+  .game-title-fr {
+    font-size: 3rem;
+  }
+
+  .game-title-nl {
+    font-size: 2rem;
+  }
+
+  .phase-icon {
+    font-size: 4rem;
+  }
+
+  .waiting-text-fr {
+    font-size: 1.5rem;
+  }
+
+  .waiting-text-nl {
+    font-size: 1.3rem;
+  }
+}

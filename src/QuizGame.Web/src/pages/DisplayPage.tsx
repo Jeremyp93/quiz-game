@@ -19,6 +19,7 @@ import { ChronoReadyScene } from '../components/scenes/ChronoReadyScene';
 import { ChronoQuestionScene } from '../components/scenes/ChronoQuestionScene';
 import { ChronoCompletionScene } from '../components/scenes/ChronoCompletionScene';
 import { ChronoFailureScene } from '../components/scenes/ChronoFailureScene';
+import { WelcomeScene } from '../components/scenes/WelcomeScene';
 import styles from './DisplayPage.module.css';
 
 export default function DisplayPage() {
@@ -33,13 +34,7 @@ export default function DisplayPage() {
   }
 
   if (!gameState.isGameStarted) {
-    return (
-      <div className={styles['display-page']}>
-        <div className={styles['waiting-display']}>
-          <h1>Waiting for Game to Start...</h1>
-        </div>
-      </div>
-    );
+    return <WelcomeScene />;
   }
 
   // Check if BoardsUp overlay should be shown
@@ -81,7 +76,7 @@ export default function DisplayPage() {
         <SabotageMcqAnswerScene gameState={gameState} />
       )}
       {gameState.currentScene === Scene.QuestionTransition && (
-        <QuestionTransitionScene />
+        <QuestionTransitionScene currentPhase={gameState.currentPhase} />
       )}
       {gameState.currentScene === Scene.Phase1Intro && <Phase1IntroScene />}
       {gameState.currentScene === Scene.Phase2Intro && <Phase2IntroScene />}
