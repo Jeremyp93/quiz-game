@@ -397,7 +397,12 @@ public class GameSessionService : IGameSessionService
         // Reset timer when loading new question
         ResetListTimerState();
 
-        // Don't change scene - GM just sees it in their panel
+        // Show question transition scene
+        if (_currentScene == Scene.Scoreboard)
+        {
+            _lastSceneBeforeScoreboard = null;
+        }
+        _currentScene = Scene.QuestionTransition;
     }
 
     public async Task ShowListQuestion()
@@ -417,6 +422,17 @@ public class GameSessionService : IGameSessionService
             _lastSceneBeforeScoreboard = null;
         }
         _currentScene = Scene.ListQuestion;
+    }
+
+    public void SetListTimerDuration(int durationSeconds)
+    {
+        if (durationSeconds <= 0)
+            throw new ArgumentException("Timer duration must be positive", nameof(durationSeconds));
+
+        if (_listTimerState != TimerState.Idle)
+            throw new InvalidOperationException("Timer duration can only be changed when timer is Idle");
+
+        _listTimerDuration = durationSeconds;
     }
 
     public void StartListTimer()

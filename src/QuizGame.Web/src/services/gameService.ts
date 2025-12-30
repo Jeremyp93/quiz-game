@@ -110,6 +110,10 @@ class GameService {
     await this.connection?.invoke('ShowListQuestion');
   }
 
+  async setListTimerDuration(durationSeconds: number) {
+    await this.connection?.invoke('SetListTimerDuration', durationSeconds);
+  }
+
   async startListTimer() {
     await this.connection?.invoke('StartListTimer');
   }

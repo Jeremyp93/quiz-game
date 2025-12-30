@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { gameService } from '../services/gameService';
 import { Scene, Phase, ChronoRunStatus, ChronoResultStatus } from '../types';
@@ -9,6 +9,14 @@ export default function ControlPage() {
   const [playerInput, setPlayerInput] = useState('');
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [selectedBlockedTeams, setSelectedBlockedTeams] = useState<number[]>([]);
+  const [listTimerDuration, setListTimerDuration] = useState(45);
+
+  // Sync timer duration from backend state
+  useEffect(() => {
+    if (gameState.listTimer) {
+      setListTimerDuration(gameState.listTimer.durationSeconds);
+    }
+  }, [gameState.listTimer.durationSeconds]);
 
   const handleStartGame = async () => {
     await gameService.startGame();
@@ -105,6 +113,10 @@ export default function ControlPage() {
 
   const handleShowListQuestion = async () => {
     await gameService.showListQuestion();
+  };
+
+  const handleSetListTimerDuration = async () => {
+    await gameService.setListTimerDuration(listTimerDuration);
   };
 
   const handleStartTimer = async () => {
@@ -294,40 +306,7 @@ export default function ControlPage() {
                 </div>
               )}
             </div>
-          ) : (
-            <div className={styles['teams-management']}>
-              <h2>Teams Management</h2>
-
-              {gameState.teams.map((team, teamIndex) => (
-                <div key={teamIndex} className={styles['team-card']}>
-                  <input
-                    type="text"
-                    value={team.name}
-                    onChange={e => handleRenameTeam(teamIndex, e.target.value)}
-                    className={styles['team-name-input']}
-                  />
-
-                  <div className={styles['team-players']}>
-                    {team.players.map((player, playerIndex) => (
-                      <div key={playerIndex} className={styles['team-player']}>
-                        <span>{player}</span>
-                        <select
-                          onChange={e => handleMovePlayer(player, Number(e.target.value))}
-                          value={teamIndex}
-                        >
-                          {gameState.teams.map((t, i) => (
-                            <option key={i} value={i}>
-                              Move to {t.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          ) : null}
 
           {gameState.teams.length > 0 && gameState.currentPhase === Phase.Setup && (
             <div className={styles['phase-selector']}>
@@ -488,6 +467,27 @@ export default function ControlPage() {
                   className={`${styles['btn-phase-action']} ${styles['btn-show-question']}`}
                 >
                   Show Question
+                </button>
+              </div>
+
+              <div className={styles['timer-duration-control']}>
+                <label htmlFor="timer-duration">Timer Duration (seconds):</label>
+                <input
+                  id="timer-duration"
+                  type="number"
+                  min="1"
+                  max="300"
+                  value={listTimerDuration}
+                  onChange={(e) => setListTimerDuration(Number(e.target.value))}
+                  disabled={gameState.listTimer.state !== 0}
+                  className={styles['timer-duration-input']}
+                />
+                <button
+                  onClick={handleSetListTimerDuration}
+                  className={styles['btn-set-duration']}
+                  disabled={gameState.listTimer.state !== 0}
+                >
+                  Set Duration
                 </button>
               </div>
 
@@ -1025,6 +1025,44 @@ export default function ControlPage() {
           )}
         </div>
       </div>
+
+      {/* Teams Management - Moved to Bottom */}
+      {gameState.teams.length > 0 && (
+        <div className={styles['teams-management-bottom']}>
+          <h2>Teams Management</h2>
+
+          <div className={styles['teams-grid']}>
+            {gameState.teams.map((team, teamIndex) => (
+              <div key={teamIndex} className={styles['team-card']}>
+                <input
+                  type="text"
+                  value={team.name}
+                  onChange={e => handleRenameTeam(teamIndex, e.target.value)}
+                  className={styles['team-name-input']}
+                />
+
+                <div className={styles['team-players']}>
+                  {team.players.map((player, playerIndex) => (
+                    <div key={playerIndex} className={styles['team-player']}>
+                      <span>{player}</span>
+                      <select
+                        onChange={e => handleMovePlayer(player, Number(e.target.value))}
+                        value={teamIndex}
+                      >
+                        {gameState.teams.map((t, i) => (
+                          <option key={i} value={i}>
+                            Move to {t.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

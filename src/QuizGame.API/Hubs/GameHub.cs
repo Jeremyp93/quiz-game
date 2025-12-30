@@ -131,6 +131,12 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    public async Task SetListTimerDuration(int durationSeconds)
+    {
+        _gameSessionService.SetListTimerDuration(durationSeconds);
+        await BroadcastGameState();
+    }
+
     public async Task StartListTimer()
     {
         _gameSessionService.StartListTimer();

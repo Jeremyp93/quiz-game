@@ -32,6 +32,7 @@ public interface IGameSessionService
     void PauseListTimer();
     void ResumeListTimer();
     void ResetListTimer();
+    void SetListTimerDuration(int durationSeconds);
 
     // Phase 3 (Sabotage)
     Task StartPhase3();
