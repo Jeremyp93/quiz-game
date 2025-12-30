@@ -143,7 +143,7 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
           })}
         </div>
 
-        <motion.div
+        {/* <motion.div
           className={`${styles['result-banner']} ${isCorrectAnswer ? styles['correct-result'] : styles['incorrect-result']}`}
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
@@ -196,7 +196,7 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
               </motion.span>
             </>
           )}
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </div>
   );

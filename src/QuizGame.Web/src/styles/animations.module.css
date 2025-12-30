@@ -61,13 +61,13 @@
 /* Glow correct animation - continuous glow for correct answers */
 @keyframes glow-correct {
   0%, 100% {
-    box-shadow: 0 0 50px rgba(16, 185, 129, 0.8),
-                0 0 80px rgba(16, 185, 129, 0.5),
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.6),
+                0 0 50px rgba(16, 185, 129, 0.3),
                 0 12px 32px rgba(0, 0, 0, 0.4);
   }
   50% {
-    box-shadow: 0 0 70px rgba(16, 185, 129, 1),
-                0 0 100px rgba(16, 185, 129, 0.7),
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.7),
+                0 0 60px rgba(16, 185, 129, 0.4),
                 0 14px 36px rgba(0, 0, 0, 0.4);
   }
 }
