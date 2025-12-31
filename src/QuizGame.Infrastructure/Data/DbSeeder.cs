@@ -1605,13 +1605,13 @@ public static class DbSeeder
             Difficulty = 3,
             IsActive = true,
             Category = "History",
-            Tags = "world-history,emperors",
-            TextFr = "Qui était l'empereur français défait à Waterloo en 1815 ?",
-            TextNl = "Wie was de Franse keizer die verslagen werd bij Waterloo in 1815?",
+            Tags = "world-history,ancient",
+            TextFr = "Qui a construit les pyramides d'Égypte ?",
+            TextNl = "Wie bouwde de piramides van Egypte?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "Napoléon",
-                AnswerNl = "Napoleon"
+                AnswerFr = "Égyptiens",
+                AnswerNl = "Egyptenaren"
             }
         });
 
@@ -1883,14 +1883,14 @@ public static class DbSeeder
             Type = QuestionType.Regular,
             Difficulty = 1,
             IsActive = true,
-            Category = "General",
-            Tags = "months",
-            TextFr = "Combien de mois y a-t-il dans une année ?",
-            TextNl = "Hoeveel maanden heeft een jaar?",
+            Category = "Food",
+            Tags = "belgium,food",
+            TextFr = "Quel pays est célèbre pour ses gaufres et son chocolat ?",
+            TextNl = "Welk land is beroemd om zijn wafels en chocolade?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "12",
-                AnswerNl = "12"
+                AnswerFr = "Belgique",
+                AnswerNl = "België"
             }
         });
 
@@ -2308,14 +2308,14 @@ public static class DbSeeder
             Type = QuestionType.Regular,
             Difficulty = 1,
             IsActive = true,
-            Category = "Shapes",
-            Tags = "geometry",
-            TextFr = "Combien de côtés a un carré ?",
-            TextNl = "Hoeveel zijden heeft een vierkant?",
+            Category = "Belgium",
+            Tags = "languages,belgium",
+            TextFr = "Combien de langues officielles la Belgique a-t-elle ?",
+            TextNl = "Hoeveel officiële talen heeft België?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "4",
-                AnswerNl = "4"
+                AnswerFr = "3",
+                AnswerNl = "3"
             }
         });
 
@@ -2531,13 +2531,13 @@ public static class DbSeeder
             Difficulty = 2,
             IsActive = true,
             Category = "Sports",
-            Tags = "football,world",
-            TextFr = "Quel pays a remporté la Coupe du Monde de football 2018 ?",
-            TextNl = "Welk land won het WK voetbal in 2018?",
+            Tags = "football,belgium",
+            TextFr = "Quel est le surnom de l'équipe nationale belge de football ?",
+            TextNl = "Wat is de bijnaam van het Belgisch voetbalelftal?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "France",
-                AnswerNl = "Frankrijk"
+                AnswerFr = "Diables Rouges",
+                AnswerNl = "Rode Duivels"
             }
         });
 
@@ -2649,14 +2649,14 @@ public static class DbSeeder
             Type = QuestionType.Regular,
             Difficulty = 2,
             IsActive = true,
-            Category = "Animals",
-            Tags = "symbols,countries",
-            TextFr = "Quel animal symbolise les États-Unis ?",
-            TextNl = "Welk dier symboliseert de Verenigde Staten?",
+            Category = "Food",
+            Tags = "belgium,beer",
+            TextFr = "Quel pays est célèbre pour ses bières trappistes ?",
+            TextNl = "Welk land is beroemd om zijn trappistenbieren?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "Aigle",
-                AnswerNl = "Adelaar"
+                AnswerFr = "Belgique",
+                AnswerNl = "België"
             }
         });
 
