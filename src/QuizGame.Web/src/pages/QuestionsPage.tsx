@@ -91,6 +91,8 @@ export default function QuestionsPage() {
     switch (type) {
       case QuestionType.Regular:
         return 'Regular';
+      case QuestionType.Regular4:
+        return 'Regular4';
       case QuestionType.List:
         return 'List';
       case QuestionType.Mcq:
@@ -122,7 +124,8 @@ export default function QuestionsPage() {
       <div className={styles['filters']}>
         <select value={typeFilter} onChange={e => setTypeFilter(e.target.value === '' ? '' : Number(e.target.value))}>
           <option value="">All Types</option>
-          <option value={QuestionType.Regular}>Regular</option>
+          <option value={QuestionType.Regular}>Regular (Phase 1)</option>
+          <option value={QuestionType.Regular4}>Regular4 (Phase 4)</option>
           <option value={QuestionType.List}>List</option>
           <option value={QuestionType.Mcq}>MCQ</option>
         </select>

@@ -96,7 +96,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       themeId: themeId || undefined,
     };
 
-    if (type === QuestionType.Regular) {
+    if (type === QuestionType.Regular || type === QuestionType.Regular4) {
       dto.regularDetails = { answerFr, answerNl };
     } else if (type === QuestionType.Mcq) {
       dto.mcqDetails = {
@@ -145,7 +145,8 @@ export default function QuestionForm({ question, onSubmit }: Props) {
         <div className={styles['form-group']}>
           <label>Question Type *</label>
           <select value={type} onChange={e => setType(Number(e.target.value))} required>
-            <option value={QuestionType.Regular}>Regular (Q&A)</option>
+            <option value={QuestionType.Regular}>Regular (Q&A) - Phase 1</option>
+            <option value={QuestionType.Regular4}>Regular4 (Q&A) - Phase 4</option>
             <option value={QuestionType.List}>List (Multiple Answers)</option>
             <option value={QuestionType.Mcq}>MCQ (3 Choices)</option>
           </select>
@@ -219,7 +220,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
         </div>
       </div>
 
-      {type === QuestionType.Regular && (
+      {(type === QuestionType.Regular || type === QuestionType.Regular4) && (
         <div className={styles['form-section']}>
           <h3>Answer (Regular)</h3>
 

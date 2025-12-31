@@ -98,6 +98,7 @@ public class QuestionService : IQuestionService
         switch (createDto.Type)
         {
             case QuestionType.Regular:
+            case QuestionType.Regular4:
                 if (createDto.RegularDetails == null)
                     throw new ArgumentException("Regular details required for Regular question type");
 
@@ -184,6 +185,7 @@ public class QuestionService : IQuestionService
         switch (updateDto.Type)
         {
             case QuestionType.Regular:
+            case QuestionType.Regular4:
                 if (updateDto.RegularDetails == null)
                     throw new ArgumentException("Regular details required");
 
@@ -298,6 +300,87 @@ public class QuestionService : IQuestionService
             if (totalCount > 1)
             {
                 query = query.Where(q => q.Id != excludeQuestionId.Value);
+            }
+        }
+
+        var questions = await query.ToListAsync();
+
+        if (!questions.Any())
+            return null;
+
+        // Select random question
+        var randomIndex = Random.Shared.Next(questions.Count);
+        return MapToDto(questions[randomIndex]);
+    }
+
+    public async Task<QuestionDto?> GetRandomRegularQuestionAsync(List<Guid>? excludeQuestionIds = null)
+    {
+        // Get all active Regular questions
+        var query = _context.Questions
+            .Include(q => q.RegularDetails)
+            .Where(q => q.Type == QuestionType.Regular && q.IsActive);
+
+        // Exclude questions if provided and multiple questions exist
+        if (excludeQuestionIds != null && excludeQuestionIds.Any())
+        {
+            var totalCount = await query.CountAsync();
+            if (totalCount > excludeQuestionIds.Count)
+            {
+                query = query.Where(q => !excludeQuestionIds.Contains(q.Id));
+            }
+        }
+
+        var questions = await query.ToListAsync();
+
+        if (!questions.Any())
+            return null;
+
+        // Select random question
+        var randomIndex = Random.Shared.Next(questions.Count);
+        return MapToDto(questions[randomIndex]);
+    }
+
+    public async Task<QuestionDto?> GetRandomRegular4QuestionAsync(List<Guid>? excludeQuestionIds = null)
+    {
+        // Get all active Regular4 questions
+        var query = _context.Questions
+            .Include(q => q.RegularDetails)
+            .Where(q => q.Type == QuestionType.Regular4 && q.IsActive);
+
+        // Exclude questions if provided and multiple questions exist
+        if (excludeQuestionIds != null && excludeQuestionIds.Any())
+        {
+            var totalCount = await query.CountAsync();
+            if (totalCount > excludeQuestionIds.Count)
+            {
+                query = query.Where(q => !excludeQuestionIds.Contains(q.Id));
+            }
+        }
+
+        var questions = await query.ToListAsync();
+
+        if (!questions.Any())
+            return null;
+
+        // Select random question
+        var randomIndex = Random.Shared.Next(questions.Count);
+        return MapToDto(questions[randomIndex]);
+    }
+
+    public async Task<QuestionDto?> GetRandomListQuestionAsync(List<Guid>? excludeQuestionIds = null)
+    {
+        // Get all active List questions
+        var query = _context.Questions
+            .Include(q => q.ListAnswers)
+            .Where(q => q.Type == QuestionType.List && q.IsActive);
+
+        // Exclude questions if provided and multiple questions exist
+        if (excludeQuestionIds != null && excludeQuestionIds.Any())
+        {
+            var totalCount = await query.CountAsync();
+            if (totalCount > excludeQuestionIds.Count)
+            {
+                query = query.Where(q => !excludeQuestionIds.Contains(q.Id));
             }
         }
 

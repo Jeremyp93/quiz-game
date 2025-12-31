@@ -2,6 +2,7 @@ export enum QuestionType {
   Regular = 0,
   List = 1,
   Mcq = 2,
+  Regular4 = 3,
 }
 
 export enum McqChoice {

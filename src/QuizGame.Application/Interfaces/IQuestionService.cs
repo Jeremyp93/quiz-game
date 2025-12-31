@@ -13,9 +13,12 @@ public interface IQuestionService
     Task<bool> DeleteQuestionAsync(Guid id);
     Task<bool> ToggleActiveAsync(Guid id);
 
-    // Phase 1 (Fast Buzzer)
+    // Phase 1 (Fast Buzzer) & Phase 4 (Chrono)
     Task<QuestionDto?> GetRandomRegularQuestionAsync(Guid? excludeQuestionId = null);
+    Task<QuestionDto?> GetRandomRegularQuestionAsync(List<Guid>? excludeQuestionIds = null);
+    Task<QuestionDto?> GetRandomRegular4QuestionAsync(List<Guid>? excludeQuestionIds = null);
 
     // Phase 2 (List)
     Task<QuestionDto?> GetRandomListQuestionAsync(Guid? excludeQuestionId = null);
+    Task<QuestionDto?> GetRandomListQuestionAsync(List<Guid>? excludeQuestionIds = null);
 }
