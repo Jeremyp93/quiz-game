@@ -4,5 +4,6 @@ public enum QuestionType
 {
     Regular,
     List,
-    Mcq
+    Mcq,
+    Regular4
 }

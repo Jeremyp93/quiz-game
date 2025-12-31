@@ -22,6 +22,7 @@ public class GameSessionService : IGameSessionService
     private Guid? _lastQuestionId;
     private List<int> _blockedNextQuestionTeamIds = new();
     private List<int> _blockedTeamIdsForCurrentQuestion = new();
+    private List<Guid> _usedPhase1QuestionIds = new();
 
     // Phase 2 (List) state
     private CurrentListQuestionDto? _currentListQuestion;
@@ -34,6 +35,7 @@ public class GameSessionService : IGameSessionService
     private long _listTimerAccumulatedPausedMs;
     private DateTime? _listTimerFinishedAtUtc;
     private DateTime? _listTimerBoardsUpVisibleUntilUtc;
+    private List<Guid> _usedPhase2QuestionIds = new();
 
     // Phase 3 (Sabotage) state
     private SabotageSubphase _sabotageCurrentSubphase = SabotageSubphase.ThemeAssignment;
@@ -63,6 +65,7 @@ public class GameSessionService : IGameSessionService
     private DateTime? _chronoTimerFinishedAtUtc;
     private long? _chronoBestTimeMs;
     private Dictionary<int, ChronoTeamResult> _chronoTeamResults = new();
+    private List<Guid> _usedPhase4QuestionIds = new();
 
     public GameSessionService(IServiceProvider serviceProvider)
     {
@@ -254,6 +257,7 @@ public class GameSessionService : IGameSessionService
         _lastQuestionId = null;
         _blockedNextQuestionTeamIds.Clear();
         _blockedTeamIdsForCurrentQuestion.Clear();
+        _usedPhase1QuestionIds.Clear();
         return Task.CompletedTask;
     }
 
@@ -263,8 +267,8 @@ public class GameSessionService : IGameSessionService
         using var scope = _serviceProvider.CreateScope();
         var questionService = scope.ServiceProvider.GetRequiredService<IQuestionService>();
 
-        // Get random Regular question (avoid immediate repeat if possible)
-        var question = await questionService.GetRandomRegularQuestionAsync(_lastQuestionId);
+        // Get random Regular question (avoid already used questions in this phase)
+        var question = await questionService.GetRandomRegularQuestionAsync(_usedPhase1QuestionIds);
 
         if (question == null)
             throw new InvalidOperationException("No active Regular questions available");
@@ -288,6 +292,7 @@ public class GameSessionService : IGameSessionService
         };
 
         _lastQuestionId = question.Id;
+        _usedPhase1QuestionIds.Add(question.Id);
         _isCurrentQuestionVisibleOnDisplay = false;
 
         // Show transition scene
@@ -338,11 +343,16 @@ public class GameSessionService : IGameSessionService
         _lastQuestionId = null;
         _blockedNextQuestionTeamIds.Clear();
         _blockedTeamIdsForCurrentQuestion.Clear();
+        _usedPhase1QuestionIds.Clear();
 
         // Clear Phase 2 state
         _currentListQuestion = null;
         _lastListQuestionId = null;
+        _usedPhase2QuestionIds.Clear();
         ResetListTimerState();
+
+        // Clear Phase 4 state
+        _usedPhase4QuestionIds.Clear();
 
         // Show scoreboard when ending phase
         if (_currentScene != Scene.Scoreboard)
@@ -361,6 +371,7 @@ public class GameSessionService : IGameSessionService
         _currentListQuestion = null;
         _isCurrentListQuestionVisibleOnDisplay = false;
         _lastListQuestionId = null;
+        _usedPhase2QuestionIds.Clear();
         ResetListTimerState();
         return Task.CompletedTask;
     }
@@ -370,7 +381,7 @@ public class GameSessionService : IGameSessionService
         using var scope = _serviceProvider.CreateScope();
         var questionService = scope.ServiceProvider.GetRequiredService<IQuestionService>();
 
-        var question = await questionService.GetRandomListQuestionAsync(_lastListQuestionId);
+        var question = await questionService.GetRandomListQuestionAsync(_usedPhase2QuestionIds);
 
         if (question == null)
             throw new InvalidOperationException("No active List questions available");
@@ -392,6 +403,7 @@ public class GameSessionService : IGameSessionService
         };
 
         _lastListQuestionId = question.Id;
+        _usedPhase2QuestionIds.Add(question.Id);
         _isCurrentListQuestionVisibleOnDisplay = false;
 
         // Reset timer when loading new question
@@ -907,6 +919,7 @@ public class GameSessionService : IGameSessionService
         _chronoCorrectCount = 0;
         _chronoCurrentQuestion = null;
         _chronoLastQuestionId = null;
+        _usedPhase4QuestionIds.Clear();
         ResetChronoTimerState();
         _chronoBestTimeMs = null;
         _chronoTeamResults.Clear();
@@ -950,11 +963,11 @@ public class GameSessionService : IGameSessionService
         using var scope = _serviceProvider.CreateScope();
         var questionService = scope.ServiceProvider.GetRequiredService<IQuestionService>();
 
-        // Get random Regular question (avoid immediate repeat)
-        var question = await questionService.GetRandomRegularQuestionAsync(_chronoLastQuestionId);
+        // Get random Regular4 question (avoid already used questions in this phase)
+        var question = await questionService.GetRandomRegular4QuestionAsync(_usedPhase4QuestionIds);
 
         if (question == null)
-            throw new InvalidOperationException("No active Regular questions available");
+            throw new InvalidOperationException("No active Regular4 questions available");
 
         if (question.RegularDetails == null)
             throw new InvalidOperationException("Question missing Regular details");
@@ -971,6 +984,7 @@ public class GameSessionService : IGameSessionService
         };
 
         _chronoLastQuestionId = question.Id;
+        _usedPhase4QuestionIds.Add(question.Id);
 
         // Auto-start timer on first question
         if (_chronoTimerState == TimerState.Idle)
@@ -1162,6 +1176,7 @@ public class GameSessionService : IGameSessionService
         _chronoCorrectCount = 0;
         _chronoCurrentQuestion = null;
         _chronoLastQuestionId = null;
+        // Note: DO NOT clear _usedPhase4QuestionIds here - we want to prevent same questions across all teams in Phase 4
         ResetChronoTimerState();
         _chronoRunStatus = ChronoRunStatus.Idle;
     }
