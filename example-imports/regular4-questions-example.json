@@ -1,0 +1,43 @@
+[
+  {
+    "type": 3,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Sports",
+    "tags": "football;belgium",
+    "textFr": "Quel joueur belge a remporté le Ballon d'Or en 2019?",
+    "textNl": "Welke Belgische speler won de Gouden Bal in 2019?",
+    "regularDetails": {
+      "answerFr": "Eden Hazard",
+      "answerNl": "Eden Hazard"
+    }
+  },
+  {
+    "type": 3,
+    "difficulty": 2,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Music",
+    "tags": "classical;composers",
+    "textFr": "Qui a composé 'Les Quatre Saisons'?",
+    "textNl": "Wie componeerde 'De Vier Jaargetijden'?",
+    "regularDetails": {
+      "answerFr": "Antonio Vivaldi",
+      "answerNl": "Antonio Vivaldi"
+    }
+  },
+  {
+    "type": 3,
+    "difficulty": 3,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Technology",
+    "textFr": "Quel langage de programmation a été créé par Guido van Rossum?",
+    "textNl": "Welke programmeertaal werd gecreëerd door Guido van Rossum?",
+    "regularDetails": {
+      "answerFr": "Python",
+      "answerNl": "Python"
+    }
+  }
+]

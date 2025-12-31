@@ -93,4 +93,24 @@ public class QuestionsController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPost("bulk-import")]
+    public async Task<ActionResult<BulkImportResultDto>> BulkImport([FromBody] List<CreateQuestionDto> questions)
+    {
+        if (questions == null || questions.Count == 0)
+            return BadRequest(new { error = "No questions provided for import" });
+
+        var result = await _questionService.BulkImportQuestionsAsync(questions);
+
+        // Return 207 Multi-Status if there were partial failures
+        if (result.FailureCount > 0 && result.SuccessCount > 0)
+            return StatusCode(207, result);
+
+        // Return 400 if all failed
+        if (result.FailureCount > 0 && result.SuccessCount == 0)
+            return BadRequest(result);
+
+        // Return 200 if all succeeded
+        return Ok(result);
+    }
 }

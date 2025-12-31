@@ -95,6 +95,7 @@ export interface Question {
   type: QuestionType;
   difficulty: number;
   isActive: boolean;
+  isPriority: boolean;
   category?: string;
   tags?: string;
   textFr: string;
@@ -110,6 +111,7 @@ export interface CreateQuestionDto {
   type: QuestionType;
   difficulty: number;
   isActive: boolean;
+  isPriority: boolean;
   category?: string;
   tags?: string;
   textFr: string;
@@ -269,4 +271,18 @@ export interface SabotageState {
   selectedAnswer?: McqChoice;
   isAnswerRevealed: boolean;
   currentQuestionInTheme: number;
+}
+
+export interface BulkImportError {
+  questionIndex: number;
+  errorMessage: string;
+  questionTextFr?: string;
+}
+
+export interface BulkImportResult {
+  totalQuestions: number;
+  successCount: number;
+  failureCount: number;
+  errors: BulkImportError[];
+  importedQuestions: Question[];
 }

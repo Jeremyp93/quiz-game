@@ -1,0 +1,43 @@
+[
+  {
+    "type": 0,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Geography",
+    "tags": "capitals;europe",
+    "textFr": "Quelle est la capitale de la France?",
+    "textNl": "Wat is de hoofdstad van Frankrijk?",
+    "regularDetails": {
+      "answerFr": "Paris",
+      "answerNl": "Parijs"
+    }
+  },
+  {
+    "type": 0,
+    "difficulty": 2,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Science",
+    "tags": "chemistry;elements",
+    "textFr": "Quel est le symbole chimique de l'or?",
+    "textNl": "Wat is het chemisch symbool van goud?",
+    "regularDetails": {
+      "answerFr": "Au",
+      "answerNl": "Au"
+    }
+  },
+  {
+    "type": 0,
+    "difficulty": 3,
+    "isActive": true,
+    "isPriority": false,
+    "category": "History",
+    "textFr": "En quelle année a eu lieu la chute du mur de Berlin?",
+    "textNl": "In welk jaar viel de Berlijnse Muur?",
+    "regularDetails": {
+      "answerFr": "1989",
+      "answerNl": "1989"
+    }
+  }
+]

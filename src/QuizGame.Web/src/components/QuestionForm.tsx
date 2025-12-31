@@ -12,6 +12,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
   const [type, setType] = useState<QuestionType>(QuestionType.Regular);
   const [difficulty, setDifficulty] = useState(1);
   const [isActive, setIsActive] = useState(true);
+  const [isPriority, setIsPriority] = useState(false);
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('');
   const [textFr, setTextFr] = useState('');
@@ -44,6 +45,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       setType(question.type);
       setDifficulty(question.difficulty);
       setIsActive(question.isActive);
+      setIsPriority(question.isPriority);
       setCategory(question.category || '');
       setTags(question.tags || '');
       setTextFr(question.textFr);
@@ -89,6 +91,7 @@ export default function QuestionForm({ question, onSubmit }: Props) {
       type,
       difficulty,
       isActive,
+      isPriority,
       category: category || undefined,
       tags: tags || undefined,
       textFr,
@@ -189,6 +192,13 @@ export default function QuestionForm({ question, onSubmit }: Props) {
             <label>
               <input type="checkbox" checked={isActive} onChange={e => setIsActive(e.target.checked)} />
               Active
+            </label>
+          </div>
+
+          <div className={styles['form-group']}>
+            <label>
+              <input type="checkbox" checked={isPriority} onChange={e => setIsPriority(e.target.checked)} />
+              Priority
             </label>
           </div>
         </div>

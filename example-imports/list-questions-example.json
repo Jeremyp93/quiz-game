@@ -1,0 +1,120 @@
+[
+  {
+    "type": 1,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Geography",
+    "tags": "countries;neighbors",
+    "textFr": "Nommez les pays qui bordent la Belgique (5 réponses)",
+    "textNl": "Noem de landen die grenzen aan België (5 antwoorden)",
+    "listAnswers": [
+      {
+        "answerFr": "France",
+        "answerNl": "Frankrijk"
+      },
+      {
+        "answerFr": "Pays-Bas",
+        "answerNl": "Nederland",
+        "altSpellings": "Hollande"
+      },
+      {
+        "answerFr": "Allemagne",
+        "answerNl": "Duitsland"
+      },
+      {
+        "answerFr": "Luxembourg",
+        "answerNl": "Luxemburg"
+      },
+      {
+        "answerFr": "Royaume-Uni",
+        "answerNl": "Verenigd Koninkrijk",
+        "altSpellings": "Angleterre;Grande-Bretagne;UK;England;Engeland"
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "difficulty": 2,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Science",
+    "tags": "planets;solar-system",
+    "textFr": "Nommez les 8 planètes du système solaire",
+    "textNl": "Noem de 8 planeten van het zonnestelsel",
+    "listAnswers": [
+      {
+        "answerFr": "Mercure",
+        "answerNl": "Mercurius"
+      },
+      {
+        "answerFr": "Vénus",
+        "answerNl": "Venus"
+      },
+      {
+        "answerFr": "Terre",
+        "answerNl": "Aarde"
+      },
+      {
+        "answerFr": "Mars",
+        "answerNl": "Mars"
+      },
+      {
+        "answerFr": "Jupiter",
+        "answerNl": "Jupiter"
+      },
+      {
+        "answerFr": "Saturne",
+        "answerNl": "Saturnus"
+      },
+      {
+        "answerFr": "Uranus",
+        "answerNl": "Uranus"
+      },
+      {
+        "answerFr": "Neptune",
+        "answerNl": "Neptunus"
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "difficulty": 3,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Movies",
+    "tags": "disney;classics",
+    "textFr": "Nommez 7 nains de Blanche-Neige",
+    "textNl": "Noem 7 dwergen van Sneeuwwitje",
+    "listAnswers": [
+      {
+        "answerFr": "Simplet",
+        "answerNl": "Dopey"
+      },
+      {
+        "answerFr": "Atchoum",
+        "answerNl": "Sneezy"
+      },
+      {
+        "answerFr": "Joyeux",
+        "answerNl": "Happy"
+      },
+      {
+        "answerFr": "Grincheux",
+        "answerNl": "Grumpy"
+      },
+      {
+        "answerFr": "Dormeur",
+        "answerNl": "Sleepy"
+      },
+      {
+        "answerFr": "Timide",
+        "answerNl": "Bashful"
+      },
+      {
+        "answerFr": "Prof",
+        "answerNl": "Doc"
+      }
+    ]
+  }
+]

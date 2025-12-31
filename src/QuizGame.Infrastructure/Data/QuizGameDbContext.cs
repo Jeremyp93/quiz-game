@@ -36,6 +36,10 @@ public class QuizGameDbContext : DbContext
                 .IsRequired()
                 .HasDefaultValue(true);
 
+            entity.Property(q => q.IsPriority)
+                .IsRequired()
+                .HasDefaultValue(false);
+
             entity.Property(q => q.TextFr)
                 .IsRequired()
                 .HasMaxLength(1000);

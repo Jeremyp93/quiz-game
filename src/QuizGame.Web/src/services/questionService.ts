@@ -1,4 +1,4 @@
-import { Question, CreateQuestionDto, QuestionType } from '../types';
+import { Question, CreateQuestionDto, QuestionType, BulkImportResult } from '../types';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -53,5 +53,20 @@ export const questionService = {
     await fetch(`${API_BASE}/questions/${id}/toggle-active`, {
       method: 'POST',
     });
+  },
+
+  async bulkImport(questions: CreateQuestionDto[]): Promise<BulkImportResult> {
+    const response = await fetch(`${API_BASE}/questions/bulk-import`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(questions),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Bulk import failed');
+    }
+
+    return response.json();
   },
 };

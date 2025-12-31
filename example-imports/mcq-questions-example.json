@@ -1,0 +1,62 @@
+[
+  {
+    "type": 2,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Animals",
+    "tags": "mammals;wildlife",
+    "textFr": "Quel est le plus grand mammifère terrestre?",
+    "textNl": "Wat is het grootste landzoogdier?",
+    "themeId": "REPLACE_WITH_ANIMALS_THEME_ID",
+    "mcqDetails": {
+      "choiceAFr": "Éléphant d'Afrique",
+      "choiceANl": "Afrikaanse olifant",
+      "choiceBFr": "Rhinocéros blanc",
+      "choiceBNl": "Witte neushoorn",
+      "choiceCFr": "Hippopotame",
+      "choiceCNl": "Nijlpaard",
+      "correctChoice": 0
+    }
+  },
+  {
+    "type": 2,
+    "difficulty": 2,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Sports",
+    "tags": "football;belgium",
+    "textFr": "Combien de fois la Belgique a-t-elle participé à une Coupe du Monde de la FIFA?",
+    "textNl": "Hoeveel keer nam België deel aan een FIFA Wereldkampioenschap?",
+    "themeId": "REPLACE_WITH_SPORTS_THEME_ID",
+    "mcqDetails": {
+      "choiceAFr": "10 fois",
+      "choiceANl": "10 keer",
+      "choiceBFr": "13 fois",
+      "choiceBNl": "13 keer",
+      "choiceCFr": "15 fois",
+      "choiceCNl": "15 keer",
+      "correctChoice": 1
+    }
+  },
+  {
+    "type": 2,
+    "difficulty": 3,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Technology",
+    "tags": "computers;history",
+    "textFr": "En quelle année a été fondée Apple Inc.?",
+    "textNl": "In welk jaar werd Apple Inc. opgericht?",
+    "themeId": "REPLACE_WITH_TECHNOLOGY_THEME_ID",
+    "mcqDetails": {
+      "choiceAFr": "1975",
+      "choiceANl": "1975",
+      "choiceBFr": "1976",
+      "choiceBNl": "1976",
+      "choiceCFr": "1977",
+      "choiceCNl": "1977",
+      "correctChoice": 1
+    }
+  }
+]

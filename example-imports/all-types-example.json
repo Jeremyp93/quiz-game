@@ -1,0 +1,131 @@
+[
+  {
+    "type": 0,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Geography",
+    "tags": "capitals;europe",
+    "textFr": "Quelle est la capitale de la Belgique?",
+    "textNl": "Wat is de hoofdstad van België?",
+    "regularDetails": {
+      "answerFr": "Bruxelles",
+      "answerNl": "Brussel"
+    }
+  },
+  {
+    "type": 1,
+    "difficulty": 2,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Belgian Culture",
+    "tags": "belgium;regions",
+    "textFr": "Nommez les 3 régions de la Belgique",
+    "textNl": "Noem de 3 gewesten van België",
+    "listAnswers": [
+      {
+        "answerFr": "Flandre",
+        "answerNl": "Vlaanderen",
+        "altSpellings": "Vlaams Gewest;Région flamande"
+      },
+      {
+        "answerFr": "Wallonie",
+        "answerNl": "Wallonië",
+        "altSpellings": "Région wallonne;Waals Gewest"
+      },
+      {
+        "answerFr": "Bruxelles-Capitale",
+        "answerNl": "Brussels Hoofdstedelijk Gewest",
+        "altSpellings": "Bruxelles;Brussels;Region de Bruxelles-Capitale"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Science",
+    "tags": "biology;human-body",
+    "textFr": "Combien d'os y a-t-il dans le corps humain adulte?",
+    "textNl": "Hoeveel botten zijn er in het volwassen menselijk lichaam?",
+    "themeId": "REPLACE_WITH_SCIENCE_THEME_ID",
+    "mcqDetails": {
+      "choiceAFr": "186",
+      "choiceANl": "186",
+      "choiceBFr": "206",
+      "choiceBNl": "206",
+      "choiceCFr": "226",
+      "choiceCNl": "226",
+      "correctChoice": 1
+    }
+  },
+  {
+    "type": 3,
+    "difficulty": 3,
+    "isActive": true,
+    "isPriority": true,
+    "category": "Belgian History",
+    "tags": "belgium;independence",
+    "textFr": "En quelle année la Belgique a-t-elle obtenu son indépendance?",
+    "textNl": "In welk jaar werd België onafhankelijk?",
+    "regularDetails": {
+      "answerFr": "1830",
+      "answerNl": "1830"
+    }
+  },
+  {
+    "type": 0,
+    "difficulty": 2,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Food",
+    "tags": "belgium;cuisine",
+    "textFr": "Quelle ville belge est célèbre pour ses gaufres?",
+    "textNl": "Welke Belgische stad is beroemd om zijn wafels?",
+    "regularDetails": {
+      "answerFr": "Liège",
+      "answerNl": "Luik"
+    }
+  },
+  {
+    "type": 1,
+    "difficulty": 1,
+    "isActive": true,
+    "isPriority": false,
+    "category": "Colors",
+    "tags": "basic;rainbow",
+    "textFr": "Nommez les 7 couleurs de l'arc-en-ciel",
+    "textNl": "Noem de 7 kleuren van de regenboog",
+    "listAnswers": [
+      {
+        "answerFr": "Rouge",
+        "answerNl": "Rood"
+      },
+      {
+        "answerFr": "Orange",
+        "answerNl": "Oranje"
+      },
+      {
+        "answerFr": "Jaune",
+        "answerNl": "Geel"
+      },
+      {
+        "answerFr": "Vert",
+        "answerNl": "Groen"
+      },
+      {
+        "answerFr": "Bleu",
+        "answerNl": "Blauw"
+      },
+      {
+        "answerFr": "Indigo",
+        "answerNl": "Indigo"
+      },
+      {
+        "answerFr": "Violet",
+        "answerNl": "Violet"
+      }
+    ]
+  }
+]

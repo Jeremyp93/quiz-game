@@ -85,6 +85,7 @@ public class QuestionService : IQuestionService
             Type = createDto.Type,
             Difficulty = createDto.Difficulty,
             IsActive = createDto.IsActive,
+            IsPriority = createDto.IsPriority,
             Category = createDto.Category,
             Tags = createDto.Tags,
             TextFr = createDto.TextFr,
@@ -167,6 +168,7 @@ public class QuestionService : IQuestionService
         question.Type = updateDto.Type;
         question.Difficulty = updateDto.Difficulty;
         question.IsActive = updateDto.IsActive;
+        question.IsPriority = updateDto.IsPriority;
         question.Category = updateDto.Category;
         question.Tags = updateDto.Tags;
         question.TextFr = updateDto.TextFr;
@@ -259,6 +261,37 @@ public class QuestionService : IQuestionService
         return true;
     }
 
+    public async Task<BulkImportResultDto> BulkImportQuestionsAsync(List<CreateQuestionDto> questions)
+    {
+        var result = new BulkImportResultDto
+        {
+            TotalQuestions = questions.Count
+        };
+
+        for (int i = 0; i < questions.Count; i++)
+        {
+            var dto = questions[i];
+            try
+            {
+                var createdQuestion = await CreateQuestionAsync(dto);
+                result.ImportedQuestions.Add(createdQuestion);
+                result.SuccessCount++;
+            }
+            catch (Exception ex)
+            {
+                result.FailureCount++;
+                result.Errors.Add(new BulkImportError
+                {
+                    QuestionIndex = i,
+                    ErrorMessage = ex.Message,
+                    QuestionTextFr = dto.TextFr
+                });
+            }
+        }
+
+        return result;
+    }
+
     public async Task<QuestionDto?> GetRandomRegularQuestionAsync(Guid? excludeQuestionId = null)
     {
         // Get all active Regular questions
@@ -330,14 +363,23 @@ public class QuestionService : IQuestionService
             }
         }
 
-        var questions = await query.ToListAsync();
+        // Try priority questions first
+        var priorityQuestions = await query.Where(q => q.IsPriority).ToListAsync();
 
-        if (!questions.Any())
+        if (priorityQuestions.Any())
+        {
+            var randomIndex = Random.Shared.Next(priorityQuestions.Count);
+            return MapToDto(priorityQuestions[randomIndex]);
+        }
+
+        // Fallback to regular questions
+        var regularQuestions = await query.Where(q => !q.IsPriority).ToListAsync();
+
+        if (!regularQuestions.Any())
             return null;
 
-        // Select random question
-        var randomIndex = Random.Shared.Next(questions.Count);
-        return MapToDto(questions[randomIndex]);
+        var regularIndex = Random.Shared.Next(regularQuestions.Count);
+        return MapToDto(regularQuestions[regularIndex]);
     }
 
     public async Task<QuestionDto?> GetRandomRegular4QuestionAsync(List<Guid>? excludeQuestionIds = null)
@@ -357,14 +399,23 @@ public class QuestionService : IQuestionService
             }
         }
 
-        var questions = await query.ToListAsync();
+        // Try priority questions first
+        var priorityQuestions = await query.Where(q => q.IsPriority).ToListAsync();
 
-        if (!questions.Any())
+        if (priorityQuestions.Any())
+        {
+            var randomIndex = Random.Shared.Next(priorityQuestions.Count);
+            return MapToDto(priorityQuestions[randomIndex]);
+        }
+
+        // Fallback to regular questions
+        var regularQuestions = await query.Where(q => !q.IsPriority).ToListAsync();
+
+        if (!regularQuestions.Any())
             return null;
 
-        // Select random question
-        var randomIndex = Random.Shared.Next(questions.Count);
-        return MapToDto(questions[randomIndex]);
+        var regularIndex = Random.Shared.Next(regularQuestions.Count);
+        return MapToDto(regularQuestions[regularIndex]);
     }
 
     public async Task<QuestionDto?> GetRandomListQuestionAsync(List<Guid>? excludeQuestionIds = null)
@@ -384,14 +435,23 @@ public class QuestionService : IQuestionService
             }
         }
 
-        var questions = await query.ToListAsync();
+        // Try priority questions first
+        var priorityQuestions = await query.Where(q => q.IsPriority).ToListAsync();
 
-        if (!questions.Any())
+        if (priorityQuestions.Any())
+        {
+            var randomIndex = Random.Shared.Next(priorityQuestions.Count);
+            return MapToDto(priorityQuestions[randomIndex]);
+        }
+
+        // Fallback to regular questions
+        var regularQuestions = await query.Where(q => !q.IsPriority).ToListAsync();
+
+        if (!regularQuestions.Any())
             return null;
 
-        // Select random question
-        var randomIndex = Random.Shared.Next(questions.Count);
-        return MapToDto(questions[randomIndex]);
+        var regularIndex = Random.Shared.Next(regularQuestions.Count);
+        return MapToDto(regularQuestions[regularIndex]);
     }
 
     private static void ValidateCreateDto(CreateQuestionDto dto)
@@ -414,6 +474,7 @@ public class QuestionService : IQuestionService
             Type = question.Type,
             Difficulty = question.Difficulty,
             IsActive = question.IsActive,
+            IsPriority = question.IsPriority,
             Category = question.Category,
             Tags = question.Tags,
             TextFr = question.TextFr,
