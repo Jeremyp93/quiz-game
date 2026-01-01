@@ -135,6 +135,13 @@ builder.Services.AddHostedService<TimerBackgroundService>();
 
 var app = builder.Build();
 
+app.Use(async (ctx, next) =>
+{
+    var logger = ctx.RequestServices.GetRequiredService<ILoggerFactory>().CreateLogger("Instance");
+    logger.LogInformation("Instance: {Machine}, Pod: {Host}", Environment.MachineName, System.Net.Dns.GetHostName());
+    await next();
+});
+
 // Configure the HTTP request pipeline
 app.UseForwardedHeaders();
 
