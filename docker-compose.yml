@@ -13,7 +13,7 @@ services:
       - .env
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:8800
+      - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Data Source=/app/data/quizgame.db
     volumes:
       - ./data:/app/data
@@ -26,4 +26,4 @@ services:
       - "traefik.http.routers.quiz-game.entrypoints=websecure"
       # - "traefik.http.routers.quiz-game.tls=true"
       - "traefik.http.routers.quiz-game.tls.certresolver=lets-encrypt"
-      - "traefik.http.services.quiz-game.loadbalancer.server.port=8082"
+      - "traefik.http.services.quiz-game.loadbalancer.server.port=8080"
