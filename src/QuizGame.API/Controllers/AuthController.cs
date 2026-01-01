@@ -117,13 +117,19 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> GetCurrentUser()
     {
+        _logger.LogInformation("GetCurrentUser called. IsAuthenticated: {IsAuth}, Identity: {Identity}",
+            User.Identity?.IsAuthenticated, User.Identity?.Name);
+
         if (!User.Identity?.IsAuthenticated ?? true)
         {
+            _logger.LogWarning("User not authenticated");
             return Ok(new { authenticated = false });
         }
 
         var role = User.IsInRole("GM") ? "GM" : User.IsInRole("Viewer") ? "Viewer" : null;
         var sessionVersion = User.FindFirst("SessionVersion")?.Value;
+
+        _logger.LogInformation("User authenticated. Role: {Role}, Username: {Username}", role, User.Identity?.Name);
 
         // Verify viewer session is still valid
         if (role == "Viewer")
@@ -133,6 +139,7 @@ public class AuthController : ControllerBase
             {
                 // Session invalidated, sign out
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                _logger.LogInformation("Viewer session invalidated");
                 return Ok(new { authenticated = false, reason = "session_invalidated" });
             }
         }
