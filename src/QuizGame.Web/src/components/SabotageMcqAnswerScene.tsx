@@ -43,8 +43,6 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
     }
   };
 
-  const isCorrectAnswer = sabotage.selectedAnswer === question.correctChoice;
-
   return (
     <div className={styles['sabotage-mcq-answer-scene']}>
       <motion.div

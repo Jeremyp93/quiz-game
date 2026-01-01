@@ -168,6 +168,10 @@ export interface GameState {
   currentScene: Scene;
   lastSceneBeforeScoreboard?: Scene;
 
+  // Viewer authentication
+  viewerCode?: string;
+  sessionVersion: number;
+
   // Phase 1 (Fast Buzzer) state
   currentQuestion?: CurrentQuestion;
   isCurrentQuestionVisibleOnDisplay: boolean;

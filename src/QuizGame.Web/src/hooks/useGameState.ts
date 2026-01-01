@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { gameService } from '../services/gameService';
-import { GameState, TimerState, SabotageSubphase } from '../types';
+import { GameState, TimerState, SabotageSubphase, ChronoRunStatus } from '../types';
 
 const initialState: GameState = {
   isGameStarted: false,
@@ -9,6 +9,7 @@ const initialState: GameState = {
   currentPhase: 0,
   currentScene: 0,
   lastSceneBeforeScoreboard: undefined,
+  sessionVersion: 0,
   currentQuestion: undefined,
   isCurrentQuestionVisibleOnDisplay: false,
   lastQuestionId: undefined,
@@ -30,6 +31,13 @@ const initialState: GameState = {
     isThemeAssignmentComplete: false,
     isAnswerRevealed: false,
     currentQuestionInTheme: 0,
+  },
+  chrono: {
+    runStatus: ChronoRunStatus.Idle,
+    correctCount: 0,
+    timerState: TimerState.Idle,
+    timerAccumulatedPausedMs: 0,
+    teamResults: {},
   },
 };
 
