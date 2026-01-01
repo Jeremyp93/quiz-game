@@ -27,6 +27,11 @@ builder.Services.AddSpaStaticFiles(configuration =>
     configuration.RootPath = "wwwroot";
 });
 
+// Add DataProtection with persistent keys for cookie encryption
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/dataprotection-keys"))
+    .SetApplicationName("QuizGame");
+
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
