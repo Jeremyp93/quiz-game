@@ -118,6 +118,11 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> GetCurrentUser()
     {
+        _logger.LogInformation("Cookie header: {CookieHeader}", Request.Headers.Cookie.ToString());
+        _logger.LogInformation("Cookie keys: {Keys}", string.Join(", ", Request.Cookies.Keys));
+        var auth = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        _logger.LogInformation("AuthenticateAsync: {Succeeded}, Failure: {Failure}",
+            auth.Succeeded, auth.Failure?.Message);
         // Log cookie presence and request details
         var hasCookie = Request.Cookies.ContainsKey("QuizGameAuth");
         var cookieValue = hasCookie ? Request.Cookies["QuizGameAuth"]?.Substring(0, Math.Min(20, Request.Cookies["QuizGameAuth"]?.Length ?? 0)) + "..." : "none";
