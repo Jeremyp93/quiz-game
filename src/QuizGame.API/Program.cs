@@ -41,7 +41,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SecurePolicy = builder.Environment.IsProduction()
             ? CookieSecurePolicy.Always
             : CookieSecurePolicy.SameAsRequest;
-        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.Cookie.SameSite = SameSiteMode.Lax; // Changed from Strict to Lax
+        options.Cookie.Path = "/";
         options.ExpireTimeSpan = TimeSpan.FromHours(8);
         options.SlidingExpiration = true;
         options.Events = new CookieAuthenticationEvents
