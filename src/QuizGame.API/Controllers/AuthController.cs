@@ -118,6 +118,8 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> GetCurrentUser()
     {
+        var v = Request.Cookies["QuizGameAuth"];
+        _logger.LogInformation("QuizGameAuth length: {Len}", v?.Length ?? 0);
         _logger.LogInformation("Cookie header: {CookieHeader}", Request.Headers.Cookie.ToString());
         _logger.LogInformation("Cookie keys: {Keys}", string.Join(", ", Request.Cookies.Keys));
         var auth = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
