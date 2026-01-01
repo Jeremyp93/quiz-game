@@ -30,7 +30,8 @@ builder.Services.AddSpaStaticFiles(configuration =>
 // Add DataProtection with persistent keys for Docker
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo("/app/dataprotection-keys"))
-    .SetApplicationName("QuizGame");
+    .SetApplicationName("QuizGame")
+    .UnprotectKeysWithAnyCertificate(); // Allow reading keys without certificate (acceptable for containerized apps)
 
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
