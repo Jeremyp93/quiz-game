@@ -27,5 +27,3 @@ services:
       - "traefik.http.routers.quiz-game.tls=true"
       - "traefik.http.routers.quiz-game.tls.certresolver=lets-encrypt"
       - "traefik.http.services.quiz-game.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.quiz-ws.headers.customrequestheaders.X-Forwarded-Proto=https"
-      - "traefik.http.routers.quiz-game.middlewares=quiz-ws"
