@@ -27,13 +27,17 @@ builder.Services.AddSpaStaticFiles(configuration =>
     configuration.RootPath = "wwwroot";
 });
 
+// Add DataProtection with persistent keys for cookie encryption
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/dataprotection-keys"))
+    .SetApplicationName("quiz.scotex.tech");
+
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
                 options.Cookie.Name = "AuthCookie";
                 options.Cookie.SameSite = SameSiteMode.Strict;
-                options.Cookie.Domain = "quiz.scotex.tech";
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 
@@ -77,6 +81,30 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
 });
 
+// Add Rate Limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("login", opts =>
+    {
+        opts.Window = TimeSpan.FromMinutes(5);
+        opts.PermitLimit = 5;
+        opts.QueueLimit = 0;
+    });
+    options.AddFixedWindowLimiter("viewer_verify", opts =>
+    {
+        opts.Window = TimeSpan.FromMinutes(5);
+        opts.PermitLimit = 10;
+        opts.QueueLimit = 0;
+    });
+});
+
+// Configure ForwardedHeaders for Traefik
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 // Add CORS from environment variable
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")
@@ -107,6 +135,9 @@ builder.Services.AddHostedService<TimerBackgroundService>();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline
+app.UseForwardedHeaders();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -114,6 +145,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
