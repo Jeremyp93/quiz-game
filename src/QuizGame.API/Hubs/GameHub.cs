@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using QuizGame.Application.Interfaces;
 
@@ -19,54 +20,72 @@ public class GameHub : Hub
         await base.OnConnectedAsync();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task StartGame()
     {
         _gameSessionService.StartGame();
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task SetPlayers(List<string> playerNames)
     {
         _gameSessionService.SetPlayers(playerNames);
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task CreateTeams()
     {
         _gameSessionService.CreateTeams();
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task RenameTeam(int teamIndex, string newName)
     {
         _gameSessionService.RenameTeam(teamIndex, newName);
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task MovePlayer(string playerName, int toTeamIndex)
     {
         _gameSessionService.MovePlayer(playerName, toTeamIndex);
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task AdjustScore(int teamIndex, int delta)
     {
         _gameSessionService.AdjustScore(teamIndex, delta);
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task ShowTeamsScene()
     {
         _gameSessionService.ShowTeamsScene();
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task ShowScoreboard()
     {
         _gameSessionService.ShowScoreboard();
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+    
     public async Task BackToGame()
     {
         _gameSessionService.BackToGame();
@@ -75,11 +94,15 @@ public class GameHub : Hub
 
     // Phase 1 (Fast Buzzer) Methods
 
+    [Authorize(Policy = "GM")]
+
     public async Task StartPhase1()
     {
         await _gameSessionService.StartPhase1();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task GetQuestion()
     {
@@ -87,11 +110,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ShowQuestion()
     {
         _gameSessionService.ShowQuestion();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task ShowAnswer()
     {
@@ -99,11 +126,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ApplyBlocksForNextQuestion(List<int> teamIndices)
     {
         _gameSessionService.ApplyBlocksForNextQuestion(teamIndices);
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task EndPhase()
     {
@@ -113,11 +144,15 @@ public class GameHub : Hub
 
     // Phase 2 (List) Methods
 
+    [Authorize(Policy = "GM")]
+
     public async Task StartPhase2()
     {
         await _gameSessionService.StartPhase2();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task LoadListQuestion()
     {
@@ -125,11 +160,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ShowListQuestion()
     {
         await _gameSessionService.ShowListQuestion();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task SetListTimerDuration(int durationSeconds)
     {
@@ -137,11 +176,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task StartListTimer()
     {
         _gameSessionService.StartListTimer();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task PauseListTimer()
     {
@@ -149,11 +192,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ResumeListTimer()
     {
         _gameSessionService.ResumeListTimer();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task ResetListTimer()
     {
@@ -163,11 +210,15 @@ public class GameHub : Hub
 
     // Phase 3 (Sabotage) Methods
 
+    [Authorize(Policy = "GM")]
+
     public async Task StartPhase3()
     {
         await _gameSessionService.StartPhase3();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task StartThemeAssignment()
     {
@@ -175,11 +226,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task AssignThemeToTeam(int teamIndex, string themeId)
     {
         _gameSessionService.AssignThemeToTeam(teamIndex, Guid.Parse(themeId));
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task UndoLastThemeAssignment()
     {
@@ -187,11 +242,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task StartMcqSubphase()
     {
         await _gameSessionService.StartMcqSubphase();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task LoadNextMcqQuestion()
     {
@@ -199,11 +258,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ShowMcqQuestion()
     {
         _gameSessionService.ShowMcqQuestion();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task SelectMcqAnswer(int choice)
     {
@@ -211,17 +274,23 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ClearMcqAnswer()
     {
         _gameSessionService.ClearMcqAnswer();
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task RevealMcqAnswer()
     {
         _gameSessionService.RevealMcqAnswer();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task AdvanceToNextMcqQuestion()
     {
@@ -233,11 +302,15 @@ public class GameHub : Hub
     // Phase 4 (Chrono) Hub Methods
     // ============================================================
 
+    [Authorize(Policy = "GM")]
+
     public async Task StartPhase4()
     {
         await _gameSessionService.StartPhase4();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task SelectTeamForChronoRun(int teamIndex)
     {
@@ -245,11 +318,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ShowNextChronoQuestion()
     {
         await _gameSessionService.ShowNextChronoQuestion();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task MarkChronoCorrect()
     {
@@ -257,11 +334,15 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task PauseChronoTimer()
     {
         _gameSessionService.PauseChronoTimer();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task ResumeChronoTimer()
     {
@@ -269,17 +350,23 @@ public class GameHub : Hub
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task ResetChronoRun()
     {
         _gameSessionService.ResetChronoRun();
         await BroadcastGameState();
     }
 
+    [Authorize(Policy = "GM")]
+
     public async Task AbortChronoRun()
     {
         _gameSessionService.AbortChronoRun();
         await BroadcastGameState();
     }
+
+    [Authorize(Policy = "GM")]
 
     public async Task ForceFinishChronoRun()
     {

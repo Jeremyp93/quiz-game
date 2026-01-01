@@ -1,0 +1,32 @@
+# Stage 1: Build frontend
+FROM node:20-alpine AS frontend-build
+WORKDIR /app
+COPY src/QuizGame.Web/package*.json ./
+RUN npm ci
+COPY src/QuizGame.Web/ ./
+RUN npm run build
+
+# Stage 2: Build backend
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["src/QuizGame.API/QuizGame.API.csproj", "QuizGame.API/"]
+COPY ["src/QuizGame.Application/QuizGame.Application.csproj", "QuizGame.Application/"]
+COPY ["src/QuizGame.Domain/QuizGame.Domain.csproj", "QuizGame.Domain/"]
+COPY ["src/QuizGame.Infrastructure/QuizGame.Infrastructure.csproj", "QuizGame.Infrastructure/"]
+RUN dotnet restore "QuizGame.API/QuizGame.API.csproj"
+COPY src/ .
+WORKDIR "/src/QuizGame.API"
+RUN dotnet publish "QuizGame.API.csproj" -c Release -o /app/publish
+
+# Stage 3: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /app/data /app/dataprotection-keys && chown -R app:app /app
+COPY --from=build /app/publish .
+COPY --from=frontend-build /app/dist ./wwwroot
+USER app
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8080/health || exit 1
+ENTRYPOINT ["dotnet", "QuizGame.API.dll"]

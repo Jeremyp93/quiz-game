@@ -58,4 +58,9 @@ public interface IGameSessionService
     void AbortChronoRun();
     void ForceFinishChronoRun();
     void FinishChronoTimerAsNotFinished();
+
+    // Viewer authentication
+    string? GetCurrentViewerCode();
+    int GetCurrentSessionVersion();
+    bool VerifyViewerCode(string code);
 }

@@ -3,6 +3,8 @@ import QuestionsPage from './pages/QuestionsPage';
 import ThemesPage from './pages/ThemesPage';
 import ControlPage from './pages/ControlPage';
 import DisplayPage from './pages/DisplayPage';
+import LoginPage from './pages/LoginPage';
+import RequireGM from './components/RequireGM';
 import './App.css';
 
 function App() {
@@ -10,9 +12,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/questions" element={<QuestionsPage />} />
-        <Route path="/themes" element={<ThemesPage />} />
-        <Route path="/control" element={<ControlPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/questions" element={<RequireGM><QuestionsPage /></RequireGM>} />
+        <Route path="/themes" element={<RequireGM><ThemesPage /></RequireGM>} />
+        <Route path="/control" element={<RequireGM><ControlPage /></RequireGM>} />
         <Route path="/display" element={<DisplayPage />} />
       </Routes>
     </BrowserRouter>

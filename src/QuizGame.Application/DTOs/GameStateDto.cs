@@ -29,6 +29,10 @@ public class GameStateDto
 
     // Phase 4 (Chrono) state
     public ChronoStateDto Chrono { get; set; } = new();
+
+    // Viewer authentication
+    public string? ViewerCode { get; set; }
+    public int SessionVersion { get; set; }
 }
 
 public class CurrentQuestionDto

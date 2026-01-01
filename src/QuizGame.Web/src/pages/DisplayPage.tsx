@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useGameState } from '../hooks/useGameState';
+import { authService } from '../services/authService';
+import ViewerCodeModal from '../components/ViewerCodeModal';
 import { Scene } from '../types';
 import TeamsScene from '../components/TeamsScene';
 import ScoreboardScene from '../components/ScoreboardScene';
@@ -24,6 +27,49 @@ import styles from './DisplayPage.module.css';
 
 export default function DisplayPage() {
   const { gameState, isConnected } = useGameState();
+  const [showCodeModal, setShowCodeModal] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+
+  useEffect(() => {
+    checkVerification();
+  }, []);
+
+  const checkVerification = async () => {
+    // Check if locally verified (localStorage flag)
+    if (authService.isViewerVerifiedLocally()) {
+      // Verify with server that session is still valid
+      const user = await authService.getCurrentUser();
+
+      if (user.authenticated && user.role === 'Viewer') {
+        setIsVerified(true);
+      } else if (user.reason === 'session_invalidated') {
+        // Session was invalidated, need new code
+        authService.clearViewerVerification();
+        setShowCodeModal(true);
+      } else {
+        setShowCodeModal(true);
+      }
+    } else {
+      setShowCodeModal(true);
+    }
+  };
+
+  const handleVerified = () => {
+    setIsVerified(true);
+    setShowCodeModal(false);
+  };
+
+  if (showCodeModal) {
+    return <ViewerCodeModal onVerified={handleVerified} />;
+  }
+
+  if (!isVerified) {
+    return (
+      <div className={styles['display-page']}>
+        <div className={styles['loading-display']}>Checking access...</div>
+      </div>
+    );
+  }
 
   if (!isConnected) {
     return (

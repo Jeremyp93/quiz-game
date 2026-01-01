@@ -6,13 +6,13 @@ class GameService {
   private stateListeners: ((state: GameState) => void)[] = [];
 
   async connect() {
-    // this.connection = new signalR.HubConnectionBuilder()
-    //   .withUrl('http://localhost:5000/gameHub')
-    //   .withAutomaticReconnect()
-    //   .build();
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+    const hubUrl = baseUrl ? `${baseUrl}/gameHub` : '/gameHub';
 
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('/gameHub')
+      .withUrl(hubUrl, {
+        withCredentials: true // Important for cookie-based auth
+      })
       .withAutomaticReconnect()
       .build();
 

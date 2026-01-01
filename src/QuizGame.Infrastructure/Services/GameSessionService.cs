@@ -67,6 +67,10 @@ public class GameSessionService : IGameSessionService
     private Dictionary<int, ChronoTeamResult> _chronoTeamResults = new();
     private List<Guid> _usedPhase4QuestionIds = new();
 
+    // Viewer authentication state
+    private string? _currentViewerCode;
+    private int _sessionVersion = 0;
+
     public GameSessionService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -141,7 +145,9 @@ public class GameSessionService : IGameSessionService
                 TimerFinishedAtUtc = _chronoTimerFinishedAtUtc,
                 BestTimeMs = _chronoBestTimeMs,
                 TeamResults = new Dictionary<int, ChronoTeamResult>(_chronoTeamResults)
-            }
+            },
+            ViewerCode = _currentViewerCode,
+            SessionVersion = _sessionVersion
         };
     }
 
@@ -153,6 +159,10 @@ public class GameSessionService : IGameSessionService
         _currentPhase = Phase.Setup;
         _currentScene = Scene.Welcome;  // Changed from Teams to Scoreboard to prevent auto-showing teams
         _lastSceneBeforeScoreboard = null;
+
+        // Generate new viewer code and increment session version for security
+        _currentViewerCode = new Random().Next(100000, 999999).ToString();
+        _sessionVersion++;
     }
 
     public void SetPlayers(List<string> playerNames)
@@ -1205,5 +1215,24 @@ public class GameSessionService : IGameSessionService
 
         var elapsed = (endTime - _chronoTimerStartedAtUtc.Value).TotalMilliseconds;
         return (long)(elapsed - _chronoTimerAccumulatedPausedMs);
+    }
+
+    // Viewer authentication methods
+    public string? GetCurrentViewerCode()
+    {
+        return _currentViewerCode;
+    }
+
+    public int GetCurrentSessionVersion()
+    {
+        return _sessionVersion;
+    }
+
+    public bool VerifyViewerCode(string code)
+    {
+        if (string.IsNullOrEmpty(_currentViewerCode))
+            return false;
+
+        return code == _currentViewerCode;
     }
 }

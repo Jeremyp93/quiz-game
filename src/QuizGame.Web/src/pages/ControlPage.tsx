@@ -253,6 +253,31 @@ export default function ControlPage() {
     <div className={styles['control-page']}>
       <h1>Game Master Control Panel</h1>
 
+      {gameState.viewerCode && (
+        <div style={{
+          background: '#fff3cd',
+          border: '2px solid #ffc107',
+          borderRadius: '8px',
+          padding: '1.5rem',
+          marginBottom: '2rem',
+          textAlign: 'center'
+        }}>
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#856404' }}>Display Viewer Code</h3>
+          <div style={{
+            fontSize: '3rem',
+            fontWeight: 'bold',
+            letterSpacing: '0.5rem',
+            color: '#856404',
+            fontFamily: 'monospace'
+          }}>
+            {gameState.viewerCode}
+          </div>
+          <p style={{ margin: '0.5rem 0 0 0', color: '#856404', fontSize: '0.9rem' }}>
+            Share this code with viewers to access the display screen
+          </p>
+        </div>
+      )}
+
       <div className={styles['control-layout']}>
         <div className={styles['left-panel']}>
           {!gameState.isGameStarted ? (

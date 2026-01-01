@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuizGame.Application.DTOs;
 using QuizGame.Application.Interfaces;
@@ -6,6 +7,7 @@ namespace QuizGame.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "GM")]
 public class ThemesController : ControllerBase
 {
     private readonly IThemeService _themeService;
