@@ -43,7 +43,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
                 if (builder.Environment.IsProduction())
                 {
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 }
 
                 options.Events.OnRedirectToLogin = (context) =>
