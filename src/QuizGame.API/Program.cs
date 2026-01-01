@@ -133,7 +133,7 @@ builder.Services.AddSingleton<IGameSessionService, GameSessionService>();
 // Register background services
 builder.Services.AddHostedService<TimerBackgroundService>();
 
-var app = builder.Build()
+var app = builder.Build();
 
 // Configure the HTTP request pipeline
 app.UseForwardedHeaders();
