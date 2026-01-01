@@ -80,12 +80,12 @@ builder.Services.AddRateLimiter(options =>
 });
 
 // Configure ForwardedHeaders for Traefik
-// builder.Services.Configure<ForwardedHeadersOptions>(options =>
-// {
-//     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-//     options.KnownNetworks.Clear();
-//     options.KnownProxies.Clear();
-// });
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 // Add CORS from environment variable
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")
