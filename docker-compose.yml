@@ -24,6 +24,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.quiz-game.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.quiz-game.entrypoints=websecure"
-      # - "traefik.http.routers.quiz-game.tls=true"
+      - "traefik.http.routers.quiz-game.tls=true"
       - "traefik.http.routers.quiz-game.tls.certresolver=lets-encrypt"
       - "traefik.http.services.quiz-game.loadbalancer.server.port=8080"
