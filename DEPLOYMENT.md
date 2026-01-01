@@ -49,8 +49,10 @@ AllowedOrigins=https://quiz.yourdomain.com
 
 ```bash
 mkdir -p data dataprotection-keys
-chmod 755 data dataprotection-keys
+chmod 777 data dataprotection-keys
 ```
+
+**Note**: The directories need `777` permissions to allow the container's non-root `app` user to write to them.
 
 ### 3. Deploy Using the Script
 

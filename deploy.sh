@@ -15,9 +15,9 @@ fi
 echo "Creating required directories..."
 mkdir -p data dataprotection-keys
 
-# Set proper permissions
+# Set proper permissions (777 allows container's app user to write)
 echo "Setting directory permissions..."
-chmod 755 data dataprotection-keys
+chmod 777 data dataprotection-keys
 
 # Build and start containers
 echo "Building Docker image..."
