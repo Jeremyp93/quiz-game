@@ -114,7 +114,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
