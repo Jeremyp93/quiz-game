@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Question, QuestionType, CreateQuestionDto, BulkImportResult } from '../types';
+import { Question, QuestionType, CreateQuestionDto, BulkImportResult, Theme } from '../types';
 import { questionService } from '../services/questionService';
 import QuestionForm from '../components/QuestionForm';
 import styles from './QuestionsPage.module.css';
+import { themeService } from '../services/themeService';
 
 const SAMPLE_JSON = `[
   {
@@ -77,6 +78,7 @@ const SAMPLE_JSON = `[
 
 export default function QuestionsPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [themes, setThemes] = useState<Theme[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -91,20 +93,29 @@ export default function QuestionsPage() {
   const [difficultyFilter, setDifficultyFilter] = useState<number | ''>('');
   const [activeFilter, setActiveFilter] = useState<boolean | ''>('');
   const [priorityFilter, setPriorityFilter] = useState<boolean | ''>('');
+  const [themeFilter, setThemeFilter] = useState<string | ''>('');
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     loadQuestions();
+    loadThemes();
   }, []);
 
   useEffect(() => {
     applyFilters();
-  }, [questions, typeFilter, difficultyFilter, activeFilter, priorityFilter, searchText]);
+  }, [questions, typeFilter, difficultyFilter, activeFilter, priorityFilter, themeFilter, searchText]);
 
   const loadQuestions = async () => {
     setLoading(true);
     const data = await questionService.getAll();
     setQuestions(data);
+    setLoading(false);
+  };
+
+  const loadThemes = async () => {
+    setLoading(true);
+    const data = await themeService.getAll();
+    setThemes(data);
     setLoading(false);
   };
 
@@ -122,6 +133,9 @@ export default function QuestionsPage() {
     }
     if (priorityFilter !== '') {
       filtered = filtered.filter(q => q.isPriority === priorityFilter);
+    }
+    if (themeFilter !== '') {
+      filtered = filtered.filter(q => q.themeId === themeFilter);
     }
     if (searchText) {
       const search = searchText.toLowerCase();
@@ -363,6 +377,13 @@ export default function QuestionsPage() {
           <option value="">All Priorities</option>
           <option value="true">Priority</option>
           <option value="false">Non Priority</option>
+        </select>
+
+        <select value={themeFilter} onChange={e => setThemeFilter(e.target.value === '' ? '' :e.target.value)}>
+          <option value="">All Themes</option>
+          {themes.map(theme => (
+            <option key={theme.id} value={theme.id}>{theme.code}</option>
+          ))}
         </select>
 
         <input

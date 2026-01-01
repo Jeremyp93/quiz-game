@@ -13,6 +13,46 @@ public static class DbSeeder
         context.SaveChanges();
 
         // ==================== THEMES ====================
+        var themeJonathan = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "jonathan",
+            NameFr = "Jonathan",
+            NameNl = "Jonathan",
+            IsActive = true,
+            SortOrder = 1
+        };
+
+        var themePieterkeshoeve = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "pieterkeshoeve",
+            NameFr = "Pieterkeshoeve",
+            NameNl = "Pieterkeshoeve",
+            IsActive = true,
+            SortOrder = 2
+        };
+
+        var themeGeography = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "geography",
+            NameFr = "Géographie",
+            NameNl = "Aardrijkskunde",
+            IsActive = true,
+            SortOrder = 3
+        };
+
+        var themeGastronomy = new Theme
+        {
+            Id = Guid.NewGuid(),
+            Code = "gastronomy",
+            NameFr = "Gastronomie",
+            NameNl = "Gastronomie",
+            IsActive = true,
+            SortOrder = 4
+        };
+
         var themeAnimals = new Theme
         {
             Id = Guid.NewGuid(),
@@ -20,17 +60,7 @@ public static class DbSeeder
             NameFr = "Animaux",
             NameNl = "Dieren",
             IsActive = true,
-            SortOrder = 1
-        };
-
-        var themeSports = new Theme
-        {
-            Id = Guid.NewGuid(),
-            Code = "sports",
-            NameFr = "Sports",
-            NameNl = "Sport",
-            IsActive = true,
-            SortOrder = 2
+            SortOrder = 5
         };
 
         var themeTechnology = new Theme
@@ -40,853 +70,834 @@ public static class DbSeeder
             NameFr = "Technologie",
             NameNl = "Technologie",
             IsActive = true,
-            SortOrder = 3
-        };
-
-        var themeMovies = new Theme
-        {
-            Id = Guid.NewGuid(),
-            Code = "movies",
-            NameFr = "Cinéma",
-            NameNl = "Film",
-            IsActive = true,
-            SortOrder = 4
-        };
-
-        var themeArt = new Theme
-        {
-            Id = Guid.NewGuid(),
-            Code = "art",
-            NameFr = "Art",
-            NameNl = "Kunst",
-            IsActive = true,
-            SortOrder = 5
-        };
-
-        var themeMusic = new Theme
-        {
-            Id = Guid.NewGuid(),
-            Code = "music",
-            NameFr = "Musique",
-            NameNl = "Muziek",
-            IsActive = true,
             SortOrder = 6
         };
 
-        var themeHistory = new Theme
+        var themeCycling = new Theme
         {
             Id = Guid.NewGuid(),
-            Code = "history",
-            NameFr = "Histoire",
-            NameNl = "Geschiedenis",
+            Code = "cycling",
+            NameFr = "Cyclisme",
+            NameNl = "Wielrennen",
             IsActive = true,
             SortOrder = 7
         };
 
-        var themeScience = new Theme
+        var themeSurprise = new Theme
         {
             Id = Guid.NewGuid(),
-            Code = "science",
-            NameFr = "Sciences",
-            NameNl = "Wetenschappen",
+            Code = "surprise",
+            NameFr = "Surprise",
+            NameNl = "Verassing",
             IsActive = true,
             SortOrder = 8
         };
 
-        context.Themes.AddRange(new[] {
-            themeAnimals, themeSports, themeTechnology, themeMovies,
-            themeArt, themeMusic, themeHistory, themeScience
-        });
+        context.Themes.AddRange([
+            themeJonathan, themePieterkeshoeve, themeTechnology, themeGastronomy,
+            themeGeography, themeCycling, themeSurprise, themeAnimals
+        ]);
         context.SaveChanges();
 
-        var questions = new List<Question>();
-
-        // ==================== REGULAR QUESTIONS ====================
-
-        // Easy Regular Questions
-        questions.Add(new Question
+        var questions = new List<Question>
         {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 1,
-            IsActive = true,
-            Category = "Geography",
-            Tags = "capitals,europe",
-            TextFr = "Quelle est la capitale de la France ?",
-            TextNl = "Wat is de hoofdstad van Frankrijk?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "Paris",
-                AnswerNl = "Parijs"
-            }
-        });
+            // ==================== REGULAR QUESTIONS ====================
 
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 1,
-            IsActive = true,
-            Category = "Science",
-            Tags = "chemistry,elements",
-            TextFr = "Quel est le symbole chimique de l'eau ?",
-            TextNl = "Wat is het chemisch symbool voor water?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "H2O",
-                AnswerNl = "H2O"
-            }
-        });
+            // Easy Regular Questions
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Regular,
+                Difficulty = 1,
+                IsActive = true,
+                Category = "Geography",
+                Tags = "capitals,europe",
+                TextFr = "Quelle est la capitale de la France ?",
+                TextNl = "Wat is de hoofdstad van Frankrijk?",
+                RegularDetails = new RegularQuestionDetails
+                {
+                    AnswerFr = "Paris",
+                    AnswerNl = "Parijs"
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Regular,
+                Difficulty = 1,
+                IsActive = true,
+                Category = "Science",
+                Tags = "chemistry,elements",
+                TextFr = "Quel est le symbole chimique de l'eau ?",
+                TextNl = "Wat is het chemisch symbool voor water?",
+                RegularDetails = new RegularQuestionDetails
+                {
+                    AnswerFr = "H2O",
+                    AnswerNl = "H2O"
+                }
+            },
 
-        // Medium Regular Questions
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 2,
-            IsActive = true,
-            Category = "History",
-            Tags = "world-war,dates",
-            TextFr = "En quelle année a commencé la Seconde Guerre mondiale ?",
-            TextNl = "In welk jaar begon de Tweede Wereldoorlog?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "1939",
-                AnswerNl = "1939"
-            }
-        });
+            // Medium Regular Questions
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Regular,
+                Difficulty = 2,
+                IsActive = true,
+                Category = "History",
+                Tags = "world-war,dates",
+                TextFr = "En quelle année a commencé la Seconde Guerre mondiale ?",
+                TextNl = "In welk jaar begon de Tweede Wereldoorlog?",
+                RegularDetails = new RegularQuestionDetails
+                {
+                    AnswerFr = "1939",
+                    AnswerNl = "1939"
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Regular,
+                Difficulty = 2,
+                IsActive = true,
+                Category = "Literature",
+                Tags = "authors,classic",
+                TextFr = "Qui a écrit 'Les Misérables' ?",
+                TextNl = "Wie schreef 'Les Misérables'?",
+                RegularDetails = new RegularQuestionDetails
+                {
+                    AnswerFr = "Victor Hugo",
+                    AnswerNl = "Victor Hugo"
+                }
+            },
 
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 2,
-            IsActive = true,
-            Category = "Literature",
-            Tags = "authors,classic",
-            TextFr = "Qui a écrit 'Les Misérables' ?",
-            TextNl = "Wie schreef 'Les Misérables'?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "Victor Hugo",
-                AnswerNl = "Victor Hugo"
-            }
-        });
+            // Hard Regular Questions
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Regular,
+                Difficulty = 3,
+                IsActive = true,
+                Category = "Science",
+                Tags = "physics,constants",
+                TextFr = "Quelle est la vitesse de la lumière dans le vide (en km/s) ?",
+                TextNl = "Wat is de lichtsnelheid in vacuüm (in km/s)?",
+                RegularDetails = new RegularQuestionDetails
+                {
+                    AnswerFr = "299792",
+                    AnswerNl = "299792"
+                }
+            },
 
-        // Hard Regular Questions
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 3,
-            IsActive = true,
-            Category = "Science",
-            Tags = "physics,constants",
-            TextFr = "Quelle est la vitesse de la lumière dans le vide (en km/s) ?",
-            TextNl = "Wat is de lichtsnelheid in vacuüm (in km/s)?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "299792",
-                AnswerNl = "299792"
-            }
-        });
+            // ==================== MCQ QUESTIONS ====================
 
-        // ==================== MCQ QUESTIONS ====================
-
-        // Easy MCQ Questions
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            Category = "Animals",
-            Tags = "mammals,classification",
-            TextFr = "Quel animal est le plus grand mammifère terrestre ?",
-            TextNl = "Welk dier is het grootste landzoogdier?",
-            ThemeId = themeAnimals.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Éléphant d'Afrique",
-                ChoiceANl = "Afrikaanse olifant",
-                ChoiceBFr = "Girafe",
-                ChoiceBNl = "Giraffe",
-                ChoiceCFr = "Rhinocéros",
-                ChoiceCNl = "Neushoorn",
-                CorrectChoice = McqChoice.A
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            Category = "Sports",
-            Tags = "olympics,track",
-            TextFr = "Combien de mètres fait un sprint olympique court ?",
-            TextNl = "Hoeveel meter is een korte olympische sprint?",
-            ThemeId = themeSports.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "50 mètres",
-                ChoiceANl = "50 meter",
-                ChoiceBFr = "100 mètres",
-                ChoiceBNl = "100 meter",
-                ChoiceCFr = "200 mètres",
-                ChoiceCNl = "200 meter",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // Medium MCQ Questions
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            Category = "Technology",
-            Tags = "computers,programming",
-            TextFr = "Quel langage de programmation est principalement utilisé pour le développement Android ?",
-            TextNl = "Welke programmeertaal wordt vooral gebruikt voor Android-ontwikkeling?",
-            ThemeId = themeTechnology.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Swift",
-                ChoiceANl = "Swift",
-                ChoiceBFr = "Python",
-                ChoiceBNl = "Python",
-                ChoiceCFr = "Kotlin",
-                ChoiceCNl = "Kotlin",
-                CorrectChoice = McqChoice.C
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            Category = "Movies",
-            Tags = "oscars,directors",
-            TextFr = "Qui a réalisé 'Pulp Fiction' ?",
-            TextNl = "Wie regisseerde 'Pulp Fiction'?",
-            ThemeId = themeMovies.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Steven Spielberg",
-                ChoiceANl = "Steven Spielberg",
-                ChoiceBFr = "Quentin Tarantino",
-                ChoiceBNl = "Quentin Tarantino",
-                ChoiceCFr = "Martin Scorsese",
-                ChoiceCNl = "Martin Scorsese",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // Hard MCQ Questions
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            Category = "Art",
-            Tags = "painting,renaissance",
-            TextFr = "Dans quel musée se trouve 'La Naissance de Vénus' de Botticelli ?",
-            TextNl = "In welk museum bevindt zich Botticelli's 'De geboorte van Venus'?",
-            ThemeId = themeArt.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Le Louvre",
-                ChoiceANl = "Het Louvre",
-                ChoiceBFr = "La Galerie des Offices",
-                ChoiceBNl = "De Uffizi Galerij",
-                ChoiceCFr = "Le Musée du Prado",
-                ChoiceCNl = "Het Prado Museum",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // Additional MCQ questions to complete theme sets for Phase 3 testing
-
-        // ANIMALS theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Combien de pattes a une araignée ?",
-            TextNl = "Hoeveel poten heeft een spin?",
-            ThemeId = themeAnimals.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "6",
-                ChoiceANl = "6",
-                ChoiceBFr = "8",
-                ChoiceBNl = "8",
-                ChoiceCFr = "10",
-                ChoiceCNl = "10",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            TextFr = "Quel est le seul mammifère capable de voler ?",
-            TextNl = "Wat is het enige zoogdier dat kan vliegen?",
-            ThemeId = themeAnimals.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "L'écureuil volant",
-                ChoiceANl = "Vliegende eekhoorn",
-                ChoiceBFr = "La chauve-souris",
-                ChoiceBNl = "Vleermuis",
-                ChoiceCFr = "Le poisson volant",
-                ChoiceCNl = "Vliegende vis",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "Quel est l'animal le plus venimeux au monde ?",
-            TextNl = "Wat is het giftigste dier ter wereld?",
-            ThemeId = themeAnimals.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "La méduse-boîte",
-                ChoiceANl = "Dooskwal",
-                ChoiceBFr = "Le taipan du désert",
-                ChoiceBNl = "Woestijntaipan",
-                ChoiceCFr = "La grenouille dorée",
-                ChoiceCNl = "Gouden gifkikker",
-                CorrectChoice = McqChoice.A
-            }
-        });
-
-        // SPORTS theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Combien de joueurs y a-t-il dans une équipe de football ?",
-            TextNl = "Hoeveel spelers zitten er in een voetbalteam?",
-            ThemeId = themeSports.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "9",
-                ChoiceANl = "9",
-                ChoiceBFr = "11",
-                ChoiceBNl = "11",
-                ChoiceCFr = "13",
-                ChoiceCNl = "13",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            TextFr = "Dans quel pays se sont déroulés les Jeux Olympiques de 2016 ?",
-            TextNl = "In welk land vonden de Olympische Spelen van 2016 plaats?",
-            ThemeId = themeSports.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Chine",
-                ChoiceANl = "China",
-                ChoiceBFr = "Brésil",
-                ChoiceBNl = "Brazilië",
-                ChoiceCFr = "Royaume-Uni",
-                ChoiceCNl = "Verenigd Koninkrijk",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "Qui détient le record du monde de médailles olympiques ?",
-            TextNl = "Wie heeft het wereldrecord voor olympische medailles?",
-            ThemeId = themeSports.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Usain Bolt",
-                ChoiceANl = "Usain Bolt",
-                ChoiceBFr = "Michael Phelps",
-                ChoiceBNl = "Michael Phelps",
-                ChoiceCFr = "Simone Biles",
-                ChoiceCNl = "Simone Biles",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // TECHNOLOGY theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Quelle entreprise a créé l'iPhone ?",
-            TextNl = "Welk bedrijf heeft de iPhone gemaakt?",
-            ThemeId = themeTechnology.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Samsung",
-                ChoiceANl = "Samsung",
-                ChoiceBFr = "Apple",
-                ChoiceBNl = "Apple",
-                ChoiceCFr = "Google",
-                ChoiceCNl = "Google",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Que signifie WWW dans une adresse internet ?",
-            TextNl = "Wat betekent WWW in een internetadres?",
-            ThemeId = themeTechnology.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "World Wide Web",
-                ChoiceANl = "World Wide Web",
-                ChoiceBFr = "World Web Wide",
-                ChoiceBNl = "World Web Wide",
-                ChoiceCFr = "Wide World Web",
-                ChoiceCNl = "Wide World Web",
-                CorrectChoice = McqChoice.A
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "Qui est considéré comme le père de l'informatique moderne ?",
-            TextNl = "Wie wordt beschouwd als de vader van de moderne informatica?",
-            ThemeId = themeTechnology.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Steve Jobs",
-                ChoiceANl = "Steve Jobs",
-                ChoiceBFr = "Alan Turing",
-                ChoiceBNl = "Alan Turing",
-                ChoiceCFr = "Bill Gates",
-                ChoiceCNl = "Bill Gates",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // MOVIES theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Quel film a remporté l'Oscar du meilleur film en 1998 ?",
-            TextNl = "Welke film won de Oscar voor beste film in 1998?",
-            ThemeId = themeMovies.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Saving Private Ryan",
-                ChoiceANl = "Saving Private Ryan",
-                ChoiceBFr = "Titanic",
-                ChoiceBNl = "Titanic",
-                ChoiceCFr = "The Truman Show",
-                ChoiceCNl = "The Truman Show",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Dans quel film trouve-t-on la réplique 'Je suis ton père' ?",
-            TextNl = "In welke film komt de zin 'Ik ben je vader' voor?",
-            ThemeId = themeMovies.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Star Trek",
-                ChoiceANl = "Star Trek",
-                ChoiceBFr = "Star Wars",
-                ChoiceBNl = "Star Wars",
-                ChoiceCFr = "Retour vers le futur",
-                ChoiceCNl = "Terug naar de toekomst",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "Quel acteur a joué dans le plus de films de l'histoire ?",
-            TextNl = "Welke acteur speelde in de meeste films in de geschiedenis?",
-            ThemeId = themeMovies.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Samuel L. Jackson",
-                ChoiceANl = "Samuel L. Jackson",
-                ChoiceBFr = "Christopher Lee",
-                ChoiceBNl = "Christopher Lee",
-                ChoiceCFr = "Robert De Niro",
-                ChoiceCNl = "Robert De Niro",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // ART theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Qui a peint la Joconde ?",
-            TextNl = "Wie schilderde de Mona Lisa?",
-            ThemeId = themeArt.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Michelangelo",
-                ChoiceANl = "Michelangelo",
-                ChoiceBFr = "Leonardo da Vinci",
-                ChoiceBNl = "Leonardo da Vinci",
-                ChoiceCFr = "Raphael",
-                ChoiceCNl = "Raphael",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Quelle couleur obtient-on en mélangeant rouge et jaune ?",
-            TextNl = "Welke kleur krijg je door rood en geel te mengen?",
-            ThemeId = themeArt.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Vert",
-                ChoiceANl = "Groen",
-                ChoiceBFr = "Orange",
-                ChoiceBNl = "Oranje",
-                ChoiceCFr = "Violet",
-                ChoiceCNl = "Violet",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            TextFr = "Quel artiste a coupé son oreille ?",
-            TextNl = "Welke kunstenaar sneed zijn oor af?",
-            ThemeId = themeArt.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Pablo Picasso",
-                ChoiceANl = "Pablo Picasso",
-                ChoiceBFr = "Vincent van Gogh",
-                ChoiceBNl = "Vincent van Gogh",
-                ChoiceCFr = "Claude Monet",
-                ChoiceCNl = "Claude Monet",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // HISTORY theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "En quelle année l'homme a-t-il marché sur la lune pour la première fois ?",
-            TextNl = "In welk jaar liep de mens voor het eerst op de maan?",
-            ThemeId = themeHistory.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "1965",
-                ChoiceANl = "1965",
-                ChoiceBFr = "1969",
-                ChoiceBNl = "1969",
-                ChoiceCFr = "1972",
-                ChoiceCNl = "1972",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Qui était le premier président des États-Unis ?",
-            TextNl = "Wie was de eerste president van de Verenigde Staten?",
-            ThemeId = themeHistory.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Thomas Jefferson",
-                ChoiceANl = "Thomas Jefferson",
-                ChoiceBFr = "George Washington",
-                ChoiceBNl = "George Washington",
-                ChoiceCFr = "Abraham Lincoln",
-                ChoiceCNl = "Abraham Lincoln",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            TextFr = "Quelle civilisation a construit le Machu Picchu ?",
-            TextNl = "Welke beschaving bouwde Machu Picchu?",
-            ThemeId = themeHistory.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Les Aztèques",
-                ChoiceANl = "De Azteken",
-                ChoiceBFr = "Les Incas",
-                ChoiceBNl = "De Inca's",
-                ChoiceCFr = "Les Mayas",
-                ChoiceCNl = "De Maya's",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "En quelle année est tombé le mur de Berlin ?",
-            TextNl = "In welk jaar viel de Berlijnse Muur?",
-            ThemeId = themeHistory.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "1987",
-                ChoiceANl = "1987",
-                ChoiceBFr = "1989",
-                ChoiceBNl = "1989",
-                ChoiceCFr = "1991",
-                ChoiceCNl = "1991",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // SCIENCE theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Quelle planète est la plus proche du Soleil ?",
-            TextNl = "Welke planeet staat het dichtst bij de zon?",
-            ThemeId = themeScience.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Vénus",
-                ChoiceANl = "Venus",
-                ChoiceBFr = "Mercure",
-                ChoiceBNl = "Mercurius",
-                ChoiceCFr = "Mars",
-                ChoiceCNl = "Mars",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Combien d'os y a-t-il dans le corps humain adulte ?",
-            TextNl = "Hoeveel botten heeft een volwassen menselijk lichaam?",
-            ThemeId = themeScience.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "186",
-                ChoiceANl = "186",
-                ChoiceBFr = "206",
-                ChoiceBNl = "206",
-                ChoiceCFr = "226",
-                ChoiceCNl = "226",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            TextFr = "Quel est l'élément chimique le plus abondant dans l'univers ?",
-            TextNl = "Wat is het meest voorkomende chemische element in het universum?",
-            ThemeId = themeScience.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Oxygène",
-                ChoiceANl = "Zuurstof",
-                ChoiceBFr = "Hydrogène",
-                ChoiceBNl = "Waterstof",
-                ChoiceCFr = "Hélium",
-                ChoiceCNl = "Helium",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "Quelle particule subatomique a été découverte au CERN en 2012 ?",
-            TextNl = "Welk subatomair deeltje werd in 2012 ontdekt bij CERN?",
-            ThemeId = themeScience.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Le quark",
-                ChoiceANl = "De quark",
-                ChoiceBFr = "Le boson de Higgs",
-                ChoiceBNl = "Het Higgs-deeltje",
-                ChoiceCFr = "Le neutrino",
-                ChoiceCNl = "De neutrino",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        // MUSIC theme (complete set: 2×Diff1, 1×Diff2, 1×Diff3)
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Combien de cordes a une guitare classique ?",
-            TextNl = "Hoeveel snaren heeft een klassieke gitaar?",
-            ThemeId = themeMusic.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "4",
-                ChoiceANl = "4",
-                ChoiceBFr = "6",
-                ChoiceBNl = "6",
-                ChoiceCFr = "8",
-                ChoiceCNl = "8",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 1,
-            IsActive = true,
-            TextFr = "Quel instrument Freddie Mercury jouait-il ?",
-            TextNl = "Welk instrument bespeelde Freddie Mercury?",
-            ThemeId = themeMusic.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Guitare",
-                ChoiceANl = "Gitaar",
-                ChoiceBFr = "Piano",
-                ChoiceBNl = "Piano",
-                ChoiceCFr = "Batterie",
-                ChoiceCNl = "Drums",
-                CorrectChoice = McqChoice.B
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 2,
-            IsActive = true,
-            TextFr = "Quel est le vrai nom d'Elton John ?",
-            TextNl = "Wat is de echte naam van Elton John?",
-            ThemeId = themeMusic.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Reginald Dwight",
-                ChoiceANl = "Reginald Dwight",
-                ChoiceBFr = "David Jones",
-                ChoiceBNl = "David Jones",
-                ChoiceCFr = "Robert Zimmerman",
-                ChoiceCNl = "Robert Zimmerman",
-                CorrectChoice = McqChoice.A
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Mcq,
-            Difficulty = 3,
-            IsActive = true,
-            TextFr = "Quel compositeur est devenu sourd à la fin de sa vie ?",
-            TextNl = "Welke componist werd doof op het einde van zijn leven?",
-            ThemeId = themeMusic.Id,
-            McqDetails = new McqQuestionDetails
-            {
-                ChoiceAFr = "Mozart",
-                ChoiceANl = "Mozart",
-                ChoiceBFr = "Beethoven",
-                ChoiceBNl = "Beethoven",
-                ChoiceCFr = "Bach",
-                ChoiceCNl = "Bach",
-                CorrectChoice = McqChoice.B
-            }
-        });
+            // Jonathan
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Jonathan",
+                Tags = "birthday",
+                TextFr = "Quel est la date d'anniversaire de Jonathan ?",
+                TextNl = "Wat is de geboortedatum van Jonathan?",
+                ThemeId = themeJonathan.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "15",
+                    ChoiceANl = "15",
+                    ChoiceBFr = "17",
+                    ChoiceBNl = "17",
+                    ChoiceCFr = "28",
+                    ChoiceCNl = "28",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Jonathan",
+                Tags = "fiancee,wedding",
+                TextFr = "En quelle année Jonathan a-t-il fait sa demande en mariage à Lies ?",
+                TextNl = "In welk jaar heeft Jonathan aan Lies ten huwelijk gevraagd?",
+                ThemeId = themeJonathan.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "2021",
+                    ChoiceANl = "2021",
+                    ChoiceBFr = "2022",
+                    ChoiceBNl = "2022",
+                    ChoiceCFr = "2023",
+                    ChoiceCNl = "2023",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Jonathan",
+                Tags = "fiancee,wedding",
+                TextFr = "Dans quelle école Jonathan n'a-t-il jamais été scolarisé ?",
+                TextNl = "Op welke school is Jonathan nooit naar school gegaan?",
+                ThemeId = themeJonathan.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "KASPW",
+                    ChoiceANl = "KASPW",
+                    ChoiceBFr = "KAE",
+                    ChoiceBNl = "KAE",
+                    ChoiceCFr = "LCO",
+                    ChoiceCNl = "LCO",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Jonathan",
+                Tags = "fiancee,wedding",
+                TextFr = "Combien d'amis à Jonathan sur Facebook ?",
+                TextNl = "Hoeveel vrienden heeft Jonathan op Facebook?",
+                ThemeId = themeJonathan.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "180",
+                    ChoiceANl = "180",
+                    ChoiceBFr = "250",
+                    ChoiceBNl = "250",
+                    ChoiceCFr = "280",
+                    ChoiceCNl = "280",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            // Pieterkeshoeve
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Pieterkeshoeve",
+                Tags = "name,animal",
+                TextFr = "Quel prénom d'animal n'est pas présent au Pieterkeshoeve ?",
+                TextNl = "Welke dierennaam is niet aanwezig op Pieterkeshoeve?",
+                ThemeId = themePieterkeshoeve.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Fiona",
+                    ChoiceANl = "Fiona",
+                    ChoiceBFr = "Pipa",
+                    ChoiceBNl = "Pipa",
+                    ChoiceCFr = "Maïa",
+                    ChoiceCNl = "Maïa",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Pieterkeshoeve",
+                Tags = "website,names",
+                TextFr = "Combien de familles sont répertoriées sur le site du Pieterkeshoeve ?",
+                TextNl = "Hoeveel families worden er vermeld op de Pieterkeshoeve-website?",
+                ThemeId = themePieterkeshoeve.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "8",
+                    ChoiceANl = "8",
+                    ChoiceBFr = "10",
+                    ChoiceBNl = "10",
+                    ChoiceCFr = "16",
+                    ChoiceCNl = "16",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Pieterkeshoeve",
+                Tags = "habitants,number",
+                TextFr = "Combien d'habitants y-a-t-il plus ou moins à Vechmaal ?",
+                TextNl = "Hoeveel inwoners zijn er ongeveer in Vechmaal?",
+                ThemeId = themePieterkeshoeve.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "400",
+                    ChoiceANl = "400",
+                    ChoiceBFr = "500",
+                    ChoiceBNl = "500",
+                    ChoiceCFr = "600",
+                    ChoiceCNl = "600",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Pieterkeshoeve",
+                Tags = "agriculture",
+                TextFr = "Quel est le principal facteur qui influence le rendement en sucre de la betterave sucrière, et qui nécessite un suivi précis lors de sa culture ?",
+                TextNl = "Wat is de belangrijkste factor die de suikeropbrengst van suikerbiet beïnvloedt en die nauwlettend gevolgd moet worden tijdens de teelt?",
+                ThemeId = themePieterkeshoeve.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Le pH du sol",
+                    ChoiceANl = "De pH van de grond",
+                    ChoiceBFr = "Le taux d'humidité du sol",
+                    ChoiceBNl = "De luchtvochtigheid van de grond",
+                    ChoiceCFr = "La température moyenne annuelle",
+                    ChoiceCNl = "De jaarlijkse gemiddelde temperatuur",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            // Geogrpahy
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Geography",
+                Tags = "capitals",
+                TextFr = "Quel est la capitale de l'Italie ?",
+                TextNl = "Wat is de hoofdstad van Italië?",
+                ThemeId = themeGeography.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Rome",
+                    ChoiceANl = "Rome",
+                    ChoiceBFr = "Milan",
+                    ChoiceBNl = "Milaan",
+                    ChoiceCFr = "Venise",
+                    ChoiceCNl = "Venetië",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Geography",
+                Tags = "habitants",
+                TextFr = "Comment s'appelle les habitants de Rio de Janeiro ?",
+                TextNl = "Hoe worden de inwoners van Rio de Janeiro genoemd?",
+                ThemeId = themeGeography.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Les riohas",
+                    ChoiceANl = "De riohas",
+                    ChoiceBFr = "Les paulistas",
+                    ChoiceBNl = "De paulistas",
+                    ChoiceCFr = "Les cariocas",
+                    ChoiceCNl = "De cariocas",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Geography",
+                Tags = "habitants",
+                TextFr = "Classe, par ordre décroissant les 4 pays les plus peuplés du monde ?",
+                TextNl = "Rang de de grootste tot de kleinste de 4 meest bevolkte landen ter wereld?",
+                ThemeId = themeGeography.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Inde, Chine, USA, Indonésie",
+                    ChoiceANl = "India, China, USA, Indonesië",
+                    ChoiceBFr = "Japon, Inde, Chine, USA",
+                    ChoiceBNl = "Japan, India, China, USA",
+                    ChoiceCFr = "Chine, Inde, USA, Indonésie",
+                    ChoiceCNl = "China, India, USA, Indonesia",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Geography",
+                Tags = "islands",
+                TextFr = "Quel pays possède le plus grand nombre d’îles au monde ?",
+                TextNl = "Welk land heeft het grootste aantal eilanden ter wereld?",
+                ThemeId = themeGeography.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Indonésie",
+                    ChoiceANl = "Indonesië",
+                    ChoiceBFr = "Suède",
+                    ChoiceBNl = "Zweden",
+                    ChoiceCFr = "Japon",
+                    ChoiceCNl = "Japan",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Gastronomy",
+                Tags = "chocolat",
+                TextFr = "Quel chocolat est le moins gras ?",
+                TextNl = "Welke chocolade bevat de minste vet?",
+                ThemeId = themeGastronomy.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Chocolat noir",
+                    ChoiceANl = "Pure chocolade",
+                    ChoiceBFr = "Chocolat au lait",
+                    ChoiceBNl = "Melkchocolade",
+                    ChoiceCFr = "Chocolat blanc",
+                    ChoiceCNl = "Witte chocolade",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Gastronomy",
+                Tags = "cheese",
+                TextFr = "Quel fromage trempe t-on dans le café chez les Ch'tis ?",
+                TextNl = "Welke kaas wordt gedipt in koffie bij de Ch'tis?",
+                ThemeId = themeGastronomy.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Morboer",
+                    ChoiceANl = "Morboer",
+                    ChoiceBFr = "Maroille",
+                    ChoiceBNl = "Maroille",
+                    ChoiceCFr = "Mimolette",
+                    ChoiceCNl = "Mimolette",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Gastronomy",
+                Tags = "asperegus",
+                TextFr = "Quel pays d'Amérique du Sud est l'un des plus gros producteurs mondiaux d'asperges ?",
+                TextNl = "Welk Zuid-Amerikaans land is een van de grootste aspergeproducenten ter wereld?",
+                ThemeId = themeGastronomy.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Pérou",
+                    ChoiceANl = "Peru",
+                    ChoiceBFr = "Bolivie",
+                    ChoiceBNl = "Bolivië",
+                    ChoiceCFr = "Argentine",
+                    ChoiceCNl = "Argentinië",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Gastronomy",
+                Tags = "asperegus",
+                TextFr = "n/a",
+                TextNl = "n/a",
+                ThemeId = themeGastronomy.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Pérou",
+                    ChoiceANl = "Peru",
+                    ChoiceBFr = "Bolivie",
+                    ChoiceBNl = "Bolivië",
+                    ChoiceCFr = "Argentine",
+                    ChoiceCNl = "Argentinië",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            // Animals
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Animals",
+                TextFr = "Quel est l'animal terrestre le plus rapide ?",
+                TextNl = "Wat is het snelste landdier?",
+                Tags = "fastest,cat",
+                ThemeId = themeAnimals.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Le guépard",
+                    ChoiceANl = "De cheetah",
+                    ChoiceBFr = "L'autruche",
+                    ChoiceBNl = "De struisvogel",
+                    ChoiceCFr = "Le lévrier",
+                    ChoiceCNl = "De greyhound",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Animals",
+                TextFr = "Combien de pattes a une araignée ?",
+                TextNl = "Hoeveel poten heeft een spin?",
+                Tags = "spider",
+                ThemeId = themeAnimals.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "6",
+                    ChoiceANl = "6",
+                    ChoiceBFr = "8",
+                    ChoiceBNl = "8",
+                    ChoiceCFr = "10",
+                    ChoiceCNl = "10",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Animals",
+                Tags = "fly",
+                TextFr = "Quel est le seul mammifère capable de voler ?",
+                TextNl = "Wat is het enige zoogdier dat kan vliegen?",
+                ThemeId = themeAnimals.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "L'écureuil volant",
+                    ChoiceANl = "Vliegende eekhoorn",
+                    ChoiceBFr = "La chauve-souris",
+                    ChoiceBNl = "Vleermuis",
+                    ChoiceCFr = "Le poisson volant",
+                    ChoiceCNl = "Vliegende vis",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Animals",
+                TextFr = "Quel est l'animal le plus venimeux au monde ?",
+                TextNl = "Wat is het giftigste dier ter wereld?",
+                Tags = "poison",
+                ThemeId = themeAnimals.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "La méduse-boîte",
+                    ChoiceANl = "Dooskwal",
+                    ChoiceBFr = "Le taipan du désert",
+                    ChoiceBNl = "Woestijntaipan",
+                    ChoiceCFr = "La grenouille dorée",
+                    ChoiceCNl = "Gouden gifkikker",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            // Tehcnology
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Tehcnology",
+                TextFr = "Que signifie WWW dans une adresse internet ?",
+                TextNl = "Wat betekent WWW in een internetadres?",
+                Tags = "smarthphones",
+                ThemeId = themeTechnology.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "World Wide Web",
+                    ChoiceANl = "World Wide Web",
+                    ChoiceBFr = "World Web Wide",
+                    ChoiceBNl = "World Web Wide",
+                    ChoiceCFr = "Wide World Web",
+                    ChoiceCNl = "Wide World Web",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Tehcnology",
+                TextFr = "Quel composant est considéré comme le « cerveau » de l'ordinateur ?",
+                TextNl = "Welke component wordt beschouwd als de « brain » van de computer?",
+                Tags = "computer",
+                ThemeId = themeTechnology.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Le disque dur",
+                    ChoiceANl = "De harde schijf",
+                    ChoiceBFr = "La souris",
+                    ChoiceBNl = "De muis",
+                    ChoiceCFr = "Le processeur",
+                    ChoiceCNl = "De processor",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Tehcnology",
+                TextFr = "Combien de smartphones se sont vendus dans le monde en 2019 ?",
+                TextNl = "Hoeveel smartphones zijn er wereldwijd verkocht in 2019?",
+                Tags = "smarthphones",
+                ThemeId = themeTechnology.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "7 par seconde",
+                    ChoiceANl = "7 per seconde",
+                    ChoiceBFr = "18 par seconde",
+                    ChoiceBNl = "18 per seconde",
+                    ChoiceCFr = "48 par seconde",
+                    ChoiceCNl = "48 per seconde",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Tehcnology",
+                TextFr = "Aujourd'hui, tu as déjà surement utilisé une clef USB, mais sais-tu ce que signifie USB ?",
+                TextNl = "Je hebt waarschijnlijk al een USB-stick gebruikt, maar weet je wat USB betekent?",
+                Tags = "usb",
+                ThemeId = themeTechnology.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Use System Bluetooth",
+                    ChoiceANl = "Use System Bluetooth",
+                    ChoiceBFr = "User Server Boot",
+                    ChoiceBNl = "User Server Boot",
+                    ChoiceCFr = "Universal Serial Bus",
+                    ChoiceCNl = "Universal Serial Bus",
+                    CorrectChoice = McqChoice.C
+                }
+            },
+            // Cycling
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Cycling",
+                TextFr = "Combien de roues a un tricycle ?",
+                TextNl = "Hoeveel wielen heeft een driewieler?",
+                Tags = "bike",
+                ThemeId = themeCycling.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "3",
+                    ChoiceANl = "3",
+                    ChoiceBFr = "4",
+                    ChoiceBNl = "4",
+                    ChoiceCFr = "5",
+                    ChoiceCNl = "5",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Cycling",
+                TextFr = "Quel grand événement cycliste a lieu chaque année en Italie ?",
+                TextNl = "Welk groot wielerevenement vindt elk jaar in Italië plaats?",
+                Tags = "race",
+                ThemeId = themeCycling.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "La Vuelta",
+                    ChoiceANl = "De Vuelta",
+                    ChoiceBFr = "Le Giro",
+                    ChoiceBNl = "De Giro",
+                    ChoiceCFr = "La Volta",
+                    ChoiceCNl = "De Volta",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Cycling",
+                TextFr = "Combien de fois Eddy Merckx a-t-il remporté le Tour de France ?",
+                TextNl = "Hoeveel keer heeft Eddy Merckx de Tour de France gewonnen?",
+                Tags = "race",
+                ThemeId = themeCycling.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "5",
+                    ChoiceANl = "5",
+                    ChoiceBFr = "7",
+                    ChoiceBNl = "7",
+                    ChoiceCFr = "9",
+                    ChoiceCNl = "9",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Cycling",
+                TextFr = "Laquelle de ces équipes cyclistes n'existe pas ?",
+                TextNl = "Welke van deze wielerploegen bestaat niet?",
+                Tags = "race",
+                ThemeId = themeCycling.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "CycloDragon",
+                    ChoiceANl = "CycloDragon",
+                    ChoiceBFr = "Alpecin-Fenix",
+                    ChoiceBNl = "Alpecin-Fenix",
+                    ChoiceCFr = "Team Jumbo-Visma",
+                    ChoiceCNl = "Team Jumbo-Visma",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            // Surprise
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Surprise",
+                TextFr = "Quel est le record du monde pour le plus grand nombre de chaussettes portées en une seule fois ?",
+                TextNl = "Wat is het wereldrecord voor het meeste aantal sokken die tegelijkertijd gedragen worden?",
+                Tags = "socks",
+                ThemeId = themeSurprise.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "399",
+                    ChoiceANl = "399",
+                    ChoiceBFr = "512",
+                    ChoiceBNl = "512",
+                    ChoiceCFr = "717",
+                    ChoiceCNl = "717",
+                    CorrectChoice = McqChoice.A
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 1,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Surprise",
+                TextFr = "Quel est le mois où naissent le plus de bébés dans le monde en général ?",
+                TextNl = "In welke maand worden wereldwijd de meeste baby's geboren?",
+                Tags = "birth",
+                ThemeId = themeSurprise.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "Janvier",
+                    ChoiceANl = "Januari",
+                    ChoiceBFr = "Septembre",
+                    ChoiceBNl = "September",
+                    ChoiceCFr = "Decembre",
+                    ChoiceCNl = "December",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 2,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Surprise",
+                TextFr = "Laquelle de ces affirmations est fausse ?",
+                TextNl = "Welke van deze beweringen is fout?",
+                Tags = "false",
+                ThemeId = themeSurprise.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "La muraille de Chine est visible depuis la lune",
+                    ChoiceANl = "De Chinese muur is zichtbaar vanaf de maan",
+                    ChoiceBFr = "Il n'existe aucun aliment naturellement bleu",
+                    ChoiceBNl = "Er bestaat geen natuurlijk blauw voedsel",
+                    ChoiceCFr = "Une des gargouilles de la cathédrale de Washington représente Dark Vador",
+                    ChoiceCNl = "Een van de gargouilles van de kathedraal van Washington stelt Darth Vader voor",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Type = QuestionType.Mcq,
+                Difficulty = 3,
+                IsActive = true,
+                IsPriority = true,
+                Category = "Surprise",
+                TextFr = "Classe les 4 pourcentages suivants du plus grand au plus petit : le % de SPAMS dans les mails échangés sur internet, Le % de bougies achetées par des femmes, le % de GPS achetés par des hommes, le % de gens mourant à l'hôpital",
+                TextNl = "Orden de 4 procenten van groot naar klein: het % van SPAM in de e-mails die op internet worden uitgewisseld, het % van kaarsen gekocht door vrouwen, het % van GPS gekocht door mannen, het % van mensen die in het ziekenhuis overlijden",
+                Tags = "order",
+                ThemeId = themeSurprise.Id,
+                McqDetails = new McqQuestionDetails
+                {
+                    ChoiceAFr = "A>B>C>D",
+                    ChoiceANl = "A>B>C>D",
+                    ChoiceBFr = "C>A>B>D",
+                    ChoiceBNl = "C>A>B>D",
+                    ChoiceCFr = "B>C>A>D",
+                    ChoiceCNl = "B>C>A>D",
+                    CorrectChoice = McqChoice.B
+                }
+            },
+        };
 
         // ==================== LIST QUESTIONS ====================
 
@@ -3123,6 +3134,644 @@ public static class DbSeeder
                 AnswerNl = "9"
             }
         });
+
+        // ==================== PRIORITY QUESTIONS ====================
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Science",
+            Tags = "chemistry,gold",
+            TextFr = "De combien de carats est constitué l'or pur ?",
+            TextNl = "Van hoeveel karaat bestaat puur goud?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "24 carats",
+                AnswerNl = "24 karaat"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "population,countries",
+            TextFr = "Quel pays est le moins peuplé du monde ?",
+            TextNl = "Welk land is het minst bevolkt ter wereld?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Vatican",
+                AnswerNl = "Vaticaan"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Movies",
+            Tags = "harry-potter,characters",
+            TextFr = "De quelle couleur sont les cheveux de Ron Weasley ?",
+            TextNl = "Welke kleur heeft Ron Weasley zijn haar?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Roux",
+                AnswerNl = "Rood"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "General Knowledge",
+            Tags = "trivia,measurements",
+            TextFr = "Quelle est la taille standard d'un cure-dent à 1cm près ?",
+            TextNl = "Wat is de standaardlengte van een tandenstoker binnen 1 cm?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "5 à 6 cm",
+                AnswerNl = "5 tot 6 cm"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Science",
+            Tags = "chemistry,water",
+            TextFr = "Quelle est la formule chimique de l'eau ?",
+            TextNl = "Wat is de chemische formule van water?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "H2O",
+                AnswerNl = "H2O"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "space,nasa,cities",
+            TextFr = "Dans quelle ville s'entraînent les astronautes de la NASA dans le Centre spatial Lyndon B. Johnson ?",
+            TextNl = "In welke stad trainen de astronauten van NASA in het Lyndon B. Johnson Space Center?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Houston",
+                AnswerNl = "Houston"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "usa,states",
+            TextFr = "Combien y a-t-il d'Etats américains ?",
+            TextNl = "Hoeveel staten zijn er in de VS?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "50",
+                AnswerNl = "50"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Science",
+            Tags = "biology,genetics",
+            TextFr = "Chromosome : qui du père ou de la mère détermine le sexe de l'enfant ?",
+            TextNl = "Chromosoom: wie van de vader of moeder bepaalt het geslacht van het kind?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Le père",
+                AnswerNl = "De vader"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Mythology",
+            Tags = "greek-mythology,gods",
+            TextFr = "Comment s'appelle le Dieu du vin dans la mythologie grecque ?",
+            TextNl = "Hoe heet de God van de wijn in de Griekse mythologie?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Dionysos (Bacchus pour les romains)",
+                AnswerNl = "Dionysos (Bacchus voor de Romeinen)"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Literature",
+            Tags = "shakespeare,classics",
+            TextFr = "Qui a écrit Roméo et Juliette ?",
+            TextNl = "Wie heeft Romeo en Julia geschreven?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Shakespeare",
+                AnswerNl = "Shakespeare"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Art",
+            Tags = "painting,leonardo-da-vinci",
+            TextFr = "Qui a peint la Joconde ?",
+            TextNl = "Wie heeft de Mona Lisa geschilderd?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Léonard de Vinci",
+                AnswerNl = "Leonardo da Vinci"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "rivers,world-records",
+            TextFr = "Quel est le plus long fleuve du monde ?",
+            TextNl = "Wat is de langste rivier ter wereld?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Le Nil",
+                AnswerNl = "De Nijl"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Literature",
+            Tags = "victor-hugo,classics",
+            TextFr = "Qui a écrit Les Misérables ?",
+            TextNl = "Wie heeft Les Misérables geschreven?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Victor Hugo",
+                AnswerNl = "Victor Hugo"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Sports",
+            Tags = "football,world-cup",
+            TextFr = "Quel pays a remporté la Coupe du Monde de football en 2018 ?",
+            TextNl = "Welk land heeft het Wereldkampioenschap voetbal 2018 gewonnen?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "La France",
+                AnswerNl = "Frankrijk"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Fun Facts",
+            Tags = "human-body,trivia",
+            TextFr = "Un être humain produit assez de salive dans sa vie pour remplir combien de piscines ?",
+            TextNl = "Een mens produceert genoeg speeksel in zijn leven om hoeveel zwembaden te vullen?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "9",
+                AnswerNl = "9"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Science",
+            Tags = "sleep,human-body",
+            TextFr = "En combien de minutes en moyenne s'endort un humain ?",
+            TextNl = "In hoeveel minuten valt een mens gemiddeld in slaap?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "15 minutes",
+                AnswerNl = "15 minuten"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "belgium,distances,personal",
+            TextFr = "Combien y a-t-il de KM entre Brugge et Lauw ?",
+            TextNl = "Hoeveel kilometer is het van Brugge naar Lauw?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Inconnu",
+                AnswerNl = "Onbekend"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Personal",
+            Tags = "personal,relationships",
+            TextFr = "Depuis combien d'années Jonathan et Lies sont-ils en couple ?",
+            TextNl = "Hoeveel jaar zijn Jonathan en Lies al samen?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "8 ans",
+                AnswerNl = "8 jaar"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 1,
+            IsActive = true,
+            IsPriority = true,
+            Category = "History",
+            Tags = "usa,presidents",
+            TextFr = "Qui a été le premier président des États-Unis ?",
+            TextNl = "Wie was de eerste president van de Verenigde Staten?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "George Washington",
+                AnswerNl = "George Washington"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Television",
+            Tags = "belgium,tv-shows",
+            TextFr = "Qui est l'animateur de l'émission 'De Slimste Mens' ?",
+            TextNl = "Wie is de presentator van het programma 'De Slimste Mens'?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Erik Van Looy",
+                AnswerNl = "Erik Van Looy"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "History",
+            Tags = "belgium,jacques-brel,music",
+            TextFr = "En quelle année est né Jacques Brel ?",
+            TextNl = "In welk jaar werd Jacques Brel geboren?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "1929 à Schaerbeek",
+                AnswerNl = "1929 in Schaerbeek"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Music",
+            Tags = "belgium,pop-rock,clouseau",
+            TextFr = "Quel est le nom du groupe belge de pop-rock connu pour le tube suivant :",
+            TextNl = "Wat is de naam van de Belgische pop-rock band die bekend is voor dit nummer:",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Clouseau",
+                AnswerNl = "Clouseau"
+            }
+        });
+
+        questions.Add(new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.Regular,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "History",
+            Tags = "ancient-civilizations,writing",
+            TextFr = "Lequel des empires suivants n'avait pas de langue écrite : l'inca, l'aztèque, l'égyptien, le romain ?",
+            TextNl = "Welk van de volgende rijken had geen geschreven taal: het Inca-rijk, het Azteekse rijk, het Egyptische rijk, het Romeinse rijk?",
+            RegularDetails = new RegularQuestionDetails
+            {
+                AnswerFr = "Inca",
+                AnswerNl = "Inca"
+            }
+        });
+
+        // ==================== PRIORITY LIST QUESTIONS ====================
+
+        var listPriorityQuestion1 = new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.List,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "countries,south-america",
+            TextFr = "Liste tous les pays d'Amérique du Sud",
+            TextNl = "Noem alle landen van Zuid-Amerika"
+        };
+        listPriorityQuestion1.ListAnswers = new List<ListQuestionAnswer>
+        {
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Argentine", AnswerNl = "Argentinië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Bolivie", AnswerNl = "Bolivië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Brésil", AnswerNl = "Brazilië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Chili", AnswerNl = "Chili" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Colombie", AnswerNl = "Colombia" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Équateur", AnswerNl = "Ecuador" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Guyana", AnswerNl = "Guyana" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Paraguay", AnswerNl = "Paraguay" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Pérou", AnswerNl = "Peru" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Suriname", AnswerNl = "Suriname" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Uruguay", AnswerNl = "Uruguay" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion1.Id, AnswerFr = "Venezuela", AnswerNl = "Venezuela" }
+        };
+        questions.Add(listPriorityQuestion1);
+
+        var listPriorityQuestion2 = new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.List,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Wildlife",
+            Tags = "animals,felines",
+            TextFr = "Citer les félins dont le nom contient la lettre A",
+            TextNl = "Noem de katachtigen waarvan de naam de letter A bevat"
+        };
+        listPriorityQuestion2.ListAnswers = new List<ListQuestionAnswer>
+        {
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Jaguar", AnswerNl = "Jaguar" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Chat", AnswerNl = "Kat" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Léopard", AnswerNl = "Luipaard" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Panthère", AnswerNl = "Panter" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Puma", AnswerNl = "Puma" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Guépard", AnswerNl = "Cheetah" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Serval", AnswerNl = "Serval" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Margay", AnswerNl = "Margay" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Caracal", AnswerNl = "Caracal" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion2.Id, AnswerFr = "Jaguarondi", AnswerNl = "Jaguarondi" }
+        };
+        questions.Add(listPriorityQuestion2);
+
+        var listPriorityQuestion3 = new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.List,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Geography",
+            Tags = "europe,european-union,countries",
+            TextFr = "Liste les pays membres de l'Union Européenne (UE) en 2025",
+            TextNl = "Noem de landen die lid zijn van de Europese Unie (EU) in 2025"
+        };
+        listPriorityQuestion3.ListAnswers = new List<ListQuestionAnswer>
+        {
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Allemagne", AnswerNl = "Duitsland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Autriche", AnswerNl = "Oostenrijk" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Belgique", AnswerNl = "België" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Bulgarie", AnswerNl = "Bulgarije" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Chypre", AnswerNl = "Cyprus" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Croatie", AnswerNl = "Kroatië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Danemark", AnswerNl = "Denemarken" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Espagne", AnswerNl = "Spanje" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Estonie", AnswerNl = "Estland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Finlande", AnswerNl = "Finland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "France", AnswerNl = "Frankrijk" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Grèce", AnswerNl = "Griekenland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Hongrie", AnswerNl = "Hongarije" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Irlande", AnswerNl = "Ierland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Italie", AnswerNl = "Italië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Lettonie", AnswerNl = "Letland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Lituanie", AnswerNl = "Litouwen" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Luxembourg", AnswerNl = "Luxemburg" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Malte", AnswerNl = "Malta" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Pays-Bas", AnswerNl = "Nederland" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Pologne", AnswerNl = "Polen" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Portugal", AnswerNl = "Portugal" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "République tchèque", AnswerNl = "Tsjechië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Roumanie", AnswerNl = "Roemenië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Slovaquie", AnswerNl = "Slovenië" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Slovénie", AnswerNl = "Slowakije" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion3.Id, AnswerFr = "Suède", AnswerNl = "Zweden" }
+        };
+        questions.Add(listPriorityQuestion3);
+
+        var listPriorityQuestion4 = new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.List,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Movies",
+            Tags = "disney,lion-king,characters",
+            TextFr = "Liste les noms des personnages qui parlent dans le dessin animé 'Le roi lion' (1994)",
+            TextNl = "Noem de namen van de personages die praten in de animatiefilm 'De Leeuwenkoning' (1994)"
+        };
+        listPriorityQuestion4.ListAnswers = new List<ListQuestionAnswer>
+        {
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Simba", AnswerNl = "Simba" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Nala", AnswerNl = "Nala" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Mufasa", AnswerNl = "Mufasa" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Scar", AnswerNl = "Scar" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Timon", AnswerNl = "Timon" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Pumbaa", AnswerNl = "Pumbaa" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Rafiki", AnswerNl = "Rafiki" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Zazu", AnswerNl = "Zazu" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Sarabi", AnswerNl = "Sarabi" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Shenzi", AnswerNl = "Shenzi" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Banzai", AnswerNl = "Banzai" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion4.Id, AnswerFr = "Ed", AnswerNl = "Ed" }
+        };
+        questions.Add(listPriorityQuestion4);
+
+        var listPriorityQuestion5 = new Question
+        {
+            Id = Guid.NewGuid(),
+            Type = QuestionType.List,
+            Difficulty = 2,
+            IsActive = true,
+            IsPriority = true,
+            Category = "Cars",
+            Tags = "automobiles,brands",
+            TextFr = "Liste le plus de marques de voiture possible",
+            TextNl = "Noem zoveel mogelijk automerken"
+        };
+        listPriorityQuestion5.ListAnswers = new List<ListQuestionAnswer>
+        {
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Toyota", AnswerNl = "Toyota" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Ford", AnswerNl = "Ford" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "BMW", AnswerNl = "BMW" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Mercedes", AnswerNl = "Mercedes" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Audi", AnswerNl = "Audi" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Honda", AnswerNl = "Honda" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Renault", AnswerNl = "Renault" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Ferrari", AnswerNl = "Ferrari" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Tesla", AnswerNl = "Tesla" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Volkswagen", AnswerNl = "Volkswagen" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Nissan", AnswerNl = "Nissan" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Peugeot", AnswerNl = "Peugeot" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Lamborghini", AnswerNl = "Lamborghini" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Hyundai", AnswerNl = "Hyundai" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Kia", AnswerNl = "Kia" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Subaru", AnswerNl = "Subaru" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Jaguar", AnswerNl = "Jaguar" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Volvo", AnswerNl = "Volvo" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Chevrolet", AnswerNl = "Chevrolet" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Mazda", AnswerNl = "Mazda" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Aston Martin", AnswerNl = "Aston Martin" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Alfa Romeo", AnswerNl = "Alfa Romeo" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Bugatti", AnswerNl = "Bugatti" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Citroën", AnswerNl = "Citroën" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Seat", AnswerNl = "Seat" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Skoda", AnswerNl = "Skoda" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "McLaren", AnswerNl = "McLaren" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Maserati", AnswerNl = "Maserati" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Rolls-Royce", AnswerNl = "Rolls-Royce" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Bentley", AnswerNl = "Bentley" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Dodge", AnswerNl = "Dodge" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Cadillac", AnswerNl = "Cadillac" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Jeep", AnswerNl = "Jeep" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Chrysler", AnswerNl = "Chrysler" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Buick", AnswerNl = "Buick" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Pontiac", AnswerNl = "Pontiac" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Lexus", AnswerNl = "Lexus" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Lotus", AnswerNl = "Lotus" },
+            new() { Id = Guid.NewGuid(), QuestionId = listPriorityQuestion5.Id, AnswerFr = "Pagani", AnswerNl = "Pagani" }
+        };
+        questions.Add(listPriorityQuestion5);
+
+        // ==================== PRIORITY REGULAR4 QUESTIONS ====================
+
+        // Difficulty 1 (21 questions)
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Harry Potter", Tags = "movies,characters", TextFr = "Comment s'appelle les 2 amis d'Harry Potter ?", TextNl = "Hoe heten de twee vrienden van Harry Potter?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Ron et Hermione", AnswerNl = "Ron en Hermione" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Anatomy", Tags = "biology,human-body", TextFr = "Dans quelle partie du corps humain se situe le cerveau ?", TextNl = "In welk deel van het menselijke lichaam bevindt zich de hersenen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "La tête", AnswerNl = "Het hoofd" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Language", Tags = "latin,vocabulary", TextFr = "Si \"recto\" signifie en latin \"à l'endroit\", quel mot latin est communément utilisé pour dire \"à l'envers\" ?", TextNl = "Als \"recto\" in het Latijn \"recht\" betekent, welk Latijns woord wordt dan meestal gebruikt om \"omgekeerd\" te zeggen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Verso", AnswerNl = "Verso" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Animals", Tags = "marine-life,wildlife", TextFr = "Quel est le plus gros animal marin ?", TextNl = "Wat is het grootste zee-dier?", RegularDetails = new RegularQuestionDetails { AnswerFr = "La baleine bleue", AnswerNl = "De blauwe walvis" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Mathematics", Tags = "arithmetic,multiplication", TextFr = "Combien font 5x5 ?", TextNl = "Hoeveel is 5x5?", RegularDetails = new RegularQuestionDetails { AnswerFr = "25", AnswerNl = "25" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Literature", Tags = "biography,books", TextFr = "Qui a écrit \"le journal d'Anne Frank\" ?", TextNl = "Wie heeft \"Het dagboek van Anne Frank\" geschreven?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Anne Frank", AnswerNl = "Anne Frank" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Music", Tags = "instruments,strings", TextFr = "Quel est l'instrument de musique à cordes se joue avec un archet ?", TextNl = "Welk snaarinstrument wordt bespeeld met een strijkstok?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Le violon", AnswerNl = "De viool" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "mountains,africa", TextFr = "Quel est le plus haut sommet d'Afrique ?", TextNl = "Wat is de hoogste berg in Afrika?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Le Kilimandjaro", AnswerNl = "De Kilimanjaro" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Culture", Tags = "japan,nicknames", TextFr = "Quel pays est surnommé le « pays du Soleil-Levant » ?", TextNl = "Welk land wordt de \"Land van de Rijzende Zon\" genoemd?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Le Japon", AnswerNl = "Japan" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Biology", Tags = "respiration,gases", TextFr = "Quel gaz les humains respirent principalement ?", TextNl = "Welk gas ademen mensen voornamelijk in?", RegularDetails = new RegularQuestionDetails { AnswerFr = "L'oxygène", AnswerNl = "Zuurstof" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Music", Tags = "belgium,stromae,songs", TextFr = "Quel chanteur belge est connu pour la chanson Alors on danse ?", TextNl = "Welke Belgische zanger is bekend van het lied 'Alors on danse'?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Stromae", AnswerNl = "Stromae" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Music", Tags = "instruments,piano", TextFr = "Quel instrument a 88 touches ?", TextNl = "Welk instrument heeft 88 toetsen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Piano", AnswerNl = "Piano" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Movies", Tags = "star-wars,quotes", TextFr = "Quel film a pour célèbre réplique : Je suis ton père ?", TextNl = "Welke film heeft de beroemde uitspraak: 'Ik ben je vader'?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Star Wars : L'Empire contre-attaque", AnswerNl = "Star Wars: The Empire Strikes Back" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Movies", Tags = "titanic,leonardo-dicaprio", TextFr = "Dans quel film Leonardo DiCaprio joue-t-il un personnage nommé Jack ?", TextNl = "In welke film speelt Leonardo DiCaprio een personage genaamd Jack?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Titanic", AnswerNl = "Titanic" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Animals", Tags = "personal,chickens", TextFr = "Est-ce que les poules de Jonathan et Lies pondent des oeufs ?", TextNl = "Leggen de kippen van Jonathan en Lies eieren?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Non", AnswerNl = "Nee" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Personal", Tags = "personal,names", TextFr = "Quel est le deuxième prénom de Céleste ?", TextNl = "Wat is de tweede naam van Céleste?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Aucun", AnswerNl = "Geen" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Animals", Tags = "personal,pets,cats", TextFr = "Comment s'appelle le chat de Jonathan et Lies ?", TextNl = "Hoe heet de kat van Jonathan en Lies?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Filou", AnswerNl = "Filou" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Personal", Tags = "personal,age", TextFr = "Quel âge a Jonathan aujourd'hui ?", TextNl = "Hoe oud is Jonathan vandaag?", RegularDetails = new RegularQuestionDetails { AnswerFr = "29 ans", AnswerNl = "29 jaar" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Music", Tags = "belgium,k3,songs", TextFr = "Quel est le nom du célèbre groupe de musique flamand qui écrit la chanson \"Oya lélé\" ?", TextNl = "Wat is de naam van de beroemde Vlaamse muziekgroep die het lied \"Oya lélé\" schrijft?", RegularDetails = new RegularQuestionDetails { AnswerFr = "K3", AnswerNl = "K3" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "True or False", Tags = "world-records,trivia", TextFr = "Vrai ou Faux : Un homme détient le record du monde pour avoir dormi debout pendant 48 heures.", TextNl = "Waar of niet waar: Een man heeft het wereldrecord voor het staan slapen gedurende 48 uur.", RegularDetails = new RegularQuestionDetails { AnswerFr = "VRAI", AnswerNl = "WAAR" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "True or False", Tags = "world-records,food", TextFr = "Vrai ou Faux : Le record du monde du plus grand nombre de donuts mangés en une minute est de 8 donuts.", TextNl = "Waar of niet waar: Het wereldrecord voor het grootste aantal donuts gegeten in één minuut is 8 donuts.", RegularDetails = new RegularQuestionDetails { AnswerFr = "Faux (12 donuts)", AnswerNl = "Onwaar (12 donuts)" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "True or False", Tags = "australia,animals", TextFr = "Vrai ou faux : l'Australie compte 10 fois plus de chameaux que de Koalas ?", TextNl = "Waar of niet waar: Australië heeft 10 keer zoveel kamelen als koala's?", RegularDetails = new RegularQuestionDetails { AnswerFr = "VRAI", AnswerNl = "WAAR" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "belgium,brussels,landmarks", TextFr = "Dans quelle ville peut-on admirer le \"Manneken-Pis\" ?", TextNl = "In welke stad kan men het 'Manneken-Pis' bewonderen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Bruxelles", AnswerNl = "Brussel" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Sports", Tags = "curling,ice-sports", TextFr = "Sur quelle surface se joue le curling ?", TextNl = "Op welk oppervlak wordt curling gespeeld?", RegularDetails = new RegularQuestionDetails { AnswerFr = "La glace", AnswerNl = "Het ijs" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Technology", Tags = "keyboards,computers", TextFr = "Combien y a-t-il de lettres sur un clavier français/néerlandais ?", TextNl = "Hoeveel letters staan er op een Frans/Nederlands toetsenbord?", RegularDetails = new RegularQuestionDetails { AnswerFr = "26", AnswerNl = "26" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "belgium,flags", TextFr = "Combien de couleurs sont présentes sur un drapeau de la Belgique ?", TextNl = "Hoeveel kleuren zijn er op de Belgische vlag?", RegularDetails = new RegularQuestionDetails { AnswerFr = "3", AnswerNl = "3" } });
+
+        // Difficulty 2 (3 questions)
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 2, IsActive = true, IsPriority = true, Category = "History", Tags = "products,kleenex,trivia", TextFr = "Quelle était la fonction principale du mouchoir lors de sa commercialisation par Kleenex en 1924 ?", TextNl = "Wat was de belangrijkste functie van de zakdoek bij de commercialisatie van Kleenex in 1924?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Du papier doux pour le démaquillage", AnswerNl = "Zacht papier voor make-upverwijdering" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 2, IsActive = true, IsPriority = true, Category = "History", Tags = "fun-facts,world-war", TextFr = "La première guerre mondiale a-t-elle été remportée par le Real Madrid après prolongation ?", TextNl = "Heeft Real Madrid de Eerste Wereldoorlog gewonnen na verlengingen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Non", AnswerNl = "Nee" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 2, IsActive = true, IsPriority = true, Category = "Geography", Tags = "size,continents,greenland", TextFr = "Le Groenland est-il plus grand ou plus petit que l'Afrique ?", TextNl = "Is Groenland groter of kleiner dan Afrika?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Plus petit (d'environ 15 fois)", AnswerNl = "Kleiner (ongeveer 15 keer)" } });
 
         // Add all questions to the context
         context.Questions.AddRange(questions);
