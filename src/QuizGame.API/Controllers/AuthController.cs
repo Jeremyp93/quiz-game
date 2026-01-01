@@ -64,7 +64,8 @@ public class AuthController : ControllerBase
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
 
-        _logger.LogInformation("GM logged in successfully");
+        _logger.LogInformation("GM logged in successfully. Scheme: {Scheme}, XForwardedProto: {XForwardedProto}",
+            Request.Scheme, Request.Headers["X-Forwarded-Proto"].ToString());
         return Ok(new { success = true, role = "GM" });
     }
 
@@ -117,12 +118,12 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> GetCurrentUser()
     {
-        // Log cookie presence
+        // Log cookie presence and request details
         var hasCookie = Request.Cookies.ContainsKey("QuizGameAuth");
         var cookieValue = hasCookie ? Request.Cookies["QuizGameAuth"]?.Substring(0, Math.Min(20, Request.Cookies["QuizGameAuth"]?.Length ?? 0)) + "..." : "none";
 
-        _logger.LogInformation("GetCurrentUser called. Cookie present: {HasCookie}, Value: {CookieValue}, IsAuthenticated: {IsAuth}, Identity: {Identity}",
-            hasCookie, cookieValue, User.Identity?.IsAuthenticated, User.Identity?.Name);
+        _logger.LogInformation("GetCurrentUser called. Scheme: {Scheme}, Cookie present: {HasCookie}, Value: {CookieValue}, IsAuthenticated: {IsAuth}, Identity: {Identity}, XForwardedProto: {XForwardedProto}",
+            Request.Scheme, hasCookie, cookieValue, User.Identity?.IsAuthenticated, User.Identity?.Name, Request.Headers["X-Forwarded-Proto"].ToString());
 
         if (!User.Identity?.IsAuthenticated ?? true)
         {
