@@ -117,12 +117,16 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> GetCurrentUser()
     {
-        _logger.LogInformation("GetCurrentUser called. IsAuthenticated: {IsAuth}, Identity: {Identity}",
-            User.Identity?.IsAuthenticated, User.Identity?.Name);
+        // Log cookie presence
+        var hasCookie = Request.Cookies.ContainsKey("QuizGameAuth");
+        var cookieValue = hasCookie ? Request.Cookies["QuizGameAuth"]?.Substring(0, Math.Min(20, Request.Cookies["QuizGameAuth"]?.Length ?? 0)) + "..." : "none";
+
+        _logger.LogInformation("GetCurrentUser called. Cookie present: {HasCookie}, Value: {CookieValue}, IsAuthenticated: {IsAuth}, Identity: {Identity}",
+            hasCookie, cookieValue, User.Identity?.IsAuthenticated, User.Identity?.Name);
 
         if (!User.Identity?.IsAuthenticated ?? true)
         {
-            _logger.LogWarning("User not authenticated");
+            _logger.LogWarning("User not authenticated. Cookie was present: {HasCookie}", hasCookie);
             return Ok(new { authenticated = false });
         }
 
