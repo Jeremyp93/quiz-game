@@ -28,9 +28,9 @@ builder.Services.AddSpaStaticFiles(configuration =>
 });
 
 // Add DataProtection with persistent keys for cookie encryption
-builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo("/app/dataprotection-keys"))
-    .SetApplicationName("quiz.scotex.tech");
+// builder.Services.AddDataProtection()
+//     .PersistKeysToFileSystem(new DirectoryInfo("/app/dataprotection-keys"))
+//     .SetApplicationName("quiz.scotex.tech");
 
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -133,14 +133,7 @@ builder.Services.AddSingleton<IGameSessionService, GameSessionService>();
 // Register background services
 builder.Services.AddHostedService<TimerBackgroundService>();
 
-var app = builder.Build();
-
-app.Use(async (ctx, next) =>
-{
-    var logger = ctx.RequestServices.GetRequiredService<ILoggerFactory>().CreateLogger("Instance");
-    logger.LogInformation("Instance: {Machine}, Pod: {Host}", Environment.MachineName, System.Net.Dns.GetHostName());
-    await next();
-});
+var app = builder.Build()
 
 // Configure the HTTP request pipeline
 app.UseForwardedHeaders();
