@@ -243,3 +243,59 @@
     gap: 0.5rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .team-name {
+    font-size: 5rem;
+  }
+
+  .time-to-beat {
+    font-size: 2.5rem;
+    padding: 1.5rem 3rem;
+  }
+
+  .time-value {
+    font-size: 3rem;
+  }
+
+  .question-container {
+    max-width: 1800px;
+  }
+
+  .question-text {
+    padding: 3rem;
+  }
+
+  .question-lang p {
+    font-size: 2.8rem;
+  }
+
+  .lang-label {
+    font-size: 1.5rem;
+  }
+
+  .timer-value {
+    font-size: 6.5rem;
+  }
+
+  .timer-status {
+    font-size: 1.6rem;
+  }
+
+  .milestone-circle {
+    border-width: 4px;
+  }
+
+  .milestone-number {
+    font-size: 1.5rem;
+  }
+
+  .checkmark {
+    font-size: 2.5rem;
+  }
+
+  .progress-label {
+    font-size: 2rem;
+  }
+}

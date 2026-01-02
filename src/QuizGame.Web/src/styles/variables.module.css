@@ -103,4 +103,6 @@
   --breakpoint-mobile: 767px;
   --breakpoint-tablet: 1199px;
   --breakpoint-desktop: 1200px;
+  --breakpoint-large: 1400px;
+  --breakpoint-xlarge: 1920px;
 }
