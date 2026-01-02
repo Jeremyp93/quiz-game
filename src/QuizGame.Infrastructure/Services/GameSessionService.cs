@@ -165,6 +165,72 @@ public class GameSessionService : IGameSessionService
         _sessionVersion++;
     }
 
+    public void CloseGame()
+    {
+        // Reset game to initial state
+        _isGameStarted = false;
+        _players.Clear();
+        _teams.Clear();
+        _currentPhase = Phase.Setup;
+        _currentScene = Scene.Teams;
+        _lastSceneBeforeScoreboard = null;
+
+        // Clear Phase 1 state
+        _currentQuestion = null;
+        _isCurrentQuestionVisibleOnDisplay = false;
+        _lastQuestionId = null;
+        _blockedNextQuestionTeamIds.Clear();
+        _blockedTeamIdsForCurrentQuestion.Clear();
+        _usedPhase1QuestionIds.Clear();
+
+        // Clear Phase 2 state
+        _currentListQuestion = null;
+        _isCurrentListQuestionVisibleOnDisplay = false;
+        _lastListQuestionId = null;
+        _listTimerDuration = 45;
+        _listTimerState = TimerState.Idle;
+        _listTimerStartedAtUtc = null;
+        _listTimerPausedAtUtc = null;
+        _listTimerAccumulatedPausedMs = 0;
+        _listTimerFinishedAtUtc = null;
+        _listTimerBoardsUpVisibleUntilUtc = null;
+        _usedPhase2QuestionIds.Clear();
+
+        // Clear Phase 3 state
+        _sabotageCurrentSubphase = SabotageSubphase.ThemeAssignment;
+        _sabotageSelectedThemes.Clear();
+        _sabotageTeamThemeAssignments.Clear();
+        _sabotageCurrentPickingTeamIndex = null;
+        _sabotageCurrentPickNumber = 1;
+        _sabotageIsThemeAssignmentComplete = false;
+        _sabotageCurrentPlayingTeamIndex = null;
+        _sabotageCurrentThemeIndex = null;
+        _sabotageCurrentMcqQuestion = null;
+        _sabotageSelectedAnswer = null;
+        _sabotageIsAnswerRevealed = false;
+        _sabotageCurrentQuestionInTheme = 0;
+        _sabotageThemeAssignmentHistory.Clear();
+
+        // Clear Phase 4 state
+        _chronoActiveTeamIndex = null;
+        _chronoRunStatus = ChronoRunStatus.Idle;
+        _chronoCorrectCount = 0;
+        _chronoCurrentQuestion = null;
+        _chronoLastQuestionId = null;
+        _chronoTimerState = TimerState.Idle;
+        _chronoTimerStartedAtUtc = null;
+        _chronoTimerPausedAtUtc = null;
+        _chronoTimerAccumulatedPausedMs = 0;
+        _chronoTimerFinishedAtUtc = null;
+        _chronoBestTimeMs = null;
+        _chronoTeamResults.Clear();
+        _usedPhase4QuestionIds.Clear();
+
+        // Clear viewer authentication (invalidate all viewer sessions)
+        _currentViewerCode = null;
+        _sessionVersion++;
+    }
+
     public void SetPlayers(List<string> playerNames)
     {
         _players = new List<string>(playerNames);

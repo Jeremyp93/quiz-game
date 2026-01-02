@@ -21,7 +21,7 @@ public class GameHub : Hub
     }
 
     [Authorize(Policy = "GM")]
-    
+
     public async Task StartGame()
     {
         _gameSessionService.StartGame();
@@ -29,7 +29,15 @@ public class GameHub : Hub
     }
 
     [Authorize(Policy = "GM")]
-    
+
+    public async Task CloseGame()
+    {
+        _gameSessionService.CloseGame();
+        await BroadcastGameState();
+    }
+
+    [Authorize(Policy = "GM")]
+
     public async Task SetPlayers(List<string> playerNames)
     {
         _gameSessionService.SetPlayers(playerNames);

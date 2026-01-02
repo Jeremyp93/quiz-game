@@ -41,6 +41,10 @@ class GameService {
     await this.connection?.invoke('StartGame');
   }
 
+  async closeGame() {
+    await this.connection?.invoke('CloseGame');
+  }
+
   async setPlayers(playerNames: string[]) {
     await this.connection?.invoke('SetPlayers', playerNames);
   }

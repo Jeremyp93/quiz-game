@@ -22,6 +22,18 @@ export default function ControlPage() {
     await gameService.startGame();
   };
 
+  const handleCloseGame = async () => {
+    const confirmed = window.confirm(
+      'WARNING: This will close the current game session and clear all data (players, teams, scores, phase progress).\n\n' +
+      'All viewers will be disconnected and a new viewer code will be generated.\n\n' +
+      'This action CANNOT be undone.\n\n' +
+      'Continue?'
+    );
+    if (confirmed) {
+      await gameService.closeGame();
+    }
+  };
+
   const handleBulkPlayerInput = () => {
     // Parse textarea input line by line
     const lines = playerInput.split('\n').map(line => line.trim()).filter(line => line.length > 0);
@@ -275,6 +287,38 @@ export default function ControlPage() {
           <p style={{ margin: '0.5rem 0 0 0', color: '#856404', fontSize: '0.9rem' }}>
             Share this code with viewers to access the display screen
           </p>
+        </div>
+      )}
+
+      {gameState.isGameStarted && (
+        <div style={{
+          background: '#f8d7da',
+          border: '2px solid #dc3545',
+          borderRadius: '8px',
+          padding: '1.5rem',
+          marginBottom: '2rem'
+        }}>
+          <h3 style={{ margin: '0 0 1rem 0', color: '#721c24' }}>Danger Zone</h3>
+          <p style={{ margin: '0 0 1rem 0', color: '#721c24', fontSize: '0.9rem' }}>
+            Close the current game session. This will clear all data and disconnect all viewers.
+          </p>
+          <button
+            onClick={handleCloseGame}
+            style={{
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 2rem',
+              borderRadius: '4px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              cursor: 'pointer'
+            }}
+            onMouseOver={e => e.currentTarget.style.background = '#c82333'}
+            onMouseOut={e => e.currentTarget.style.background = '#dc3545'}
+          >
+            Close Game Session
+          </button>
         </div>
       )}
 

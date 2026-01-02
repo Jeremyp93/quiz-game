@@ -7,6 +7,7 @@ public interface IGameSessionService
 {
     GameStateDto GetCurrentState();
     void StartGame();
+    void CloseGame();
     void SetPlayers(List<string> playerNames);
     void CreateTeams();
     void RenameTeam(int teamIndex, string newName);
