@@ -862,15 +862,26 @@ public class GameSessionService : IGameSessionService
             isActive: true,
             searchText: null);
 
-        // Filter by theme
-        var themeQuestions = questions.Where(q => q.ThemeId == currentTheme.Id).ToList();
+        // Filter by theme and order consistently
+        var themeQuestions = questions.Where(q => q.ThemeId == currentTheme.Id)
+                                      .OrderBy(q => q.Id)
+                                      .ToList();
 
         if (themeQuestions.Count == 0)
             throw new InvalidOperationException($"No MCQ questions found for theme '{currentTheme.NameFr}' with difficulty {difficulty}");
 
-        // Pick random question
-        var random = new Random();
-        var question = themeQuestions[random.Next(themeQuestions.Count)];
+        // For difficulty 1 (questions 0 and 1), select based on question index
+        // For difficulty 2 and 3, take the first question
+        int questionIndex = 0;
+        if (difficulty == 1)
+        {
+            // Question 0 gets first easy question, Question 1 gets second easy question
+            questionIndex = _sabotageCurrentQuestionInTheme; // 0 or 1
+            if (questionIndex >= themeQuestions.Count)
+                throw new InvalidOperationException($"Not enough MCQ questions for theme '{currentTheme.NameFr}' with difficulty {difficulty}");
+        }
+
+        var question = themeQuestions[questionIndex];
 
         _sabotageCurrentMcqQuestion = new CurrentMcqQuestionDto
         {

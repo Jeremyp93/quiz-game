@@ -392,10 +392,10 @@ export default function ControlPage() {
                   </div>
                   <div className={styles['question-preview']}>
                     <div className={styles['q-lang']}>
-                      <strong>FR:</strong> {gameState.currentQuestion.textNl}
+                      <strong>NL:</strong> {gameState.currentQuestion.textNl}
                     </div>
                     <div className={styles['q-lang']}>
-                      <strong>NL:</strong> {gameState.currentQuestion.textFr}
+                      <strong>FR:</strong> {gameState.currentQuestion.textFr}
                     </div>
                     <div className={styles['answer-preview']}>
                       <div className={styles['q-lang']}>
