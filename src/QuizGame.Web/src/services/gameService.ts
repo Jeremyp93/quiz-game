@@ -1,5 +1,6 @@
 import * as signalR from '@microsoft/signalr';
 import { GameState } from '../types';
+import { authService } from './authService';
 
 class GameService {
   private connection: signalR.HubConnection | null = null;
@@ -9,9 +10,11 @@ class GameService {
     const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
     const hubUrl = baseUrl ? `${baseUrl}/gameHub` : '/gameHub';
 
+    const token = authService.getTokenForSignalR();
+
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl, {
-        withCredentials: true // Important for cookie-based auth
+        accessTokenFactory: () => token || ''
       })
       .withAutomaticReconnect()
       .build();

@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.SpaServices.Extensions;
@@ -27,52 +28,46 @@ builder.Services.AddSpaStaticFiles(configuration =>
     configuration.RootPath = "wwwroot";
 });
 
-// Add DataProtection with persistent keys for cookie encryption
-// builder.Services.AddDataProtection()
-//     .PersistKeysToFileSystem(new DirectoryInfo("/app/dataprotection-keys"))
-//     .SetApplicationName("quiz.scotex.tech");
+// Add JWT Authentication
+var jwtSecretKey = builder.Configuration["Jwt:SecretKey"];
+if (string.IsNullOrEmpty(jwtSecretKey))
+{
+    throw new InvalidOperationException("JWT SecretKey must be configured in environment variables");
+}
 
-// Add Cookie Authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSecretKey)),
+            ClockSkew = TimeSpan.Zero // No tolerance for expired tokens
+        };
+
+        // Configure SignalR to accept JWT from query string
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
             {
-                options.Cookie.Name = "QuizGameAuth";
-                options.Cookie.SameSite = SameSiteMode.Strict;
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
 
-                if (builder.Environment.IsProduction())
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/gameHub"))
                 {
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                    context.Token = accessToken;
                 }
 
-                options.Events.OnRedirectToLogin = (context) =>
-                {
-                    context.Response.StatusCode = 401;
-                    return Task.CompletedTask;
-                };
-            });
-// builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//     .AddCookie(options =>
-//     {
-//         options.Cookie.Name = "QuizGameAuth";
-//         options.Cookie.HttpOnly = true;
-//         options.Cookie.SecurePolicy = builder.Environment.IsProduction()
-//             ? CookieSecurePolicy.Always
-//             : CookieSecurePolicy.SameAsRequest;
-//         options.Cookie.SameSite = SameSiteMode.Lax; // Changed from Strict to Lax
-//         options.Cookie.Path = "/";
-//         options.ExpireTimeSpan = TimeSpan.FromHours(8);
-//         options.SlidingExpiration = true;
-//         options.Events = new CookieAuthenticationEvents
-//         {
-//             OnRedirectToLogin = context =>
-//             {
-//                 context.Response.StatusCode = 401;
-//                 return Task.CompletedTask;
-//             }
-//         };
-//     });
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 // Add Authorization Policies
 builder.Services.AddAuthorization(options =>
@@ -115,8 +110,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(allowedOrigins.Split(','))
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowAnyMethod();
     });
 });
 
@@ -129,6 +123,7 @@ builder.Services.AddDbContext<QuizGameDbContext>(options =>
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IThemeService, ThemeService>();
 builder.Services.AddSingleton<IGameSessionService, GameSessionService>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 // Register background services
 builder.Services.AddHostedService<TimerBackgroundService>();

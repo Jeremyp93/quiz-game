@@ -8,19 +8,57 @@ export interface AuthUser {
   reason?: string;
 }
 
+interface LoginResponse {
+  success: boolean;
+  role?: string;
+  token?: string;
+  expiresIn?: number;
+  error?: string;
+}
+
 class AuthService {
+  private readonly TOKEN_KEY = 'quiz_game_token';
+
+  private getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  private setToken(token: string): void {
+    localStorage.setItem(this.TOKEN_KEY, token);
+  }
+
+  private removeToken(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+  }
+
+  private getAuthHeaders(): HeadersInit {
+    const token = this.getToken();
+    if (token) {
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+    }
+    return { 'Content-Type': 'application/json' };
+  }
+
   async login(username: string, password: string): Promise<{ success: boolean; error?: string }> {
     try {
       const response = await fetch(`${AUTH_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
         const error = await response.json();
         return { success: false, error: error.error || 'Login failed' };
+      }
+
+      const data: LoginResponse = await response.json();
+
+      if (data.token) {
+        this.setToken(data.token);
       }
 
       return { success: true };
@@ -30,10 +68,17 @@ class AuthService {
   }
 
   async logout(): Promise<void> {
-    await fetch(`${AUTH_URL}/logout`, {
-      method: 'POST',
-      credentials: 'include',
-    });
+    try {
+      const token = this.getToken();
+      if (token) {
+        await fetch(`${AUTH_URL}/logout`, {
+          method: 'POST',
+          headers: this.getAuthHeaders(),
+        });
+      }
+    } finally {
+      this.removeToken();
+    }
   }
 
   async verifyViewerCode(code: string): Promise<{ success: boolean; error?: string }> {
@@ -41,13 +86,18 @@ class AuthService {
       const response = await fetch(`${AUTH_URL}/viewer/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({ code }),
       });
 
       if (!response.ok) {
         const error = await response.json();
         return { success: false, error: error.error || 'Verification failed' };
+      }
+
+      const data: LoginResponse = await response.json();
+
+      if (data.token) {
+        this.setToken(data.token);
       }
 
       // Store verification flag in localStorage
@@ -61,11 +111,19 @@ class AuthService {
   async getCurrentUser(): Promise<AuthUser> {
     try {
       const response = await fetch(`${AUTH_URL}/me`, {
-        credentials: 'include',
+        headers: this.getAuthHeaders(),
       });
+
       const data = await response.json();
+
+      // If session invalidated, remove token
+      if (!data.authenticated || data.reason === 'session_invalidated') {
+        this.removeToken();
+      }
+
       return data;
     } catch (error) {
+      this.removeToken();
       return { authenticated: false };
     }
   }
@@ -76,6 +134,11 @@ class AuthService {
 
   clearViewerVerification(): void {
     localStorage.removeItem('viewer_verified');
+  }
+
+  // Expose token for SignalR connection
+  getTokenForSignalR(): string | null {
+    return this.getToken();
   }
 }
 

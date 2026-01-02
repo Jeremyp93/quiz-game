@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using QuizGame.Application.Interfaces;
+using QuizGame.API.Services;
 using System.Security.Claims;
 
 namespace QuizGame.API.Controllers;
@@ -15,15 +14,18 @@ public class AuthController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly IGameSessionService _gameSessionService;
     private readonly ILogger<AuthController> _logger;
+    private readonly IJwtTokenService _jwtTokenService;
 
     public AuthController(
         IConfiguration configuration,
         IGameSessionService gameSessionService,
-        ILogger<AuthController> logger)
+        ILogger<AuthController> logger,
+        IJwtTokenService jwtTokenService)
     {
         _configuration = configuration;
         _gameSessionService = gameSessionService;
         _logger = logger;
+        _jwtTokenService = jwtTokenService;
     }
 
     [HttpPost("login")]
@@ -52,28 +54,22 @@ public class AuthController : ControllerBase
             new Claim(ClaimTypes.Role, "GM")
         };
 
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var authProperties = new AuthenticationProperties
-        {
-            IsPersistent = true,
-            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
-        };
+        var token = _jwtTokenService.GenerateToken(claims, TimeSpan.FromHours(8));
 
-        await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(claimsIdentity),
-            authProperties);
-
-        _logger.LogInformation("GM logged in successfully. Scheme: {Scheme}, XForwardedProto: {XForwardedProto}",
-            Request.Scheme, Request.Headers["X-Forwarded-Proto"].ToString());
-        return Ok(new { success = true, role = "GM" });
+        _logger.LogInformation("GM logged in successfully");
+        return Ok(new {
+            success = true,
+            role = "GM",
+            token = token,
+            expiresIn = 28800 // 8 hours in seconds
+        });
     }
 
     [HttpPost("logout")]
     [Authorize(Policy = "GM")]
-    public async Task<IActionResult> Logout()
+    public IActionResult Logout()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        // JWT is stateless - logout is handled client-side by removing token
         _logger.LogInformation("GM logged out");
         return Ok(new { success = true });
     }
@@ -99,42 +95,23 @@ public class AuthController : ControllerBase
             new Claim("SessionVersion", sessionVersion.ToString())
         };
 
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var authProperties = new AuthenticationProperties
-        {
-            IsPersistent = true,
-            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(24)
-        };
-
-        await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(claimsIdentity),
-            authProperties);
+        var token = _jwtTokenService.GenerateToken(claims, TimeSpan.FromHours(24));
 
         _logger.LogInformation("Viewer code verified successfully");
-        return Ok(new { success = true, role = "Viewer" });
+        return Ok(new {
+            success = true,
+            role = "Viewer",
+            token = token,
+            expiresIn = 86400 // 24 hours in seconds
+        });
     }
 
     [HttpGet("me")]
-    public async Task<IActionResult> GetCurrentUser()
+    public IActionResult GetCurrentUser()
     {
-        var v = Request.Cookies["QuizGameAuth"];
-        _logger.LogInformation("QuizGameAuth length: {Len}", v?.Length ?? 0);
-        _logger.LogInformation("Cookie header: {CookieHeader}", Request.Headers.Cookie.ToString());
-        _logger.LogInformation("Cookie keys: {Keys}", string.Join(", ", Request.Cookies.Keys));
-        var auth = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        _logger.LogInformation("AuthenticateAsync: {Succeeded}, Failure: {Failure}",
-            auth.Succeeded, auth.Failure?.Message);
-        // Log cookie presence and request details
-        var hasCookie = Request.Cookies.ContainsKey("QuizGameAuth");
-        var cookieValue = hasCookie ? Request.Cookies["QuizGameAuth"]?.Substring(0, Math.Min(20, Request.Cookies["QuizGameAuth"]?.Length ?? 0)) + "..." : "none";
-
-        _logger.LogInformation("GetCurrentUser called. Scheme: {Scheme}, Cookie present: {HasCookie}, Value: {CookieValue}, IsAuthenticated: {IsAuth}, Identity: {Identity}, XForwardedProto: {XForwardedProto}",
-            Request.Scheme, hasCookie, cookieValue, User.Identity?.IsAuthenticated, User.Identity?.Name, Request.Headers["X-Forwarded-Proto"].ToString());
-
         if (!User.Identity?.IsAuthenticated ?? true)
         {
-            _logger.LogWarning("User not authenticated. Cookie was present: {HasCookie}", hasCookie);
+            _logger.LogWarning("User not authenticated");
             return Ok(new { authenticated = false });
         }
 
@@ -149,9 +126,7 @@ public class AuthController : ControllerBase
             var currentVersion = _gameSessionService.GetCurrentSessionVersion();
             if (sessionVersion != currentVersion.ToString())
             {
-                // Session invalidated, sign out
-                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                _logger.LogInformation("Viewer session invalidated");
+                _logger.LogInformation("Viewer session invalidated - version mismatch");
                 return Ok(new { authenticated = false, reason = "session_invalidated" });
             }
         }

@@ -17,7 +17,6 @@ services:
       - ConnectionStrings__DefaultConnection=Data Source=/app/data/quizgame.db
     volumes:
       - ./data:/app/data
-      - ./dataprotection-keys:/app/dataprotection-keys
     networks:
       - traefik
     labels:
