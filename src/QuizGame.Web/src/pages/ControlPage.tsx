@@ -265,7 +265,7 @@ export default function ControlPage() {
     <div className={styles['control-page']}>
       <h1>Game Master Control Panel</h1>
 
-      {gameState.viewerCode && (
+      {gameState.viewerCode && gameState.teams.length === 0 && (
         <div style={{
           background: '#fff3cd',
           border: '2px solid #ffc107',
@@ -287,22 +287,7 @@ export default function ControlPage() {
           <p style={{ margin: '0.5rem 0 0 0', color: '#856404', fontSize: '0.9rem' }}>
             Share this code with viewers to access the display screen
           </p>
-        </div>
-      )}
-
-      {gameState.isGameStarted && (
-        <div style={{
-          background: '#f8d7da',
-          border: '2px solid #dc3545',
-          borderRadius: '8px',
-          padding: '1.5rem',
-          marginBottom: '2rem'
-        }}>
-          <h3 style={{ margin: '0 0 1rem 0', color: '#721c24' }}>Danger Zone</h3>
-          <p style={{ margin: '0 0 1rem 0', color: '#721c24', fontSize: '0.9rem' }}>
-            Close the current game session. This will clear all data and disconnect all viewers.
-          </p>
-          <button
+          {gameState.isGameStarted && (<button
             onClick={handleCloseGame}
             style={{
               background: '#dc3545',
@@ -318,7 +303,7 @@ export default function ControlPage() {
             onMouseOut={e => e.currentTarget.style.background = '#dc3545'}
           >
             Close Game Session
-          </button>
+          </button>)}
         </div>
       )}
 
@@ -1130,6 +1115,49 @@ export default function ControlPage() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Viewer Code - Shown at bottom once teams are created */}
+      {gameState.viewerCode && gameState.teams.length > 0 && (
+        <div style={{
+          background: '#fff3cd',
+          border: '2px solid #ffc107',
+          borderRadius: '8px',
+          padding: '1.5rem',
+          marginTop: '2rem',
+          textAlign: 'center'
+        }}>
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#856404' }}>Display Viewer Code</h3>
+          <div style={{
+            fontSize: '3rem',
+            fontWeight: 'bold',
+            letterSpacing: '0.5rem',
+            color: '#856404',
+            fontFamily: 'monospace'
+          }}>
+            {gameState.viewerCode}
+          </div>
+          <p style={{ margin: '0.5rem 0 0 0', color: '#856404', fontSize: '0.9rem' }}>
+            Share this code with viewers to access the display screen
+          </p>
+          {gameState.isGameStarted && (<button
+            onClick={handleCloseGame}
+            style={{
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 2rem',
+              borderRadius: '4px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              cursor: 'pointer'
+            }}
+            onMouseOver={e => e.currentTarget.style.background = '#c82333'}
+            onMouseOut={e => e.currentTarget.style.background = '#dc3545'}
+          >
+            Close Game Session
+          </button>)}
         </div>
       )}
     </div>
