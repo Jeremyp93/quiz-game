@@ -75,7 +75,7 @@
 /* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
 @media (min-width: 1400px) {
   .transition-container {
-    max-width: 1000px;
+    max-width: 1800px;
     padding: 4rem 5rem;
   }
 

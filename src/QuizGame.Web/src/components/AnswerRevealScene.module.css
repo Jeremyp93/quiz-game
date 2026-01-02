@@ -154,7 +154,7 @@
 /* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
 @media (min-width: 1400px) {
   .answer-container {
-    max-width: 1400px;
+    max-width: 1800px;
   }
 
   .answer-card {
