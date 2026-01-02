@@ -3,6 +3,7 @@ import { GameState } from '../types';
 import styles from './SabotageMcqQuestionScene.module.css';
 import sharedStyles from '../styles/shared.module.css';
 import '../styles/animations.module.css';
+import { isDuplicateText } from '../utils/bilingualHelpers';
 
 interface Props {
   gameState: GameState;
@@ -67,7 +68,8 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.4 }}
         >
-          <div className={sharedStyles['question-nl-light']}>{question.textNl}</div>
+          <div className={sharedStyles['question-fr-light']}>{question.textNl}</div>
+          <hr></hr>
           <div className={sharedStyles['question-fr-light']}>{question.textFr}</div>
         </motion.div>
 
@@ -97,7 +99,8 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
                 <div className={styles['choice-letter']}>{letter}</div>
                 <div className={styles['choice-text']}>
                   <div>{choiceData.nl}</div>
-                  <div className={sharedStyles['choice-fr']}>{choiceData.fr}</div>
+                  {!isDuplicateText(choiceData.fr, choiceData.nl) && (<div>{choiceData.fr}</div>)}
+                  {/* <div className={sharedStyles['choice-fr']}>{choiceData.fr}</div> */}
                 </div>
               </motion.div>
             );

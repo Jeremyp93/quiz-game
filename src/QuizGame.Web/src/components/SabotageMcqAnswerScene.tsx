@@ -82,7 +82,8 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <div className={sharedStyles['question-nl-dark']}>{question.textNl}</div>
+          <div className={sharedStyles['question-fr-dark']}>{question.textNl}</div>
+          <hr></hr>
           <div className={sharedStyles['question-fr-dark']}>{question.textFr}</div>
         </motion.div>
 
@@ -147,61 +148,6 @@ export default function SabotageMcqAnswerScene({ gameState }: Props) {
             );
           })}
         </div>
-
-        {/* <motion.div
-          className={`${styles['result-banner']} ${isCorrectAnswer ? styles['correct-result'] : styles['incorrect-result']}`}
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 1.5,
-            duration: 0.5,
-            type: "spring",
-            stiffness: 150,
-            damping: 12
-          }}
-        >
-          {isCorrectAnswer ? (
-            <>
-              <motion.span
-                className={styles['result-icon']}
-                initial={{ rotate: -180, scale: 0 }}
-                animate={{ rotate: 0, scale: 1 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-              >
-                🎉
-              </motion.span>
-              <span className={styles['result-text']}>Correct Answer!</span>
-              <motion.span
-                className={styles['result-icon']}
-                initial={{ rotate: 180, scale: 0 }}
-                animate={{ rotate: 0, scale: 1 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-              >
-                🎉
-              </motion.span>
-            </>
-          ) : (
-            <>
-              <motion.span
-                className={styles['result-icon']}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 1.6, duration: 0.4 }}
-              >
-                😞
-              </motion.span>
-              <span className={styles['result-text']}>Wrong Answer</span>
-              <motion.span
-                className={styles['result-icon']}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 1.6, duration: 0.4 }}
-              >
-                😞
-              </motion.span>
-            </>
-          )}
-        </motion.div> */}
       </motion.div>
     </div>
   );

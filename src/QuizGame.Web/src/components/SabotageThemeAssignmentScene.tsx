@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameState } from '../types';
 import styles from './SabotageThemeAssignmentScene.module.css';
+import { isDuplicateText } from '../utils/bilingualHelpers';
 
 interface Props {
   gameState: GameState;
@@ -71,8 +72,10 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                         <div className={styles['theme-type-icon']}>✨</div>
                         <div className={styles['theme-icon']}>{assignment.selfSelectedTheme.icon}</div>
                         <div className={styles['theme-content']}>
-                          <div className={styles['theme-name-fr']}>{assignment.selfSelectedTheme.nameFr}</div>
-                          <div className={styles['theme-name-nl']}>{assignment.selfSelectedTheme.nameNl}</div>
+                          <div className={styles['theme-name-fr']}>{assignment.selfSelectedTheme.nameNl}</div>
+                          {!isDuplicateText(assignment.selfSelectedTheme.nameFr, assignment.selfSelectedTheme.nameNl) && (
+                            <div className={styles["theme-name-fr"]}>{assignment.selfSelectedTheme.nameFr}</div>
+                          )}
                         </div>
                       </motion.div>
                     ) : (
@@ -93,8 +96,10 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                         <div className={styles['theme-type-icon']}>💣</div>
                         <div className={styles['theme-icon']}>{assignment.sabotageTheme.icon}</div>
                         <div className={styles['theme-content']}>
-                          <div className={styles['theme-name-fr']}>{assignment.sabotageTheme.nameFr}</div>
-                          <div className={styles['theme-name-nl']}>{assignment.sabotageTheme.nameNl}</div>
+                          <div className={styles['theme-name-fr']}>{assignment.sabotageTheme.nameNl}</div>
+                          {!isDuplicateText(assignment.sabotageTheme.nameFr, assignment.sabotageTheme.nameNl) && (
+                            <div className={styles["theme-name-fr"]}>{assignment.sabotageTheme.nameFr}</div>
+                          )}
                         </div>
                       </motion.div>
                     ) : (
@@ -143,9 +148,12 @@ export default function SabotageThemeAssignmentScene({ gameState }: Props) {
                     transition={{ delay: 0.6 + idx * 0.05 }}
                   >
                     <span className={styles['available-theme-icon']}>{theme.icon}</span>
-                    <div className={styles['available-theme-text']}>
-                      <div className={styles['theme-name-fr']}>{theme.nameFr}</div>
-                      <div className={styles['theme-name-nl']}>{theme.nameNl}</div>
+                    <div className={styles["available-theme-text"]}>
+                      <div className={styles["theme-name-fr"]}>{theme.nameNl}</div>
+
+                      {!isDuplicateText(theme.nameFr, theme.nameNl) && (
+                        <div className={styles["theme-name-fr"]}>{theme.nameFr}</div>
+                      )}
                     </div>
                   </motion.div>
                 );

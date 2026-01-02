@@ -392,10 +392,10 @@ export default function ControlPage() {
                   </div>
                   <div className={styles['question-preview']}>
                     <div className={styles['q-lang']}>
-                      <strong>FR:</strong> {gameState.currentQuestion.textFr}
+                      <strong>FR:</strong> {gameState.currentQuestion.textNl}
                     </div>
                     <div className={styles['q-lang']}>
-                      <strong>NL:</strong> {gameState.currentQuestion.textNl}
+                      <strong>NL:</strong> {gameState.currentQuestion.textFr}
                     </div>
                     <div className={styles['answer-preview']}>
                       <div className={styles['q-lang']}>
@@ -476,10 +476,10 @@ export default function ControlPage() {
                   </div>
                   <div className={styles['question-preview']}>
                     <div className={styles['q-lang']}>
-                      <strong>FR:</strong> {gameState.currentListQuestion.textFr}
+                      <strong>NL:</strong> {gameState.currentListQuestion.textNl}
                     </div>
                     <div className={styles['q-lang']}>
-                      <strong>NL:</strong> {gameState.currentListQuestion.textNl}
+                      <strong>FR:</strong> {gameState.currentListQuestion.textFr}
                     </div>
                     <div className={styles['answer-preview']}>
                       <h4>Accepted Answers ({gameState.currentListQuestion.answers.length})</h4>
@@ -754,8 +754,8 @@ export default function ControlPage() {
                       <div className={styles['mcq-question-info']}>
                         <h4>Question Preview</h4>
                         <div className={styles['mcq-question-text']}>
-                          <div>{gameState.sabotage.currentMcqQuestion.textFr}</div>
                           <div>{gameState.sabotage.currentMcqQuestion.textNl}</div>
+                          <div>{gameState.sabotage.currentMcqQuestion.textFr}</div>
                         </div>
                         <div className={styles['mcq-choices']}>
                           <div
@@ -887,17 +887,17 @@ export default function ControlPage() {
                   <h3>Current Question (GM View)</h3>
                   <div className={styles['question-preview']}>
                     <div className={styles['q-lang']}>
-                      <strong>FR:</strong> {gameState.chrono.currentQuestion.textFr}
+                      <strong>NL:</strong> {gameState.chrono.currentQuestion.textNl}
                     </div>
                     <div className={styles['q-lang']}>
-                      <strong>NL:</strong> {gameState.chrono.currentQuestion.textNl}
+                      <strong>FR:</strong> {gameState.chrono.currentQuestion.textFr}
                     </div>
                     <div className={styles['answer-preview']}>
                       <div className={styles['q-lang']}>
-                        <strong>Answer FR:</strong> {gameState.chrono.currentQuestion.answerFr}
+                        <strong>Answer NL:</strong> {gameState.chrono.currentQuestion.answerNl}
                       </div>
                       <div className={styles['q-lang']}>
-                        <strong>Answer NL:</strong> {gameState.chrono.currentQuestion.answerNl}
+                        <strong>Answer FR:</strong> {gameState.chrono.currentQuestion.answerFr}
                       </div>
                     </div>
                   </div>

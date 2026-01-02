@@ -489,7 +489,7 @@ public static class DbSeeder
                 IsPriority = true,
                 Category = "Animals",
                 TextFr = "Lequel de ces animaux n'appartient pas à l'astrologie chinoise ?",
-                TextNl = "Hoeveel poten heeft een spin?",
+                TextNl = "Welke van deze dieren hoort niet bij de Chinese astrologie?",
                 Tags = "china",
                 ThemeId = themeAnimals.Id,
                 McqDetails = new McqQuestionDetails
