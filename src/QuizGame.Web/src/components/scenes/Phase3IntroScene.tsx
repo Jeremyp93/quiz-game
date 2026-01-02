@@ -4,8 +4,8 @@ import styles from './Phase3IntroScene.module.css';
 export function Phase3IntroScene() {
   const rules = [
     { fr: "Choisissez un thème pour votre équipe", nl: "Kies een thema voor je team" },
-    { fr: "Sabotez vos adversaires avec des questions difficiles", nl: "Saboteer tegenstanders met moeilijke vragen" },
-    { fr: "Répondez correctement aux QCM pour gagner", nl: "Beantwoord MCQ's correct om te winnen" }
+    { fr: "Sabotez vos adversaires avec un thème difficile", nl: "Saboteer tegenstanders met een moeilijke thema" },
+    { fr: "Répondez correctement aux QCM pour gagner", nl: "Beantwoord MKV's correct om te winnen" }
   ];
 
   return (
@@ -72,8 +72,8 @@ export function Phase3IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-nl']}>Punten voor correcte MCQ-antwoorden</div>
-          <div className={styles['scoring-fr']}>Points pour réponses QCM correctes</div>
+          <div className={styles['scoring-nl']}>Punten voor correcte MKV-antwoorden (meer punten afhankelijk van de moeilijkheidsgraad)</div>
+          <div className={styles['scoring-fr']}>Points pour réponses QCM correctes (plus de points en fonction de la difficulté)</div>
         </motion.div>
       </motion.div>
     </div>

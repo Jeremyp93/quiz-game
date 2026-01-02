@@ -27,7 +27,8 @@ export function BoardsUpOverlay() {
             repeatType: 'reverse',
           }}
         >
-          BOARDS UP!
+          <p>STOPPEN MET SCHRIJVEN!</p>
+          <p>ARRETER D'ECRIRE!</p>
         </motion.h1>
         <motion.div
           className={styles['boards-up-subtitle']}
@@ -35,8 +36,8 @@ export function BoardsUpOverlay() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <p>Borden omhoog!</p>
-          <p>Levez les ardoises !</p>
+          <p>Handen omhoog!</p>
+          <p>Levez les mains !</p>
         </motion.div>
       </motion.div>
     </motion.div>
