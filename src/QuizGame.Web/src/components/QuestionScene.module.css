@@ -116,3 +116,40 @@
   transform: translateY(-50%);
   font-size: 1.5rem;
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .question-container {
+    max-width: 1400px;
+  }
+
+  .question-card {
+    padding: 4rem;
+  }
+
+  .question-text {
+    font-size: 3.5rem;
+  }
+
+  .difficulty-badge {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+  }
+
+  .lang-label {
+    font-size: 1.6rem;
+  }
+
+  .blocked-title {
+    font-size: 2rem;
+  }
+
+  .blocked-team-badge {
+    font-size: 1.8rem;
+    padding: 1.2rem 2rem 1.2rem 3.5rem;
+  }
+
+  .blocked-team-badge::before {
+    font-size: 1.8rem;
+  }
+}

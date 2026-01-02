@@ -211,3 +211,28 @@
     padding: 1rem 1.5rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .scene-title {
+    font-size: 6rem;
+  }
+
+  .teams-grid {
+    max-width: 1600px;
+    gap: 3rem;
+  }
+
+  .team-display-card {
+    padding: 3rem;
+  }
+
+  .team-display-header h2 {
+    font-size: 4rem;
+  }
+
+  .player-display-item {
+    font-size: 2rem;
+    padding: 1.5rem 2.5rem;
+  }
+}

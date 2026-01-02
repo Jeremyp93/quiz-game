@@ -158,3 +158,34 @@
     font-size: 1.3rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .game-title-fr,
+  .game-title-nl {
+    font-size: 6.5rem;
+  }
+
+  .phases-grid {
+    max-width: 1400px;
+    gap: 2.5rem;
+  }
+
+  .phase-card {
+    padding: 2.5rem;
+  }
+
+  .phase-icon {
+    font-size: 6rem;
+  }
+
+  .phase-name-fr,
+  .phase-name-nl {
+    font-size: 2rem;
+  }
+
+  .waiting-text-fr,
+  .waiting-text-nl {
+    font-size: 2.5rem;
+  }
+}

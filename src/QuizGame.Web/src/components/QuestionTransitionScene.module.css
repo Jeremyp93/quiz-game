@@ -71,3 +71,15 @@
   background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
   margin: 1rem 0;
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .transition-container {
+    max-width: 1000px;
+    padding: 4rem 5rem;
+  }
+
+  .transition-title {
+    font-size: 4.5rem;
+  }
+}

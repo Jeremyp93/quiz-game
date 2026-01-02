@@ -100,3 +100,26 @@
     font-size: 1.5rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .timeout-icon {
+    font-size: 15rem;
+  }
+
+  .failure-title {
+    font-size: 6rem;
+  }
+
+  .team-name {
+    font-size: 4rem;
+  }
+
+  .score-reached {
+    font-size: 4.5rem;
+  }
+
+  .encouragement {
+    font-size: 2.5rem;
+  }
+}

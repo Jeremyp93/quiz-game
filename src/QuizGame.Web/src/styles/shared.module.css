@@ -136,7 +136,7 @@
 .question-container {
   max-width: 1200px;
   width: 100%;
-  max-height: calc(100vh - 280px);
+  max-height: calc(100vh - 250px);
   overflow-y: auto;
   z-index: 1;
 }
@@ -201,5 +201,73 @@
 
   .choice-nl {
     font-size: 1rem;
+  }
+}
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .phase-title {
+    font-size: 4rem;
+  }
+
+  .team-info h2 {
+    font-size: 4rem;
+  }
+
+  .theme-info {
+    font-size: 2.2rem;
+  }
+
+  .progress-info {
+    font-size: 1.8rem;
+  }
+
+  .question-fr-light,
+  .question-fr-dark {
+    font-size: 3.5rem;
+  }
+
+  .question-nl-light,
+  .question-nl-dark {
+    font-size: 2.8rem;
+  }
+
+  .choice-nl {
+    font-size: 2rem;
+  }
+
+  .question-text-light,
+  .question-text-dark {
+    padding: 3rem;
+  }
+
+  .question-container {
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+/* Extra Large Screens (1920px+) */
+@media (min-width: 1920px) {
+  .phase-title {
+    font-size: 4.5rem;
+  }
+
+  .question-fr-light,
+  .question-fr-dark {
+    font-size: 4rem;
+  }
+
+  .question-nl-light,
+  .question-nl-dark {
+    font-size: 3.2rem;
+  }
+}
+
+/* Height-constrained displays (1280x800 projectors) */
+@media (min-width: 1280px) and (max-height: 900px) {
+  .question-text-light,
+  .question-text-dark {
+    padding: 2rem;
   }
 }

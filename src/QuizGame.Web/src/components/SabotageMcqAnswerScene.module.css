@@ -262,3 +262,70 @@
     font-size: 2rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .choices {
+    gap: 2rem;
+    padding: 0 3rem;
+  }
+
+  .choice {
+    padding: 2.5rem 3rem;
+    gap: 2.5rem;
+  }
+
+  .choice-letter {
+    width: 90px;
+    height: 90px;
+    font-size: 3.5rem;
+  }
+
+  .choice-text > div:first-child {
+    font-size: 2.2rem;
+  }
+
+  .choice-indicator {
+    font-size: 4rem;
+  }
+
+  .result-banner {
+    padding: 2.5rem 4rem;
+  }
+
+  .result-text {
+    font-size: 3.5rem;
+  }
+
+  .result-icon {
+    font-size: 4rem;
+  }
+}
+
+/* Extra Large Screens (1920px+) */
+@media (min-width: 1920px) {
+  .choice-letter {
+    width: 100px;
+    height: 100px;
+    font-size: 4rem;
+  }
+
+  .choice-text > div:first-child {
+    font-size: 2.5rem;
+  }
+}
+
+/* Height-constrained displays (1280x800 projectors) */
+@media (min-width: 1280px) and (max-height: 900px) {
+  .sabotage-mcq-answer-scene {
+    padding: 1.5rem;
+  }
+
+  .choices {
+    gap: 1.2rem;
+  }
+
+  .choice {
+    padding: 1.5rem 2rem;
+  }
+}

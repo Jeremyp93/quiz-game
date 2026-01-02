@@ -167,3 +167,37 @@
     font-size: 1.2rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .phase-number {
+    font-size: 4rem;
+  }
+
+  .phase-icon {
+    font-size: 15rem;
+  }
+
+  .name-fr,
+  .name-nl {
+    font-size: 5.5rem;
+  }
+
+  .rule-fr,
+  .rule-nl {
+    font-size: 2.3rem;
+  }
+
+  .rule-bullet {
+    font-size: 4rem;
+  }
+
+  .scoring-fr,
+  .scoring-nl {
+    font-size: 2.2rem;
+  }
+
+  .rule-item {
+    padding: 2rem 2.5rem;
+  }
+}
