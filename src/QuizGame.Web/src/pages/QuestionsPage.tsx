@@ -315,7 +315,7 @@ export default function QuestionsPage() {
   return (
     <div className={styles['questions-page']}>
       <div className={styles['page-header']}>
-        <h1>Question Management</h1>
+        <h1>Question Management ({filteredQuestions.length})</h1>
         <div>
           <button onClick={handleCreate} className={styles['btn-primary']}>Create New Question</button>
           <button onClick={handleBulkImportClick} className={styles['btn-secondary']} style={{ marginLeft: '10px' }}>
