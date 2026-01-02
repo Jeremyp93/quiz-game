@@ -136,7 +136,7 @@
 .question-container {
   max-width: 1200px;
   width: 100%;
-  max-height: calc(100vh - 250px);
+  max-height: calc(100vh - 220px);
   overflow-y: auto;
   z-index: 1;
 }
@@ -207,43 +207,48 @@
 /* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
 @media (min-width: 1400px) {
   .phase-title {
-    font-size: 4rem;
+    font-size: 3.2rem;
   }
 
   .team-info h2 {
-    font-size: 4rem;
+    font-size: 3.2rem;
   }
 
   .theme-info {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
 
   .progress-info {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
   }
 
   .question-fr-light,
   .question-fr-dark {
-    font-size: 3.5rem;
+    font-size: 2.6rem;
   }
 
   .question-nl-light,
   .question-nl-dark {
-    font-size: 2.8rem;
+    font-size: 2.1rem;
   }
 
   .choice-nl {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .question-text-light,
   .question-text-dark {
-    padding: 3rem;
+    padding: 2rem;
   }
 
   .question-container {
+    max-width: 1800px;
     max-height: none;
     overflow-y: visible;
+  }
+
+  .mcq-header {
+    margin-bottom: 1.5rem;
   }
 }
 

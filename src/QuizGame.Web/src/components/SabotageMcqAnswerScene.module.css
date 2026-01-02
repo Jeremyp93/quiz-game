@@ -265,40 +265,48 @@
 
 /* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
 @media (min-width: 1400px) {
+  .sabotage-mcq-answer-scene {
+    padding: 1.2rem;
+  }
+
+  .question-container {
+    max-width: 1800px;
+  }
+
   .choices {
-    gap: 2rem;
-    padding: 0 3rem;
+    gap: 1.2rem;
+    padding: 0 1.5rem;
   }
 
   .choice {
-    padding: 2.5rem 3rem;
-    gap: 2.5rem;
+    padding: 1.5rem 2rem;
+    gap: 1.5rem;
   }
 
   .choice-letter {
-    width: 90px;
-    height: 90px;
-    font-size: 3.5rem;
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
   }
 
   .choice-text > div:first-child {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
   }
 
   .choice-indicator {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   .result-banner {
-    padding: 2.5rem 4rem;
+    padding: 1.5rem 2rem;
   }
 
   .result-text {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
 
   .result-icon {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 }
 
