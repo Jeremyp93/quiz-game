@@ -175,14 +175,20 @@ using (var scope = app.Services.CreateScope())
     if (app.Environment.IsProduction())
     {
         db.Database.Migrate();
+
+        // Only seed if database is empty (no questions exist)
+        if (!db.Questions.Any())
+        {
+            DbSeeder.SeedDatabase(db);
+        }
     }
     else
     {
         db.Database.EnsureCreated();
-    }
 
-    // Seed the database with test questions
-    DbSeeder.SeedDatabase(db);
+        // Always seed in development
+        DbSeeder.SeedDatabase(db);
+    }
 }
 
 app.Run();

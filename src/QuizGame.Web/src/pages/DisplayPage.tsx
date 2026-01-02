@@ -34,6 +34,16 @@ export default function DisplayPage() {
     checkVerification();
   }, []);
 
+  // Watch for game closure (viewer code becomes null)
+  useEffect(() => {
+    if (!gameState.viewerCode && isVerified) {
+      // Game was closed, invalidate viewer session
+      authService.clearViewerVerification();
+      setIsVerified(false);
+      setShowCodeModal(true);
+    }
+  }, [gameState.viewerCode, isVerified]);
+
   const checkVerification = async () => {
     // Check if locally verified (localStorage flag)
     if (authService.isViewerVerifiedLocally()) {
