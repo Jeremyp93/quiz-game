@@ -373,17 +373,17 @@ public static class DbSeeder
                 IsPriority = true,
                 Category = "Geography",
                 Tags = "capitals",
-                TextFr = "Quel est la capitale de l'Italie ?",
-                TextNl = "Wat is de hoofdstad van Italië?",
+                TextFr = "Quel est la capitale du Canada ?",
+                TextNl = "Wat is de hoofdstad van Canada?",
                 ThemeId = themeGeography.Id,
                 McqDetails = new McqQuestionDetails
                 {
-                    ChoiceAFr = "Rome",
-                    ChoiceANl = "Rome",
-                    ChoiceBFr = "Milan",
-                    ChoiceBNl = "Milaan",
-                    ChoiceCFr = "Venise",
-                    ChoiceCNl = "Venetië",
+                    ChoiceAFr = "Ottawa",
+                    ChoiceANl = "Ottawa",
+                    ChoiceBFr = "Montreal",
+                    ChoiceBNl = "Montreal",
+                    ChoiceCFr = "Quebec",
+                    ChoiceCNl = "Quebec",
                     CorrectChoice = McqChoice.A
                 }
             },
@@ -406,7 +406,7 @@ public static class DbSeeder
                     ChoiceBNl = "De paulistas",
                     ChoiceCFr = "Les cariocas",
                     ChoiceCNl = "De cariocas",
-                    CorrectChoice = McqChoice.A
+                    CorrectChoice = McqChoice.C
                 }
             },
             new() {
@@ -482,18 +482,18 @@ public static class DbSeeder
                 IsActive = true,
                 IsPriority = true,
                 Category = "Gastronomy",
-                Tags = "cheese",
-                TextFr = "Quel fromage trempe t-on dans le café chez les Ch'tis ?",
-                TextNl = "Welke kaas wordt gedipt in koffie bij de Ch'tis?",
+                Tags = "michelin",
+                TextFr = "Quel est le nombres d'étoiles attribuable à un restaurant gastronomique ?",
+                TextNl = "Wat is het maximum aantal sterren dat een restaurant kan krijgen?",
                 ThemeId = themeGastronomy.Id,
                 McqDetails = new McqQuestionDetails
                 {
-                    ChoiceAFr = "Morboer",
-                    ChoiceANl = "Morboer",
-                    ChoiceBFr = "Maroille",
-                    ChoiceBNl = "Maroille",
-                    ChoiceCFr = "Mimolette",
-                    ChoiceCNl = "Mimolette",
+                    ChoiceAFr = "2",
+                    ChoiceANl = "2",
+                    ChoiceBFr = "3",
+                    ChoiceBNl = "3",
+                    ChoiceCFr = "4",
+                    ChoiceCNl = "4",
                     CorrectChoice = McqChoice.B
                 }
             },
@@ -527,16 +527,16 @@ public static class DbSeeder
                 IsPriority = true,
                 Category = "Gastronomy",
                 Tags = "asperegus",
-                TextFr = "n/a",
+                TextFr = "Qu'est ce que la badiane ?",
                 TextNl = "n/a",
                 ThemeId = themeGastronomy.Id,
                 McqDetails = new McqQuestionDetails
                 {
-                    ChoiceAFr = "Pérou",
-                    ChoiceANl = "Peru",
-                    ChoiceBFr = "Bolivie",
+                    ChoiceAFr = "Fruit",
+                    ChoiceANl = "Fruit",
+                    ChoiceBFr = "Epice",
                     ChoiceBNl = "Bolivië",
-                    ChoiceCFr = "Argentine",
+                    ChoiceCFr = "Liqueur",
                     ChoiceCNl = "Argentinië",
                     CorrectChoice = McqChoice.A
                 }
@@ -571,19 +571,19 @@ public static class DbSeeder
                 IsActive = true,
                 IsPriority = true,
                 Category = "Animals",
-                TextFr = "Combien de pattes a une araignée ?",
+                TextFr = "Lequel de ces animaux n'appartient pas à l'astrologie chinoise ?",
                 TextNl = "Hoeveel poten heeft een spin?",
-                Tags = "spider",
+                Tags = "china",
                 ThemeId = themeAnimals.Id,
                 McqDetails = new McqQuestionDetails
                 {
-                    ChoiceAFr = "6",
-                    ChoiceANl = "6",
-                    ChoiceBFr = "8",
-                    ChoiceBNl = "8",
-                    ChoiceCFr = "10",
-                    ChoiceCNl = "10",
-                    CorrectChoice = McqChoice.B
+                    ChoiceAFr = "Dragon",
+                    ChoiceANl = "Draak",
+                    ChoiceBFr = "Chèvre",
+                    ChoiceBNl = "Geit",
+                    ChoiceCFr = "Chat",
+                    ChoiceCNl = "Kat",
+                    CorrectChoice = McqChoice.C
                 }
             },
             new() {
@@ -694,7 +694,7 @@ public static class DbSeeder
                     ChoiceBNl = "18 per seconde",
                     ChoiceCFr = "48 par seconde",
                     ChoiceCNl = "48 per seconde",
-                    CorrectChoice = McqChoice.B
+                    CorrectChoice = McqChoice.C
                 }
             },
             new() {
@@ -828,7 +828,7 @@ public static class DbSeeder
                     ChoiceBNl = "512",
                     ChoiceCFr = "717",
                     ChoiceCNl = "717",
-                    CorrectChoice = McqChoice.A
+                    CorrectChoice = McqChoice.C
                 }
             },
             new() {
@@ -872,7 +872,7 @@ public static class DbSeeder
                     ChoiceBNl = "Er bestaat geen natuurlijk blauw voedsel",
                     ChoiceCFr = "Une des gargouilles de la cathédrale de Washington représente Dark Vador",
                     ChoiceCNl = "Een van de gargouilles van de kathedraal van Washington stelt Darth Vader voor",
-                    CorrectChoice = McqChoice.B
+                    CorrectChoice = McqChoice.A
                 }
             },
             new() {
@@ -1812,23 +1812,6 @@ public static class DbSeeder
             Type = QuestionType.Regular,
             Difficulty = 1,
             IsActive = true,
-            Category = "Movies",
-            Tags = "trick,obvious",
-            TextFr = "Quel acteur a joué dans le film avec Tom Hanks dans le rôle principal ?",
-            TextNl = "Welke acteur speelde in de film met Tom Hanks in de hoofdrol?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "Tom Hanks",
-                AnswerNl = "Tom Hanks"
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 1,
-            IsActive = true,
             Category = "Music",
             Tags = "trick,obvious",
             TextFr = "Qui a chanté la chanson 'Bohemian Rhapsody' de Queen ?",
@@ -1846,27 +1829,10 @@ public static class DbSeeder
             Type = QuestionType.Regular,
             Difficulty = 1,
             IsActive = true,
-            Category = "Art",
-            Tags = "trick,obvious",
-            TextFr = "Qui a peint le tableau 'La Joconde' peint par Léonard de Vinci ?",
-            TextNl = "Wie schilderde het schilderij 'De Mona Lisa' geschilderd door Leonardo da Vinci?",
-            RegularDetails = new RegularQuestionDetails
-            {
-                AnswerFr = "Léonard de Vinci",
-                AnswerNl = "Leonardo da Vinci"
-            }
-        });
-
-        questions.Add(new Question
-        {
-            Id = Guid.NewGuid(),
-            Type = QuestionType.Regular,
-            Difficulty = 1,
-            IsActive = true,
             Category = "Technology",
             Tags = "trick,obvious",
-            TextFr = "Quelle entreprise a créé l'iPhone fabriqué par Apple ?",
-            TextNl = "Welk bedrijf maakte de iPhone gemaakt door Apple?",
+            TextFr = "Quelle entreprise a créé l'iPhone ?",
+            TextNl = "Welk bedrijf maakte de iPhone?",
             RegularDetails = new RegularQuestionDetails
             {
                 AnswerFr = "Apple",
@@ -1882,8 +1848,8 @@ public static class DbSeeder
             IsActive = true,
             Category = "Science",
             Tags = "trick,obvious",
-            TextFr = "Quel scientifique a développé la théorie de la relativité d'Einstein ?",
-            TextNl = "Welke wetenschapper ontwikkelde de relativiteitstheorie van Einstein?",
+            TextFr = "Quel scientifique a développé la théorie de la relativité ?",
+            TextNl = "Welke wetenschapper ontwikkelde de relativiteitstheorie?",
             RegularDetails = new RegularQuestionDetails
             {
                 AnswerFr = "Einstein",
@@ -1899,12 +1865,12 @@ public static class DbSeeder
             IsActive = true,
             Category = "Sports",
             Tags = "trick,obvious",
-            TextFr = "Quel sport se joue au tennis ?",
+            TextFr = "Quel sport joue les pongistes?",
             TextNl = "Welke sport wordt gespeeld bij tennis?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "Tennis",
-                AnswerNl = "Tennis"
+                AnswerFr = "Tennis de table",
+                AnswerNl = "Ping-Pong"
             }
         });
 
@@ -3438,8 +3404,8 @@ public static class DbSeeder
             TextNl = "Hoeveel kilometer is het van Brugge naar Lauw?",
             RegularDetails = new RegularQuestionDetails
             {
-                AnswerFr = "Inconnu",
-                AnswerNl = "Onbekend"
+                AnswerFr = "182 km",
+                AnswerNl = "182 km"
             }
         });
 
@@ -3745,7 +3711,7 @@ public static class DbSeeder
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Anatomy", Tags = "biology,human-body", TextFr = "Dans quelle partie du corps humain se situe le cerveau ?", TextNl = "In welk deel van het menselijke lichaam bevindt zich de hersenen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "La tête", AnswerNl = "Het hoofd" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Language", Tags = "latin,vocabulary", TextFr = "Si \"recto\" signifie en latin \"à l'endroit\", quel mot latin est communément utilisé pour dire \"à l'envers\" ?", TextNl = "Als \"recto\" in het Latijn \"recht\" betekent, welk Latijns woord wordt dan meestal gebruikt om \"omgekeerd\" te zeggen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Verso", AnswerNl = "Verso" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Animals", Tags = "marine-life,wildlife", TextFr = "Quel est le plus gros animal marin ?", TextNl = "Wat is het grootste zee-dier?", RegularDetails = new RegularQuestionDetails { AnswerFr = "La baleine bleue", AnswerNl = "De blauwe walvis" } });
-        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Mathematics", Tags = "arithmetic,multiplication", TextFr = "Combien font 5x5 ?", TextNl = "Hoeveel is 5x5?", RegularDetails = new RegularQuestionDetails { AnswerFr = "25", AnswerNl = "25" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Mathematics", Tags = "arithmetic,multiplication", TextFr = "Combien font 7x8 ?", TextNl = "Hoeveel is 7x8?", RegularDetails = new RegularQuestionDetails { AnswerFr = "56", AnswerNl = "56" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Literature", Tags = "biography,books", TextFr = "Qui a écrit \"le journal d'Anne Frank\" ?", TextNl = "Wie heeft \"Het dagboek van Anne Frank\" geschreven?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Anne Frank", AnswerNl = "Anne Frank" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Music", Tags = "instruments,strings", TextFr = "Quel est l'instrument de musique à cordes se joue avec un archet ?", TextNl = "Welk snaarinstrument wordt bespeeld met een strijkstok?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Le violon", AnswerNl = "De viool" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "mountains,africa", TextFr = "Quel est le plus haut sommet d'Afrique ?", TextNl = "Wat is de hoogste berg in Afrika?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Le Kilimandjaro", AnswerNl = "De Kilimanjaro" } });
@@ -3766,7 +3732,7 @@ public static class DbSeeder
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "belgium,brussels,landmarks", TextFr = "Dans quelle ville peut-on admirer le \"Manneken-Pis\" ?", TextNl = "In welke stad kan men het 'Manneken-Pis' bewonderen?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Bruxelles", AnswerNl = "Brussel" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Sports", Tags = "curling,ice-sports", TextFr = "Sur quelle surface se joue le curling ?", TextNl = "Op welk oppervlak wordt curling gespeeld?", RegularDetails = new RegularQuestionDetails { AnswerFr = "La glace", AnswerNl = "Het ijs" } });
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Technology", Tags = "keyboards,computers", TextFr = "Combien y a-t-il de lettres sur un clavier français/néerlandais ?", TextNl = "Hoeveel letters staan er op een Frans/Nederlands toetsenbord?", RegularDetails = new RegularQuestionDetails { AnswerFr = "26", AnswerNl = "26" } });
-        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "belgium,flags", TextFr = "Combien de couleurs sont présentes sur un drapeau de la Belgique ?", TextNl = "Hoeveel kleuren zijn er op de Belgische vlag?", RegularDetails = new RegularQuestionDetails { AnswerFr = "3", AnswerNl = "3" } });
+        questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 1, IsActive = true, IsPriority = true, Category = "Geography", Tags = "belgium,flags", TextFr = "Combien de couleurs sont présentes sur le drapeau de la Belgique ?", TextNl = "Hoeveel kleuren zijn er op de Belgische vlag?", RegularDetails = new RegularQuestionDetails { AnswerFr = "3", AnswerNl = "3" } });
 
         // Difficulty 2 (3 questions)
         questions.Add(new Question { Id = Guid.NewGuid(), Type = QuestionType.Regular4, Difficulty = 2, IsActive = true, IsPriority = true, Category = "History", Tags = "products,kleenex,trivia", TextFr = "Quelle était la fonction principale du mouchoir lors de sa commercialisation par Kleenex en 1924 ?", TextNl = "Wat was de belangrijkste functie van de zakdoek bij de commercialisatie van Kleenex in 1924?", RegularDetails = new RegularQuestionDetails { AnswerFr = "Du papier doux pour le démaquillage", AnswerNl = "Zacht papier voor make-upverwijdering" } });
