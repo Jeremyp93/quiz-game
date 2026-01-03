@@ -5,7 +5,7 @@ export function Phase1IntroScene() {
   const rules = [
     { fr: "Les équipes se précipitent pour répondre en premier", nl: "Teams racen om als eerste te antwoorden" },
     { fr: "Les mauvaises réponses bloquent la question suivante", nl: "Foute antwoorden blokkeren de volgende vraag" },
-    { fr: "Réflexion rapide requise", nl: "Snel denken vereist" }
+    { fr: "Une réponse par BUZZ (3s pour répondre)", nl: "Een antwoord per BUZZ (3s om te antwoorden)" }
   ];
 
   return (
@@ -72,8 +72,8 @@ export function Phase1IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-nl']}>Punten voor goede antwoorden, straf voor blokkades</div>
-          <div className={styles['scoring-fr']}>Points pour bonnes réponses, pénalités pour blocages</div>
+          <div className={styles['scoring-nl']}>Punten voor goede antwoorden, straf voor foute antwoorden</div>
+          <div className={styles['scoring-fr']}>Points pour bonnes réponses, pénalité pour mauvaises réponses</div>
         </motion.div>
       </motion.div>
     </div>
