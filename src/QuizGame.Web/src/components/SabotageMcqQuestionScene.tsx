@@ -63,14 +63,14 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
         }}
       >
         <motion.div
-          className={sharedStyles['question-text-light']}
+          className={sharedStyles['question-text-fixed-light']}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.4 }}
         >
-          <div className={sharedStyles['question-fr-light']}>{question.textNl}</div>
+          <div className={sharedStyles['question-text-auto']}>{question.textNl}</div>
           <hr></hr>
-          <div className={sharedStyles['question-fr-light']}>{question.textFr}</div>
+          <div className={sharedStyles['question-text-auto']}>{question.textFr}</div>
         </motion.div>
 
         <div className={styles.choices}>
