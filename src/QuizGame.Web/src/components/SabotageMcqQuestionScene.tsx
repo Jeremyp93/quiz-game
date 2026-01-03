@@ -76,6 +76,8 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
         <div className={styles.choices}>
           {[0, 1, 2].map((index) => {
             const isSelected = sabotage.selectedAnswer === index;
+            const isCorrect = question.correctChoice === index;
+            const isAnswerRevealed = sabotage.isAnswerRevealed;
             const letter = String.fromCharCode(65 + index);
             const choiceData = [
               { fr: question.choiceAFr, nl: question.choiceANl },
@@ -83,10 +85,28 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
               { fr: question.choiceCFr, nl: question.choiceCNl }
             ][index];
 
+            // Determine the CSS class for this choice
+            let choiceClass = styles.choice;
+            if (isAnswerRevealed) {
+              // In revealed state
+              if (isCorrect) {
+                choiceClass += ` ${styles.correct}`;
+              } else if (isSelected) {
+                choiceClass += ` ${styles.incorrect}`;
+              } else {
+                choiceClass += ` ${styles.dimmed}`;
+              }
+            } else {
+              // In question state
+              if (isSelected) {
+                choiceClass += ` ${styles.selected}`;
+              }
+            }
+
             return (
               <motion.div
                 key={index}
-                className={`${styles.choice} ${isSelected ? styles.selected : ''}`}
+                className={choiceClass}
                 initial={{ opacity: 0, x: -100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
@@ -102,6 +122,13 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
                   {!isDuplicateText(choiceData.fr, choiceData.nl) && (<div>{choiceData.fr}</div>)}
                   {/* <div className={sharedStyles['choice-fr']}>{choiceData.fr}</div> */}
                 </div>
+                {isAnswerRevealed && (
+                  <div className={styles['choice-indicator']}>
+                    <span className={styles['indicator-icon']}>
+                      {isCorrect ? '✓' : (isSelected ? '✗' : '')}
+                    </span>
+                  </div>
+                )}
               </motion.div>
             );
           })}
