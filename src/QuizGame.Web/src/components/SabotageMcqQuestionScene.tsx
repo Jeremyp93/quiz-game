@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
+import { useRef } from 'react';
 import { GameState } from '../types';
 import styles from './SabotageMcqQuestionScene.module.css';
 import sharedStyles from '../styles/shared.module.css';
 import '../styles/animations.module.css';
 import { isDuplicateText } from '../utils/bilingualHelpers';
+import { useAutoTextSize } from '../hooks/useAutoTextSize';
 
 interface Props {
   gameState: GameState;
@@ -11,6 +13,10 @@ interface Props {
 
 export default function SabotageMcqQuestionScene({ gameState }: Props) {
   const { teams, sabotage } = gameState;
+
+  const questionContainerRef = useRef<HTMLDivElement>(null);
+  const nlTextRef = useAutoTextSize(questionContainerRef, { minFontSize: 14, maxFontSize: 60 });
+  const frTextRef = useAutoTextSize(questionContainerRef, { minFontSize: 14, maxFontSize: 60 });
 
   if (!sabotage.currentMcqQuestion || sabotage.currentPlayingTeamIndex === undefined) {
     return <div>Loading...</div>;
@@ -37,9 +43,9 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
           damping: 15
         }}
       >
-        <h1 className={sharedStyles['phase-title']}>Phase 3: Sabotage - MCQ</h1>
+        <h1 className={sharedStyles['phase-title']}>Phase 3: Sabotage</h1>
 
-        <div className={sharedStyles['team-info']}>
+        <div className={`${sharedStyles['team-info']} ${styles['team-info-compact']}`}>
           <h2>{currentTeam.name}</h2>
           <div className={sharedStyles['theme-info']}>
             {themeIcon} {question.theme.icon} {question.theme.nameFr} / {question.theme.nameNl}
@@ -63,19 +69,28 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
         }}
       >
         <motion.div
-          className={sharedStyles['question-text-light']}
+          ref={questionContainerRef}
+          className={sharedStyles['question-text-fixed-light']}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.4 }}
         >
-          <div className={sharedStyles['question-fr-light']}>{question.textNl}</div>
-          <hr></hr>
-          <div className={sharedStyles['question-fr-light']}>{question.textFr}</div>
+          <div className={styles['question-lang']}>
+            <span className={styles['lang-label']}>NL:</span>
+            <div ref={nlTextRef} className={styles['question-text-auto-sabotage']}>{question.textNl}</div>
+          </div>
+          <div className={styles['question-divider']}></div>
+          <div className={styles['question-lang']}>
+            <span className={styles['lang-label']}>FR:</span>
+            <div ref={frTextRef} className={styles['question-text-auto-sabotage']}>{question.textFr}</div>
+          </div>
         </motion.div>
 
         <div className={styles.choices}>
           {[0, 1, 2].map((index) => {
             const isSelected = sabotage.selectedAnswer === index;
+            const isCorrect = question.correctChoice === index;
+            const isAnswerRevealed = sabotage.isAnswerRevealed;
             const letter = String.fromCharCode(65 + index);
             const choiceData = [
               { fr: question.choiceAFr, nl: question.choiceANl },
@@ -83,10 +98,28 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
               { fr: question.choiceCFr, nl: question.choiceCNl }
             ][index];
 
+            // Determine the CSS class for this choice
+            let choiceClass = styles.choice;
+            if (isAnswerRevealed) {
+              // In revealed state
+              if (isCorrect) {
+                choiceClass += ` ${styles.correct}`;
+              } else if (isSelected) {
+                choiceClass += ` ${styles.incorrect}`;
+              } else {
+                choiceClass += ` ${styles.dimmed}`;
+              }
+            } else {
+              // In question state
+              if (isSelected) {
+                choiceClass += ` ${styles.selected}`;
+              }
+            }
+
             return (
               <motion.div
                 key={index}
-                className={`${styles.choice} ${isSelected ? styles.selected : ''}`}
+                className={choiceClass}
                 initial={{ opacity: 0, x: -100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
@@ -102,6 +135,13 @@ export default function SabotageMcqQuestionScene({ gameState }: Props) {
                   {!isDuplicateText(choiceData.fr, choiceData.nl) && (<div>{choiceData.fr}</div>)}
                   {/* <div className={sharedStyles['choice-fr']}>{choiceData.fr}</div> */}
                 </div>
+                {isAnswerRevealed && (
+                  <div className={styles['choice-indicator']}>
+                    <span className={styles['indicator-icon']}>
+                      {isCorrect ? '✓' : (isSelected ? '✗' : '')}
+                    </span>
+                  </div>
+                )}
               </motion.div>
             );
           })}

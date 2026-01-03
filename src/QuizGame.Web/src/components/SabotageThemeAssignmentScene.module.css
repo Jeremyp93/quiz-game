@@ -212,3 +212,51 @@
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .phase-title {
+    font-size: 5rem;
+  }
+
+  .subphase-title {
+    font-size: 3.5rem;
+  }
+
+  .assignment-container {
+    max-width: 2000px;
+    gap: 4rem;
+  }
+
+  .team-header h3 {
+    font-size: 2.5rem;
+  }
+
+  .theme-icon {
+    font-size: 4.5rem;
+  }
+
+  .theme-name-fr {
+    font-size: 2.2rem;
+  }
+
+  .theme-name-nl {
+    font-size: 1.8rem;
+  }
+
+  .theme-slot-empty {
+    font-size: 2rem;
+  }
+
+  .available-theme-icon {
+    font-size: 3.5rem;
+  }
+
+  .available-theme .theme-name-fr {
+    font-size: 2rem;
+  }
+
+  .completion-message {
+    font-size: 3.5rem;
+  }
+}

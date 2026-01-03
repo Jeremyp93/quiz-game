@@ -129,6 +129,35 @@
   }
 }
 
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .team-name {
+    font-size: 5rem;
+    padding: 1.5rem 3.5rem;
+  }
+
+  .ready-text-fr {
+    font-size: 6rem;
+  }
+
+  .ready-text-nl {
+    font-size: 5rem;
+  }
+
+  .challenge-label-fr,
+  .challenge-label-nl {
+    font-size: 2rem;
+  }
+
+  .best-time {
+    font-size: 5rem;
+  }
+
+  .icon-container {
+    font-size: 15rem;
+  }
+}
+
 @media (max-width: 768px) {
   .ready-scene {
     padding: 2rem;

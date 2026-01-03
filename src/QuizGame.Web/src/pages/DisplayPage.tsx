@@ -9,7 +9,6 @@ import { ListQuestionScene } from '../components/scenes/ListQuestionScene';
 import { BoardsUpOverlay } from '../components/scenes/BoardsUpOverlay';
 import SabotageThemeAssignmentScene from '../components/SabotageThemeAssignmentScene';
 import SabotageMcqQuestionScene from '../components/SabotageMcqQuestionScene';
-import SabotageMcqAnswerScene from '../components/SabotageMcqAnswerScene';
 import QuestionTransitionScene from '../components/QuestionTransitionScene';
 import { Phase1IntroScene } from '../components/scenes/Phase1IntroScene';
 import { Phase2IntroScene } from '../components/scenes/Phase2IntroScene';
@@ -69,11 +68,9 @@ export default function DisplayPage() {
       {gameState.currentScene === Scene.SabotageThemeAssignment && (
         <SabotageThemeAssignmentScene gameState={gameState} />
       )}
-      {gameState.currentScene === Scene.SabotageMcqQuestion && (
+      {(gameState.currentScene === Scene.SabotageMcqQuestion ||
+        gameState.currentScene === Scene.SabotageMcqAnswer) && (
         <SabotageMcqQuestionScene gameState={gameState} />
-      )}
-      {gameState.currentScene === Scene.SabotageMcqAnswer && (
-        <SabotageMcqAnswerScene gameState={gameState} />
       )}
       {gameState.currentScene === Scene.QuestionTransition && (
         <QuestionTransitionScene currentPhase={gameState.currentPhase} />

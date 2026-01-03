@@ -100,3 +100,29 @@
     font-size: 1.5rem;
   }
 }
+
+/* Large Screen Optimizations (1400px+) - For Projectors & Large Displays */
+@media (min-width: 1400px) {
+  .team-name {
+    font-size: 5rem;
+    padding: 1.5rem 3.5rem;
+  }
+
+  .completion-text-fr,
+  .completion-text-nl {
+    font-size: 5.5rem;
+  }
+
+  .time-text-fr,
+  .time-text-nl {
+    font-size: 2.2rem;
+  }
+
+  .final-time {
+    font-size: 6.5rem;
+  }
+
+  .icon-container {
+    font-size: 15rem;
+  }
+}
