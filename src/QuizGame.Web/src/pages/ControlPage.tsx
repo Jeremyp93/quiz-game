@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { gameService } from '../services/gameService';
 import { Scene, Phase, ChronoRunStatus, ChronoResultStatus } from '../types';
+import { TEAM_COLORS } from '../constants/teamColors';
 import styles from './ControlPage.module.css';
 
 export default function ControlPage() {
@@ -1050,8 +1051,14 @@ export default function ControlPage() {
             <div className={styles['teams-scores']}>
               <h2>Teams & Scores</h2>
 
-              {gameState.teams.map((team, teamIndex) => (
-                <div key={teamIndex} className={styles['score-card']}>
+              {gameState.teams.map((team, teamIndex) => {
+                const teamColor = TEAM_COLORS[teamIndex % TEAM_COLORS.length];
+                return (
+                <div
+                  key={teamIndex}
+                  className={styles['score-card']}
+                  style={{ backgroundColor: teamColor.solid }}
+                >
                   <div className={styles['score-header']}>
                     <h3>{team.name}</h3>
                     <div className={styles['score-value']}>{team.score}</div>
@@ -1074,7 +1081,8 @@ export default function ControlPage() {
                     ))}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
