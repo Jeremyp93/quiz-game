@@ -72,8 +72,8 @@ export function Phase4IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-nl']}>Ranking op basis van tijd (snelste = meeste punten)</div>
-          <div className={styles['scoring-fr']}>Classement basé sur le temps (le plus rapide = le plus de points)</div>
+          <div className={styles['scoring-nl']}>Versla je tegenstander: trek punten af + bonuspunten voor de beste tijd.</div>
+          <div className={styles['scoring-fr']}>Battez votre adversaire : retirez-lui des points + points bonus pour le meilleur temps.</div>
         </motion.div>
       </motion.div>
     </div>
