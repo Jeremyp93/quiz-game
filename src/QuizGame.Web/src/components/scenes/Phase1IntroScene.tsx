@@ -72,8 +72,8 @@ export function Phase1IntroScene() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <div className={styles['scoring-nl']}>Punten voor goede antwoorden, straf voor foute antwoorden</div>
-          <div className={styles['scoring-fr']}>Points pour bonnes réponses, pénalité pour mauvaises réponses</div>
+          <div className={styles['scoring-nl']}>Punten voor een correct antwoord, straf voor fout antwoord</div>
+          <div className={styles['scoring-fr']}>Point pour bonne réponse, pénalité pour mauvaise réponse</div>
         </motion.div>
       </motion.div>
     </div>
